@@ -1,0 +1,139 @@
+.bong-admin-editor{
+	background-color: #F5F5F5;
+	z-index: 10;
+	position: absolute;
+	height: 400px;
+	width: 800px;
+	left: 30px;
+	top: 40px;
+	border: 1px solid #D9E0EA;
+	-webkit-border-top-right-radius: 7px;
+	-moz-border-radius-topright: 7px;
+	border-top-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-left-radius: 10px;
+}
+.bong-admin-editor-title{
+	text-decoration: none;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	position: relative;
+	background-color: #3B5999;
+	height: 22px;
+	color: #fff;
+	padding-left: 5px;
+	padding-top: 5px;
+	border: 1px solid #31446E;
+	-webkit-border-top-right-radius: 7px;
+	-moz-border-radius-topright: 7px;
+	border-top-right-radius: 7px;
+}
+.bong-admin-editor-body{
+	position: relative;
+	padding: 5px;
+}
+.bong-admin-editor-filename{
+	position: relative;
+	width: 100%;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	font-size: 11px;
+	margin-top: 2px;
+	margin-bottom: 9px;
+	color: #333;
+}
+.bong-admin-editor-filename > label{
+	position: relative;
+	font-weight: bold;
+	margin-right: 20px;
+}
+.bong-admin-editor-filename > span{
+	position: relative;
+	background-color: #D9E0EA;
+	color: #333;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	border-bottom-right-radius: 10px;
+	padding: 3px;
+	padding-left: 6px;
+	padding-right: 15px;
+	font-size: 11px;
+}
+.bong-admin-editor-body-textarea, .editbox{
+/*	position: relative;
+	display: block;
+	width: 790px;
+	height: 300px;
+	border: 1px solid #D9E0EA;*/
+}
+.bong-admin-editor-bottom{
+	margin-top: 5px;
+	text-align: right;
+}
+.bong-admin-editor-bottom-info{
+	float: left;
+	text-align: left;
+	direction: ltr;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	font-size: 11px;
+	padding-left: 7px;
+}
+#bong-admin-editor-minimize-area{
+	position: fixed;
+	/*height: 25px;*/
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	border-color: #ccc;
+	right: 25px;
+	bottom: 0px;
+}
+.bong-admin-editor-minimize-tab{
+	background: #f4f4f4 url(<?php echo Resource::image('bar.png') ?>) repeat-x;
+	border: 1px solid #999;
+	border-bottom: 0px none;
+	padding: 3px 19px 3px 5px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	text-align: left;
+	font-weight: bold;
+	line-height: 19px;
+	color: #333;
+	cursor: pointer;
+	float: left;
+	position: relative;
+}
+.bong-admin-editor-minimize-tab-selected{
+	background-position: 0px 16px;
+}
+.bong-admin-editor-minimize-tab-close{
+	position: absolute;
+	right: 3px;
+	top: 6px;
+	background: url("<?php echo Resource::image('close.png') ?>") 0 0;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+.bong-admin-editor-minimize-tab:hover .bong-admin-editor-minimize-tab-close{
+	background-position: 0px -15px;
+}
+.bong-admin-editor-minimize-tab:hover .bong-admin-editor-minimize-tab-close:hover{
+	background-position: 0px 15px;
+}
+.CodeMirror-wrapping{
+	margin-left: -3px;
+	border: 1px solid #D9E0EA;
+}
+.CodeMirror-line-numbers{
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	font-size: 9pt;
+	line-height: 20px;
+	color: #333;
+	background-color: #D9E0EA;
+	padding-left: 3px;
+	padding-right: 5px;
+}

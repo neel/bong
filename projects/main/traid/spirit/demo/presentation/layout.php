@@ -1,0 +1,1 @@
+DEMO: <?php echo $this->viewContents ?>

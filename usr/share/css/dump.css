@@ -1,0 +1,124 @@
+.dumpWindow{
+	border-top: 1px solid navy;
+	border-bottom: 5px solid navy;
+	border-right: 2px solid navy;
+	border-left: 2px solid navy;
+	padding-bottom: 5px;
+	padding-right: 0px;
+	display: inline-block;
+	margin: 5px;
+}
+.dumpWindow .dumpWindowTitle{
+	background-color: navy;
+	font-family:Verdana,sans-serif;
+	text-align: center;
+	font-size:14px;
+	padding-bottom: 2px;
+	color: #FFFFFF;
+	cursor:pointer;
+	-moz-user-select: none;
+}
+.dumpWindow .dumpWindowTitle .dumpWindowControl{
+	float: right;
+	font-family:arial;
+	font-size:19px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+.dumpWindow .dumpWindowTitle .dumpWindowControl .dumpWindowFloat{
+	font-size:20px;
+	padding-right: 5px;
+}
+.dumpWindow .dumpArea{
+	padding-left: 10px;
+	padding-right:5px; 
+}
+.node{
+	line-height: 1em;
+	display: block;
+	background-color: #FFFFFF;
+	-x-system-font:none;
+	color:navy;
+	font-family:courier new;
+	font-size:13px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:bold;
+	line-height:12px;
+	margin-bottom: 1.2px;
+	white-space: nowrap;
+	padding-left: 0px;
+	position: relative;
+}
+.node .node ul:hover{
+	border-left: 1px dashed #FFFFFF;
+}
+.node .node li:hover{
+	border-left: 1px dashed #FFFFFF;
+}
+.node .fold{
+	font-family:arial,sans-serif;
+	font-size:14px;
+	font-weight:bold;	
+	color:navy;
+	margin-left:-16px;
+	cursor: pointer;
+}
+.node .line{
+	display: inline;
+	/*background-color: #83B9ED;*/
+	width: 100%;
+}
+.node a{
+
+}
+.node li.node:hover{
+	background-color: #BFDFFF;
+}
+.node ul.node:hover{
+	background-color: #8EC4FA;
+}
+.node a.line:hover{
+	background-color: #8EC4FA;
+}
+.node span.key{
+	cursor: pointer;
+}
+.node span.key:hover{
+	background-color: #CAE78B;
+	font-weight: normal;
+	font-size:12px;
+}
+.node span.value:hover{
+	background-color: #EEC192;
+}
+.node span.private{
+	color: #D75861;
+}
+.node span.protected{
+	color: #D7AA58;
+}
+.node span.lite{
+	font-size:11px;
+	font-weight:normal;
+}
+.node a.disabled{
+	color: #CBC9C9;
+}
+.node a.fold:hover{
+	font-size:15px;
+}
+.node span.elem{
+	font-weight:normal;	
+}
+.node .node{
+	padding-left: 12px;
+	display: none;
+}

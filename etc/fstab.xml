@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<bong:reposetory xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:project name="main" location="main" default="true" />
+	<bong:project name="bong" location="bong" default="false">
+		<bong:auth mode="allow">
+			<bong:accept user="bong" pass="bong" />
+			<bong:accept user="admin" pass="admin" />
+		</bong:auth>
+		<bong:filter mode="allow">
+			<bong:ip address="127.0.*.*" />
+			<bong:ip address="192.168.0.*" />
+		</bong:filter>
+	</bong:project>
+	<bong:project name="mkt" location="market" default="false" />
+</bong:reposetory>

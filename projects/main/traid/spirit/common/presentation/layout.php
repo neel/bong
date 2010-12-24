@@ -1,0 +1,1 @@
+COMMON: <?php echo $this->viewContents ?>

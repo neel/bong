@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bong:module name="mvc" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:meta>
+		<bong:info name="author" value="Neel Basu" />
+		<bong:info name="version" value="0.0.0.1" />
+	</bong:meta>
+	<bong:initialization></bong:initialization>
+	<bong:dependencies>
+	</bong:dependencies>
+	<bong:includes>
+		<bong:include file="Struct.php" />
+		<bong:include file="Controller.php" />
+		<bong:include file="AppController.php" />
+		<bong:include file="Argument.php" />
+		<bong:include file="CommonComponent.php" />
+		<bong:include file="Layout.php" />
+		<bong:include file="Params.php" />
+		<bong:include file="CommonView.php" />
+		<bong:include file="ControllerLayout.php" />
+		<bong:include file="View.php" />
+		<bong:include file="ControllerView.php" />
+		<bong:include file="ControllerAppView.php" />
+		<bong:include file="Method.php" />
+		<bong:include file="ControllerMethod.php" />
+		<bong:include file="SpiritMethod.php" />
+		<bong:include file="Project.php" />
+		<bong:include file="SpiritController.php" />
+		<bong:include file="SpiritLayout.php" />
+		<bong:include file="SpiritView.php" />
+	</bong:includes>
+</bong:module>

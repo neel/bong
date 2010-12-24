@@ -1,0 +1,44 @@
+.bong-admin-property-value{
+
+}
+.bong-admin-property-rhs input{
+	border: 1px solid #96A6C5;
+}
+.bong-admin-property-rhs select{
+	background-color: #DDD;
+	border: 1px solid #96A6C5;
+	color: #333;
+	font-size: 11px;
+	padding: 2px;
+	line-height: 12px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+.bong-admin-property-new{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 5px;
+	width: 5px;
+	color: red;
+	display: none;
+}
+.bong-admin-property-new:after{
+	content: "*";
+}
+.bong-admin-component-headline .bong-dialog-btn-default{
+	margin-top: 1px;
+	float: right;
+	height: 18px;
+	margin-right: 5px;
+	font-size: 11px;
+	min-width: 50px;
+	display: none;
+}
+.bong-admin-component-method-headline .bong-dialog-btn{
+	margin-top: 1px;
+	float: right;
+	height: 18px;
+	margin-right: 5px;
+	font-size: 11px;
+	min-width: 50px;
+}

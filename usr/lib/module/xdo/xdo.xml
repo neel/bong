@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bong:module name="xdo" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:meta>
+		<bong:info name="author" value="Neel Basu" />
+		<bong:info name="version" value="0.0.0.1" />
+	</bong:meta>
+	<bong:initialization>
+		<bong:run file="init.php" />
+	</bong:initialization>
+	<bong:dependencies />
+	<bong:includes>
+		<bong:include file="_XMLNodeType.php" />
+		<bong:include file="RefStack.php" />
+		<bong:include file="xmlpacker.php" />
+		<bong:include file="xmlunpacker.php" />
+		<bong:include file="AbstractXDO.php" />
+	</bong:includes>
+</bong:module>

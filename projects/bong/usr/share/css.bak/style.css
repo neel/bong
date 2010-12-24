@@ -1,0 +1,251 @@
+a{
+	text-decoration: none;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	color: #31446e;
+	font-weight: bold;
+}
+body{
+	margin: 0px;
+}
+#bong-admin-body{
+	margin-top: 10px;
+	margin-left: 75px;
+	margin-right: 75px;
+	width: auto;
+}
+#bong-admin-header{
+	padding-top: 2px;
+	padding-left: 40px;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	color: #ffffff;
+	font-size: 20px;
+	height: 35px;
+	width: auto;
+	background: #3b5999 url("/bong/sys/rc/img/icons/bong.png") 5px 3px no-repeat;
+	margin-left: 50px;
+	margin-right: 50px;
+	border-bottom: #31446e 1px solid;
+	border-left: #31446e 1px solid;
+	border-right: #31446e 1px solid;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	margin-top: 0px;
+	position: relative;
+}
+#bong-admin-header a{
+	text-decoration: none;
+	color: #ffffff;
+}
+#bong-admin-header .bong-admin-doc-search{
+	float: right;
+	border: 2px solid #B9C6DE;
+	text-align: right:
+	position: relative;
+	margin-right: 11px;
+	color: #8b8b8b;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	font-size: 12px;
+	margin-top: 5px;
+	width: 200px;
+	padding-left: 7px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+#bong-admin-header .bong-admin-home{
+	float: left;
+	position: relative;
+}
+#bong-admin-header .bong-admin-header-cntrl{
+	float: right;
+	font-size: 12px;
+	/*font-weight: normal;*/
+	font-family: "verdana";
+	padding-top: 8px;
+	padding-right: 8px;
+	margin-left: 7px;
+}
+.bong-admin-box{
+	width: 800px;
+	height: 500px;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -10px;
+	padding: 10px;
+	padding-top: 20px;
+	position: relative;
+}
+.bong-admin-box .bong-admin-box-header{
+	text-align: center;
+	padding-top: 10px;
+	position: absolute;
+	bottom: -24px;
+	background-color: #F2F2F2;
+	border: 1px solid #cccccc;
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	width: 100%;
+	margin: 0px;
+	margin-left: -11px;
+	height: 25px;
+	font-family: tahoma, verdana, arial, sans-serif;
+	color: #333333;
+	font-size: 12px;
+	-webkit-user-select:none;
+	-moz-user-select:
+	font-weight: bold;
+}
+.bong-admin-common-close{
+	background: url("<?php echo Resource::image('close.png') ?>") 0 0;
+	height: 15px;
+	width: 15px;
+	cursor: pointer;
+}
+.bong-admin-common-close:hover{
+	background-position: 0px 15px;
+}
+.bong-admin-project{
+	height: 28px;
+	min-width: 100px;
+	padding-left: 5px;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin: 4px;
+	position: relative;
+	background-color: #EDEFF4;
+	border: 1px solid #627AAD;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
+	font-family: "lucida grande", "tahoma", "verdana", "arial", sans-serif;
+	color: #333333;
+	font-size: 11px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+}
+.bong-admin-project .bong-admin-project-name{
+	font-weight: bold;
+	cursor: pointer;
+}
+.bong-admin-project .bong-admin-project-name:before{
+	content: "~";
+}
+.bong-admin-project .bong-admin-project-name a{
+	text-decoration: none;
+	color: inherit;
+}
+.bong-admin-project-bottom{
+	display: block;
+	margin-top: 3px;
+}
+.bong-admin-project .bong-admin-project-dir{
+	display: inline;
+	margin-right: 50px;
+	padding-right: 4px;
+}
+.bong-admin-project .bong-admin-project-dir:before{
+	content: "/";
+}
+.bong-admin-project-cntrl-default{
+	font-size: 9px;
+	display: inline;
+	font-weight: bold;
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	cursor: pointer;
+}
+.bong-admin-project-cntrl-isdefault{
+	font-size: 8px;
+	display: inline;
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	cursor: pointer;
+}
+.bong-admin-project-default{
+	
+}
+.bong-admin-project-delete{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	z-index: 4;
+}
+.bong-admin-project-new{
+	padding-right: 1px;
+}
+.bong-admin-project-new .bong-admin-project-bottom{
+		
+}
+.bong-admin-project-new .bong-admin-project-name{
+	color: #8B8B8B;
+}
+.bong-admin-project-new .bong-admin-project-cntrl-new{
+	height: 15px;
+	font-size: 9px;
+	font-family: sans-serif;
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	border: 0px none;
+	background: url("<?php echo Resource::image('bar.png') ?>") 0px 216px;
+	color: #FFFFFF;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	cursor: pointer;
+}
+.bong-admin-project-name-editable-cntrl{
+	width: 90px;
+	border: none;
+	height: 14px;
+	font-size: 11px;
+	border: 1px solid #BDC7D8;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	padding-top: 0px;
+	padding-bottom: 2px;
+	color: #777777;
+}
+.bong-dialog-form{
+	display: table;
+	width: 100%;
+	padding: 2px;
+	padding-left: 5px;
+}
+.bong-dialog-form-field{
+	display: table-row;
+	width: 100%;
+	margin-top: 3px;
+}
+.bong-dialog-form-field label, .bong-dialog-form input, .bong-dialog-form select{
+	display: table-cell;
+}
+.bong-dialog-form select{
+	background-color: #DDD;
+	border: 1px solid #96A6C5;
+	color: #333;
+	font-size: 11px;
+	padding: 2px;
+	line-height: 12px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+.bong-admin-component-source{
+	margin-bottom: -19px; 
+	text-align: right;
+}
+.bong-admin-component-source .bong-dialog-btn{
+	height: 20px;
+	line-height: 18px;
+	font-size: 11px;
+	padding-top: 0px;
+}

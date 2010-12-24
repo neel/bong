@@ -1,0 +1,1 @@
+MAIN: <?php echo $this->viewContents ?>

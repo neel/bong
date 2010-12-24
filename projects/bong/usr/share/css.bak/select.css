@@ -1,0 +1,371 @@
+#bong-admin-body{
+	margin-top: 0px;
+	position: relative;
+	float: left;
+}
+.bong-admin-sidebar{
+	float: left;
+	min-width: 160px;
+	border-right: 1px solid #B3B3B3;
+	min-height: 500px;
+	position: relative;
+}
+.bong-admin-sidebar-components{
+	min-height: 40px;
+	padding-top: 3px;
+	border-top: 1px solid #EEEEEE;
+	position: relative;
+	padding-left: 0px;
+}
+.bong-admin-sidebar-components-project{
+	min-height: 60px;
+	height: 60px;
+}
+.bong-admin-sidebar-gap{
+	height: 70px;
+}
+.bong-admin-sidebar-components-label{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	background-color: #D9E0EA;
+	color: #3B5A98;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 12px;
+	cursor: pointer;
+	height: 20px;
+	font-weight: bold;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-right: 3px;
+	padding-left: 10px;
+	-webkit-border-bottom-left-radius: 15px;
+	-moz-border-radius-bottomleft: 15px;
+	border-bottom-left-radius: 15px;
+	opacity: 0.08;
+	list-style: none;
+}
+.bong-admin-sidebar-components-label:hover{
+	opacity: 1;
+}
+.bong-admin-sidebar-separator{
+	position: relative;
+	border-top: 1px solid #EEEEEE;
+	height: 40px;
+}
+.bong-admin-sidebar-components-item{
+	position: relative;
+	height: 16px;
+	padding-left: 18px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 11px;
+	color: #333;
+	padding-top: 3px;
+	cursor: pointer;
+	list-style: none;
+}
+.bong-admin-sidebar-components-item a{
+	text-decoration: none;
+	font-weight: normal;
+}
+.bong-admin-sidebar-components-controller .bong-admin-sidebar-components-item{
+	background: url("<?php echo Resource::image('controller.png'); ?>") 0 1 no-repeat;
+}
+.bong-admin-sidebar-components-spirit .bong-admin-sidebar-components-item{
+	background: url("<?php echo Resource::image('spirit.png'); ?>") 0 1 no-repeat;
+}
+.bong-admin-sidebar-components-item-properties{
+	background: url("<?php echo Resource::image('properties.gif'); ?>") 0 1 no-repeat;
+}
+.bong-admin-sidebar-components-item-settings{
+	background: url("<?php echo Resource::image('settings.png'); ?>") 0 1 no-repeat;
+}
+.bong-admin-sidebar-components-item-resource{
+	background: url("<?php echo Resource::image('resource.png'); ?>") 0 1 no-repeat;
+}
+.bong-admin-sidebar-components .bong-admin-sidebar-components-item-selected{
+	background-color: #D9E0EA;
+}
+.bong-admin-sidebar-components-item:hover{
+	background-color: #F0F3F7;
+}
+.bong-admin-central{
+	float: left;
+	position: relative;
+	padding: 10px;
+}
+.bong-admin-sidebar-components .bong-admin-sidebar-components-item-spcl{
+	margin-left: 10px;
+	background-image: none;
+}
+.bong-admin-sidebar-components-item-spcl:hover{
+	background-color: #ffffff;
+}
+.bong-admin-component-headline{
+	border-top: 1px solid #E2E2E2;
+	background-color: #F2F2F2;
+	height: 22px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	padding-left: 5px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.bong-admin-central-main{
+	position: ralative;
+	float: left;
+}
+.bong-admin-component-method{
+	position: relative;
+	height: 54px;
+	width: 100%;
+	border-bottom: 1px solid #EEEEEE;
+	display: block;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 13px;
+	margin-left: 5px;
+	margin-right: 10px;
+}
+.bong-admin-component-method-cross{
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	z-index: 5;
+	background: url("<?php echo Resource::image('close.png') ?>") 0 0;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+}
+.bong-admin-sidebar-components-item-cross:hover{
+	background-position: 0px 15px;
+}
+.bong-admin-sidebar-component-more:after{
+	content: "See More";
+}
+.bong-admin-sidebar-component-more{
+	font-size: 9px;
+	background: url("<?php echo Resource::image('downarrow.png') ?>") no-repeat 4px right;
+	padding-right: 12px;
+	cursor: pointer;
+	display: block;
+	float: right;
+	margin-right: 3px;
+}
+
+.bong-admin-central{
+	float: left;
+	position: relative;
+	padding: 10px;
+}
+.bong-admin-component-headline{
+	border-top: 1px solid #E2E2E2;
+	background-color: #F2F2F2;
+	height: 22px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	padding-left: 5px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.bong-admin-central-main{
+	position: ralative;
+	float: left;
+}
+.bong-admin-central-right{
+	width: 225px;
+	float: right;
+	height: 100px;
+	position: relative;
+	margin-left: 10px;
+}
+.bong-admin-component-xdo{
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 12px;
+	font-family: 'Courier New';
+}
+.bong-admin-component-xdo:hover{
+	font-weight: bold;
+}
+.bong-admin-component-xdo-more:after{
+	content: "See More";
+}
+.bong-admin-component-xdo-more{
+	font-size: 9px;
+	background: url("<?php echo Resource::image('downarrow.png') ?>") no-repeat 4px right;
+	padding-right: 12px;
+	cursor: pointer;
+	display: block;
+	text-align: right;
+}
+.bong-admin-sidebar-component-more:after{
+	content: "See More";
+}
+.bong-admin-sidebar-component-more{
+	font-size: 9px;
+	background: url("<?php echo Resource::image('downarrow.png') ?>") no-repeat 4px right;
+	padding-right: 12px;
+	cursor: pointer;
+	display: block;
+	float: right;
+	margin-right: 3px;
+}
+
+
+.bong-admin-properties-area{
+	display: block;
+}
+.bong-admin-property{
+	display: block;
+	position: relative;
+	width: 100%;
+}
+.bong-admin-property-label, .bong-admin-property-rhs{
+	display: inline-block;
+	position: relative;
+}
+.bong-admin-property-label{
+	min-width: 75px;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	padding-left: 10px;
+	color: #666;
+	padding-right: 7px;
+}
+.bong-admin-property-label:after{
+	content: ":";
+}
+.bong-admin-property-rhs{
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	padding-left: 5px;
+	color: #333;
+}
+.bong-admin-property-rhs .bong-dialog-btn{
+	height: 18px;
+	font-size: 11px;
+	min-width: 50px;
+}
+.bong-admin-property .bong-admin-property-edit{
+	margin-left: 15px;
+}
+.bong-admin-property .bong-admin-property-edit:after{
+	content: "Edit";
+}
+.bong-admin-property .bong-admin-property-create{
+	margin-left: 15px;
+}
+.bong-admin-property .bong-admin-property-create:after{
+	content: "Create";
+}
+.bong-admin-property-cross{
+	position: absolute;
+	background: url("<?php echo Resource::image('close.png') ?>") 0 0;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	float: right;
+	top: 3px;
+	right: 2px;
+	z-index: 5;
+}
+.bong-admin-property:hover .bong-admin-property-cross:hover{
+	background-position: 0 15px;
+}
+.bong-admin-property:hover .bong-admin-property-cross{
+	background-position: 0 -15px;
+}
+.bong-admin-properties-fieldset{
+	border: none;
+	padding: 0px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 10px;
+	padding-bottom: 10px;
+}
+.bong-admin-properties-fieldset legend{
+	text-align: right;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	color: #ccc;
+	width: 100%;
+	cursor: pointer;
+}
+.bong-admin-properties-fieldset:hover legend{
+	font-weight: bold;
+}
+.bong-admin-property-info{
+	display: none;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	margin-left: 11px;
+	color: #ccc;
+	position: relative;
+	height: 19px;
+}
+.bong-admin-property-with-info:hover{
+	border-left: 1px solid #ccc;
+}
+.bong-admin-property:hover .bong-admin-property-info{
+	display: block;
+	margin-top: 4px;
+}
+.bong-admin-property:hover .bong-admin-property-info:hover .bong-admin-property-info-text{
+	z-index: 6;
+}
+.bong-admin-property-found-status{
+	display: inline-block;
+	width: 60px;
+}
+.bong-admin-property-found-status-found:after{
+	content: "Found";
+}
+.bong-admin-property-found-status-notfound:after{
+	content: "Not Found";
+}
+.bong-admin-property-info-label{
+	position: absolute;
+	z-index: 5;
+	left: -10;
+	bottom: 0;
+	background-color: #ffffff;
+	padding-left: 5px;
+	padding-top: 1px;
+	line-height: 20px;
+	border: 1px solid #ffffff;
+}
+.bong-admin-property-info-text{
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	background-color: #f5f5f5;
+	color: #333;
+	padding-left: 5px;
+	padding-right: 3px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	border: 1px solid #eee;
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	font-size: 11px;
+	line-height: 20px;
+	z-index: 4;
+}
+.bong-admin-property-info-text:hover{
+	z-index: 6;
+}
+.bong-admin-component-method-headline .bong-dialog-btn{
+	margin-top: 1px;
+	float: right;
+	height: 18px;
+	margin-right: 5px;
+	font-size: 11px;
+	min-width: 50px;
+}

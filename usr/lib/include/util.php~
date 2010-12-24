@@ -1,0 +1,12 @@
+<?php
+class Resource{
+	public static function css($cssName){
+		return MemPool::instance()->get("bong.url.root")."/rc/css/$cssName";
+	}
+	public static function css($jsName){
+		return MemPool::instance()->get("bong.url.root")."/rc/css/$jsName";
+	}
+	public static function image($imageName){
+		return MemPool::instance()->get("bong.url.root")."/rc/css/$imageName";
+	}
+}

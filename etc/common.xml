@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<bong:settings xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:pref key="autoxtruct" value="true" comment="If there is no View or no default View Specified Controller's Data Object is represented as XML" ></bong:pref>
+	<bong:pref key="autoscaffold" value="true" comment="http://example.com/bong/scaffold/-modelName will automatically provide Scaffolding for that model" />
+	<bong:pref key="autoscaffoldaccess" value="protected">
+		<bong:pref catagory="credential" user="bong" pass="bongo" />
+		<bong:pref catagory="credential" user="sys" pass="admin" />
+	</bong:pref>
+	<bong:pref key="default">
+		<bong:pref key="controller" value="default" />
+		<bong:pref key="method" value="main" />
+	</bong:pref>
+	<bong:pref key="urlpatterns">
+		<bong:pref catagory="pattern" key="service">
+			<bong:pref catagory="pattern" key="app" value="~^\/\w+\.(xml|json|prop|res)(?:\/(?:[^\.\/]+)?)*$~" />
+			<bong:pref catagory="pattern" key="spirit" value="~^(?:\/\w+\.s(?:\/\w+)*)?\/\+[\w\:]+\.(xml|json|prop|res)(?:\/(?:[^\.\/]+)?)*$~" />
+			<!-- Previous Version
+			<bong:pref catagory="pattern" key="spirit" value="~^(?:\/\w+)?\/\+[\w\:]+\.(xml|json|prop|res)(?:\/(?:[^\.\/]+)?)*$~" />
+			-->
+		</bong:pref>
+		<bong:pref catagory="pattern" key="resource">
+			<bong:pref catagory="pattern" key="local" value="~^\/rc\/(css|img|js|scrap|xslt)\/(.+)$~" />
+			<bong:pref catagory="pattern" key="sys" value="~^\/sys\/rc\/(css|img|js|scrap|xslt)\/(.+)$~" />
+		</bong:pref>
+		<bong:pref catagory="pattern" key="mvc" value="'~(\w+)~'" />
+	</bong:pref>
+</bong:settings>

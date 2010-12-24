@@ -1,0 +1,21 @@
+Actor->AppController: spirit(spirit:string)
+activate AppController
+AppController->SpiritAdapter: new(spirit:string)
+activate SpiritAdapter
+SpiritAdapter->AppController: return this
+deactivate SpiritAdapter
+AppController->Actor: return engine
+deactivate AppController
+
+Actor->SpiritAdapter: call(method:string, args[])
+activate SpiritAdapter
+SpiritAdapter->SpiritEngine: run(spirit:string, method:String, args[])
+activate SpiritEngine
+SpiritEngine->SpiritEngine: executeLogic(spirit:string, method:String, args[])
+activate SpiritEngine
+SpiritEngine->SpiritEngine: spirit(spirit:string)
+SpiritEngine->SpiritAbstractor:new(spirit:String, &controller)
+deactivate SpiritEngine
+SpiritEngine->SpiritAbstractor:method(args)
+deactivate SpiritEngine
+deactivate SpiritAdapter

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bong:module name="mvc" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:meta>
+		<bong:info name="author" value="Neel Basu" />
+		<bong:info name="version" value="0.0.0.1" />
+	</bong:meta>
+	<bong:initialization></bong:initialization>
+	<bong:dependencies>
+		<bong:dependency module="xdo" />
+		<bong:dependency module="validation" />
+		<bong:dependency module="orm" />
+	</bong:dependencies>
+	<bong:includes>
+		<bong:include file="AbstractDeliveryTrait.php" />
+		<bong:include file="JSONDeliveryTrait.php" />
+		<bong:include file="XMLDeliveryTrait.php" />
+		<bong:include file="ResponseDeliveryTrait.php" />
+		<bong:include file="PropertyDeliveryTrait.php" />
+		<bong:include file="ServiceEngine.php" />
+		<bong:include file="AppJSONServiceEngine.php" />
+		<bong:include file="AppXMLServiceEngine.php" />
+		<bong:include file="AppResponseServiceEngine.php" />
+		<bong:include file="AppPropertyServiceEngine.php" />
+		<bong:include file="ControllerMeta.php" />
+		<bong:include file="ControllerTray.php" />
+		<bong:include file="SpiritTray.php" />
+		<bong:include file="ControllerXDO.php" />
+		<bong:include file="BongController.php" />
+		<bong:include file="BongAppController.php" />
+		<bong:include file="SpiritXDO.php" />
+		<!-- 
+		<bong:include file="SharedSpiritXDO.php" />
+		<bong:include file="CompactSpiritXDO.php" />
+		-->
+		<bong:include file="SpiritInterfaces.php" />
+		<bong:include file="SpiritMemoryXDO.php" />
+		<bong:include file="SpiritAbstractor.php" />
+		<bong:include file="SpiritMeta.php" />
+		<bong:include file="SpiritEngine.php" />
+		<bong:include file="EmbeddedSpiritEngine.php" />
+		<bong:include file="SpiritEngineProxy.php" />
+		<bong:include file="AbstractSpiritAdapter.php" />
+		<bong:include file="SpiritAdapter.php" />
+		<bong:include file="SpiritInstanceAdapter.php" />
+		<bong:include file="SpiritCoordinator.php" />
+		<bong:include file="SpiritJSONServiceEngine.php" />
+		<bong:include file="SpiritPropertyServiceEngine.php" />
+		<bong:include file="SpiritXMLServiceEngine.php" />
+		<bong:include file="SpiritResponseServiceEngine.php" />
+	</bong:includes>
+</bong:module>

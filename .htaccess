@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteCond %{REQUEST_URI} [^/]$ 
+  RewriteCond %{SCRIPT_FILENAME}/ -d 
+  RewriteRule .* %{REQUEST_URI}/ [R=301,L]
+  RewriteCond $1 !^sharedVendor(/.*)?$
+  RewriteCond $1 !^projects(/.*)?$ [NC]
+  RewriteCond $1 !^r(/.*)?$ [NC]
+  RewriteCond $1 !^rt\.php(.*)?$ [NC]
+  RewriteCond $1 !^index\.php(/.*)?$ [NC]
+  #{ Application Routing Handling
+  RewriteRule ^(.*)$ ./index.php/$1 [L]
+  #}
+  #{ Shared Content Routing Handling
+  RewriteRule ^r\/(.+)$	./rt.php/$1 [L]
+  #}
+</IfModule>

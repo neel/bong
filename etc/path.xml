@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<bong:reposetory xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:path name="etc" scope="bong" location="etc">
+		<bong:path name="init" location="init.d" />
+		<bong:path name="conf" location="conf.d" />
+	</bong:path>
+	<bong:path name="lib" scope="bong" location="usr/lib">
+		<bong:path name="module" nick="module" location="module" />
+		<bong:path name="segment" location="segment" />
+	</bong:path>
+	<bong:path name="share" scope="bong" location="usr/share">
+		<bong:path name="apps" location="apps">
+			<bong:path name="layout" location="layout" />
+		</bong:path>
+		<bong:path name="css" location="css" />
+		<bong:path name="javascript" location="javascript" />
+		<bong:path name="image" location="image" />
+		<bong:path name="template" location="template" />
+		<bong:path name="xslt" location="xslt" />
+	</bong:path>
+	<bong:path name="project" location="projects">
+		<bong:path name="self" location="$projectDir" />
+		<bong:path name="etc" scope="bong" location="$projectDir/etc">
+			<bong:path name="init" location="init.d" />
+			<bong:path name="conf" location="conf.d" />
+		</bong:path>
+		<bong:path name="apps" location="$projectDir/traid/apps">
+			<bong:path name="controller" location="controller" />
+			<bong:path name="layout" location="layout">
+				<bong:path name="controller" location="$controller" />
+			</bong:path>
+			<bong:path name="model" location="models" />
+			<bong:path name="view" location="presentation">
+				<bong:path name="controller" location="$controller">
+					<bong:path name="method" location="$method" />
+				</bong:path>
+			</bong:path>
+		</bong:path>
+		<bong:path name="spiritPath" location="$projectDir/traid/spirit">
+		</bong:path>
+		<bong:path name="spirit" location="$projectDir/traid/spirit/$spirit">
+			<bong:path name="view" location="presentation">
+				<bong:path name="method" location="$method" />
+			</bong:path>
+		</bong:path>
+		<bong:path name="common" location="$projectDir/usr/local/common">
+			<bong:path name="layout" location="layout" />
+		</bong:path>
+		<bong:path name="share" scope="bong" location="$projectDir/usr/share">
+			<bong:path name="css" location="css" />
+			<bong:path name="javascript" location="javascript" />
+			<bong:path name="image" location="image" />
+			<bong:path name="scrap" location="scrap" />
+			<bong:path name="xslt" location="xslt" />
+		</bong:path>
+		<bong:path name="log" location="$projectDir/var/log" />
+		<bong:path name="run" location="$projectDir/var/run" />
+		<bong:path name="backend" location="$projectDir/var/backend" />
+	</bong:path>
+</bong:reposetory>
+<!--
+Possible Path Keys
+~~~~~~~~~~~~~~~~~~
+etc
+etc.init
+etc.conf
+lib
+lib.module
+lib.segment
+share
+share.css
+share.javascript
+share.image
+share.template
+share.xslt
+project:$projectName
+project:$projectName.etc
+project:$projectName.etc.init
+project:$projectName.etc.conf
+project:$projectName.segment
+project:$projectName.share
+project:$projectName.share.css
+project:$projectName.share.javascript
+project:$projectName.share.image
+project:$projectName.share.template
+project:$projectName.share.xslt
+-->
