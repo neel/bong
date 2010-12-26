@@ -1,8 +1,15 @@
 <?php
 class MVCEngine extends ContentEngine{
 	private $_systemView = false;
-	private $_ParamsList = array();//Params set via several Params
-	private $_arrangedParams = array();
+	
+	private $_actionParams = null;
+	private $_methodParams = null;
+	private $_ctorParams = null;
+	private $_appParams = null;
+	private $_projectParams = null;
+	private $_bongParams =null;
+	
+	private $_arrangedParams = null;
 	
 	protected function validate(){
 		return (
@@ -19,6 +26,7 @@ class MVCEngine extends ContentEngine{
 		$controllerReflection = new ReflectionClass($controllerName);
 		$controller = $controllerReflection->newInstance();
 		$this->_ctorParams = $controller->params();
+		$controller->flushParams();
 		if(isset($this->navigation->methodName)){
 			$this->_alternateView = ControllerTray::instance()->alternateView;
 			$controllerReflectionObject = new ReflectionObject($controller);
@@ -29,8 +37,11 @@ class MVCEngine extends ContentEngine{
 			}
 			if($methodReflection){
 				$methodReflection->invokeArgs($controller, $this->navigation->args);
+				$this->_actionParams = $controller->params();
+				$controller->flushParams();
 			}
 		}
+		$controller->setParams($this->_arrangedParams);
 		$this->storeXDO($controller->xdo);
 		$controller->serialize();
 		return $controller;	
@@ -97,10 +108,10 @@ class MVCEngine extends ContentEngine{
 		if($this->_systemView){
 			$controller->dumpStrap();
 		}
+		
 		if(ControllerTray::instance()->renderLayout){
-			$params = new stdClass();
-			require($this->params());
-			$this->mergeParams(&$params, $controller->params());
+			$this->mergeParams();
+			$params = $this->_arrangedParams;
 			ob_start();
 			require($this->layout());
 			$this->responseBuffer = ob_get_contents();
@@ -120,16 +131,37 @@ class MVCEngine extends ContentEngine{
 	 * 
 	 * For Multivalue Parameters like JS or CSS first take the ctor()'s then take 
 	 */
-	private function mergeParams(&$params, $controllerParams){
-		var_dump($params);
-		var_dump($controllerParams);
-		foreach($controllerParams as $key => &$value){
-			if(!isset($params->{$key})){
-				$params->{$key} = $value;
-			}else{
-				if(is_array($params->{$key})){
-					$params->{$key} = array_merge($params->{$key}, $value);
+	private function mergeParams(){
+		$this->params();
+		$this->_arrangedParams = new StdClass;
+
+		$arrangedParams =& $this->_arrangedParams;
+		$buildParams = function($paramsDict) use(&$arrangedParams){
+			foreach($paramsDict as $key => $value){
+				if(is_array($value)){
+					if(isset($arrangedParams->{$key})){
+						foreach($value as $v){
+							if(!in_array($v, $arrangedParams->{$key})){
+								$arrangedParams->{$key}[] = $v;
+							}
+						}
+					}else{
+						$arrangedParams->{$key} = $value;
+					}
+				}else{
+					$arrangedParams->{$key} = $value;
 				}
+			}
+		};
+		
+		foreach(array($this->_bongParams, $this->_projectParams, $this->_appParams, $this->_ctorParams, $this->_methodParams, $this->_actionParams) as $paramsFile){
+			if(is_string($paramsFile)){
+				$params = new stdClass();
+				require($paramsFile);
+				$buildParams($params);
+				$params = null;
+			}else if(is_array($paramsFile) || is_object($paramsFile)){
+				$buildParams($paramsFile);
 			}
 		}
 	}
@@ -153,9 +185,23 @@ class MVCEngine extends ContentEngine{
 			Path::instance()->currentProject('common.layout.@params.php'),//Project Params
 			Path::instance()->evaluate('share.apps.layout.@params.php')//Bong Params
 		);
-		foreach($params as $param){
+		foreach($params as $i => $param){
 			if(file_exists($param)){
-				return $param;
+				switch($i){
+					case 0:
+						$this->_methodParams = $param;
+						break;
+					case 1:
+						$this->_appParams = $param;
+						break;
+					case 2:
+						$this->_projectParams = $param;
+						break;
+					case 3:
+						$this->_bongParams = $param;
+						break;
+					default:
+				}
 			}
 		}
 	}

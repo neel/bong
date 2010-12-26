@@ -1,5 +1,6 @@
 <?php
 function fseekline($resource, $lineNumber){
+	fseek($resource, 0);
 	$c = 0;
 	while($c < $lineNumber){
 		fgets($resource);

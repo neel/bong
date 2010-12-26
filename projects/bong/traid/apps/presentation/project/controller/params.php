@@ -8,6 +8,7 @@ $params->js = array(
 );
 $params->css = array(
   Resource::css('style'),
-  Resource::css('controller')
+  Resource::css('controller'),
+  Resource::css('editor')
 );
 ?>

@@ -17,7 +17,7 @@ final class ControllerTray extends AbstractDataTray {
 	public $contentType = null;
 	public $xsltView = false;
 	public $renderLayout = true;
-	public $trim = true;
+	public $trim = false;
 	public $stripWhiteSpaces = true;
 	
 	public function responceMainType(){

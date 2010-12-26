@@ -1,6 +1,4 @@
 <?php
 namespace Structs\Admin;
-class CommonView extends CommonComponent{
-
-}
+class CommonView extends CommonComponent{}
 ?>

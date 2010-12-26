@@ -10,11 +10,11 @@
 			}
 		}]
 	});
-<?php else: ?>
-	<?php if($data->exists): ?>
-		<?php if($data->sourceRequested): ?>
-			<?php echo $data->source ?>
-		<?php else: ?>
+<?php else: 
+	 if($data->exists): 
+		 if($data->sourceRequested):
+			 echo $data->source; 
+		 else: ?>
 			bong.editor({
 				file: '<?php echo $data->file ?>',
 				url: '<?php echo Resource::self('?source') ?>',
@@ -30,8 +30,8 @@
 				embeddedPhpDoc: true
 				<?php endif; ?>
 			});
-		<?php endif; ?>
-	<?php else: ?>
+		<?php endif; 
+	 else: ?>
 		bong.dialog({
 			title: '<?php echo $data->title ?> don\'t Exist',
 			content: 'Would You Like to Create One ?',
@@ -44,5 +44,5 @@
 				}
 			}]
 		});
-	<?php endif; ?>
-<?php endif; ?>
+	<?php endif;
+ endif; ?>

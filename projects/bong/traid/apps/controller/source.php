@@ -132,20 +132,24 @@ class SourceController extends BongAppController{
 			return $this->save($this->_backend->spiritByName($this->_xdo->spiritName)->methodByName($methodName)->viewByName($viewName), $_POST['contents']);
 		}else{
 			return $this->source($this->_backend->spiritByName($this->_xdo->spiritName)->methodByName($methodName)->viewByName($viewName));
-		}	
+		}
 	}
 	public function controllerMethod($methodName){
 		$this->data->phpDoc = true;
 		$this->data->exists = false;
 		$this->data->sourceRequested = false;
 		$this->data->file = $this->_backend->controllerByName($this->_controllerName)->filePath();
+		$this->data->filePath = $this->data->file;
 		$method = $this->_backend->controllerByName($this->_controllerName)->methodByName($methodName);
 		if($method){
 			$this->data->exists = true;
 			$this->data->source = $method->code();
-		}		
+		}
 		if($this->data->exists && isset($_GET['source'])){
 			$this->data->sourceRequested = true;
+		}else if(isset($_POST['contents'])){
+			$this->data->saveSuccess = false;
+			$this->data->saveSuccess = $method->setCode($_POST['contents']);
 		}
 	}
 	public function spiritMethod($methodName){
@@ -162,12 +166,23 @@ class SourceController extends BongAppController{
 			$this->data->sourceRequested = true;
 		}
 	}
+	public function spaceToTab($text){
+		return preg_replace("/\G {2}/","\t$1", $text);
+	}
 	public function save($component, $contents){
 		$this->data->filePath = $component->filePath();
 		$this->data->saveSuccess = false;
 		if(is_writable($component->filePath())){
+			$fd = @fopen($component->filePath(), 'rb+');
+			if(!$fd)
+				return false;
+			$codeFd = fopen('data:text/plain,'.$contents, 'rb');
+			while(($line = fgets($codeFd)) !== false){
+				fwrite($fd, $this->spaceToTab($line));
+			}
+			fclose($fd);
 			$this->data->saveSuccess = true;
-			return file_put_contents($component->filePath(), $contents);
+			return true;
 		}
 		return false;
 	}

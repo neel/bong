@@ -108,6 +108,7 @@ MemPool::instance()->set("bong.root", rtrim(getcwd(), "/"));
 MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
 
 Runtime::loadModule("xdo");
+
 /*AbstractContentRouter* */ $router = URLAnalyzer::instance()->decide();
 /*AbstractContentEngine* */ $engine = $router->engine();
 $engine->run();

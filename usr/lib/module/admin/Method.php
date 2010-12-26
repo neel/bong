@@ -112,10 +112,48 @@ class Method extends Struct{
 			$buffer .= fgets($fd);
 			++$c;
 		}
-		return $buffer;
+		return rtrim($buffer);
+	}
+	public function spaceToTab($text){
+		return preg_replace("/\G {2}/","\t$1", $text);
 	}
 	public function setCode($code){
-		
+		$size = filesize($this->_controller->filePath());
+		$fd = @fopen($this->_controller->filePath(), 'rb');
+		if(!$fd){
+			return false;
+		}
+		//"php://temp/maxmemory:$size"
+		$backup = fopen('php://temp/maxmemory:$size', 'w');
+		$c = 0;
+		while($c < $this->_startLine-1){
+			fwrite($backup, fgets($fd));
+			++$c;
+		}
+		//{ Write the Code
+		$codeFd = fopen('data:text/plain,'.$code, 'rb');
+		while(($line = fgets($codeFd)) !== false){
+			fwrite($backup, $this->spaceToTab($line));
+		}
+		//}
+		fwrite($backup, "\n");
+		\fseekline($fd, $this->_endLine);
+		while(!feof($fd)){
+			fwrite($backup, fgets($fd));
+		}
+		fclose($fd);
+		$fd = @fopen($this->_controller->filePath(), 'w');
+		if(!$fd){
+			return false;
+		}
+		fseek($fd, 0);
+		fseek($backup, 0);
+		while(!feof($backup)){
+			fwrite($fd, fread($backup, 1), 1);
+		}
+		fclose($fd);
+		fclose($backup);
+		return true;
 	}
 }
 ?>

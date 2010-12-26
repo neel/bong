@@ -54,6 +54,17 @@ abstract class BongAppController extends BongController{
 		$this->javascript(MemPool::instance()->get("bong.url.base").'/sys/rc/js/dump');
 		$this->stylesheet(MemPool::instance()->get("bong.url.base").'/sys/rc/css/dump');
 	}
+	public function flushParams(){
+		$this->_params = array();
+	}
+	/**
+	 * @internal
+	 * Intended for Intended Use only.
+	 * set's the Whole $this->_params object
+	 */
+	public function setParams($params){
+		$this->_params = $params;
+	}
 }
 
 ?>

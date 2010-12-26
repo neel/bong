@@ -7,7 +7,8 @@ class ProjectController extends BongAppController{
 		$this->jquery();
 	}
 	public function ls(){
-
+		$this->javascript(Resource::js('ls'));
+		$this->styleSheet(Resource::css('style'));
 	}
 	public function select($projectName){
 		$backend = null;
@@ -17,6 +18,13 @@ class ProjectController extends BongAppController{
 			$explorer = Structs\Admin\Project::create($projectName);/*Create From reflection*/
 		}
 		$this->data->explorer = $explorer;
+		$this->javascript(Resource::js('select'));
+		$this->styleSheet(Resource::css('style'));
+		$this->styleSheet(Resource::css('select'));
+		
+		$this->styleSheet(Resource::css('editor'));
+		$this->javascript(Resource::js('editor'));
+		$this->javascript('/CodeMirror/js/codemirror.js');
 		$this->xdo->project = Fstab::instance()->project($projectName);
 		$this->data->project = $explorer;
 		$this->data->controllers = $explorer->controllers();
@@ -33,6 +41,13 @@ class ProjectController extends BongAppController{
 		$this->data->explorer = $explorer;
 		$this->data->controller = $explorer->controllerByName($controllerName);
 		$this->xdo->controllerName = $controllerName;
+		//$this->javascript(Resource::js('controller'));
+		//$this->styleSheet(Resource::css('style'));
+		//$this->styleSheet(Resource::css('controller'));
+		
+		//$this->styleSheet(Resource::css('editor'));
+		//$this->javascript(Resource::js('editor'));
+		//$this->javascript('/CodeMirror/js/codemirror.js');
 		$this->data->controllers = $explorer->controllers();
 		$this->data->spirits = $explorer->spirits();
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
@@ -47,6 +62,15 @@ class ProjectController extends BongAppController{
 		$this->data->explorer = $explorer;
 		$this->data->controller = $explorer->spiritByName($spiritName);
 		$this->xdo->spiritName = $spiritName;
+		$this->javascript(Resource::js('controller'));
+		$this->javascript(Resource::js('sspirit'));
+		$this->styleSheet(Resource::css('sspirit'));
+		$this->styleSheet(Resource::css('style'));
+		$this->styleSheet(Resource::css('controller'));
+		
+		$this->styleSheet(Resource::css('editor'));
+		$this->javascript(Resource::js('editor'));
+		$this->javascript('/CodeMirror/js/codemirror.js');
 		$this->data->controllers = $explorer->controllers();
 		$this->data->spirits = $explorer->spirits();
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
