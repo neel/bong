@@ -9,12 +9,16 @@ class ProjectController extends BongAppController{
 	public function ls(){
 
 	}
-	public function createProject($projectName){
+	public function createProject($projectName, $projectDir){
 		ControllerTray::instance()->renderLayout = false;
 		$this->data->projectName = $projectName;
+		if(!\Fstab::instance()->addProject($projectName, $projectDir)){
+			return false;
+		}
+		\Fstab::instance()->save();
 		$this->data->success = false;
 		$commonProject = \Path::instance()->evaluate("common.template.prj");
-		$projectPath = \Path::instance()->evaluate(":$projectName");
+		$projectPath = \Path::instance()->evaluate(":$projectName.root")."$projectDir";
 		if(!is_dir($projectPath)){
 			if(!recurse_copy($commonProject, $projectPath)){
 				$this->data->success = false;

@@ -23,6 +23,19 @@ final class Fstab extends ConfigurationAdapter{
 		$project->isDefault = $projectNode->attributes->getNamedItem("default")->nodeValue == 'true';
 		return $project;
 	}
+	public function addProject($projectName, $projectDir){
+		$repo = $this->xpath->query("//bong:reposetory");
+		$projectNode = $this->dom->createElement('bong:project');
+		$projectNode->setAttribute('name', $projectName);
+		$projectNode->setAttribute('location', $projectDir);
+		$projectNode->setAttribute('default', 'false');
+		$repo->appendChild($projectNode);
+	}
+	public function save(){
+		$this->dom->formatOutput = true
+		$this->dom->preserveWhiteSpace = false
+		return $this->dom->save();
+	}
 	private function __validateDefault(){
 		return $this->xpath->evaluate("count(//bong:reposetory/bong:project[@default='true'])") == 1;
 	}

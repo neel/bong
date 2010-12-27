@@ -24,6 +24,7 @@
 		<bong:path name="xslt" location="xslt" />
 	</bong:path>
 	<bong:path name="project" location="projects">
+		<bong:path name="root" location="" />
 		<bong:path name="self" location="$projectDir" />
 		<bong:path name="etc" scope="bong" location="$projectDir/etc">
 			<bong:path name="init" location="init.d" />
