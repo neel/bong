@@ -9,6 +9,20 @@ class ProjectController extends BongAppController{
 	public function ls(){
 
 	}
+	public function createProject($projectName){
+		ControllerTray::instance()->renderLayout = false;
+		$this->data->projectName = $projectName;
+		$this->data->success = false;
+		$commonProject = \Path::instance()->evaluate("common.template.prj");
+		$projectPath = \Path::instance()->evaluate(":$projectName");
+		if(!is_dir($projectPath)){
+			if(!recurse_copy($commonProject, $projectPath)){
+				$this->data->success = false;
+			}else{
+				$this->data->success = true;
+			}
+		}
+	}
 	public function select($projectName){
 		$backend = null;
 		if(Backend::ExistsUnSessioned('explorer.'.$projectName)){
@@ -62,7 +76,7 @@ class ProjectController extends BongAppController{
 		$this->data->name = $name;
 		$controller = Structs\Admin\AppController::create($explorer, $name);
 		$explorer->addController($controller);
-		//$controller->generate();
+		$controller->generate();
 		$this->data->controller = $controller;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
@@ -81,7 +95,7 @@ class ProjectController extends BongAppController{
 		$spirit->setFeeder($_POST['feeder']);
 		$spirit->setSession($_POST['session']);
 		$explorer->addSpirit($spirit);
-		//$spirit->generate();
+		$spirit->generate();
 		$this->data->spirit = $spirit;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
@@ -98,8 +112,9 @@ class ProjectController extends BongAppController{
 		ControllerTray::instance()->renderLayout = false;
 		$method = Structs\Admin\ControllerMethod::create($controller, $methodName);
 		$controller->addMethod($method);
-		//$method->generate();
+		$method->generate();
 		$this->data->method = $method;
+		$this->data->methodName = $methodName;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
 	public function addSpiritMethod($methodName){
@@ -115,7 +130,7 @@ class ProjectController extends BongAppController{
 		ControllerTray::instance()->renderLayout = false;
 		$method = Structs\Admin\SpiritMethod::create($controller, $methodName);
 		$controller->addMethod($method);
-		//$method->generate();
+		$method->generate();
 		$this->data->method = $method;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
@@ -135,7 +150,7 @@ class ProjectController extends BongAppController{
 		$view = Structs\Admin\ControllerView::create($method, $viewName);
 		$method->addView($view);
 		$this->data->success = false;
-		//$this->data->success = $view->generate();
+		$this->data->success = $view->generate();
 		$this->data->method = $method;
 		$this->data->view = $view;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
@@ -155,7 +170,7 @@ class ProjectController extends BongAppController{
 		$view = Structs\Admin\SpiritView::create($methodName, $viewName);
 		$method = $controller->methodByName($methodName);
 		$method->addView($view);
-		//$view->generate();
+		$view->generate();
 		$this->data->method = $method;
 		$this->data->view = $view;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
@@ -203,4 +218,3 @@ class ProjectController extends BongAppController{
 
 	}
 }
-?>

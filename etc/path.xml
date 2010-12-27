@@ -8,6 +8,11 @@
 		<bong:path name="module" nick="module" location="module" />
 		<bong:path name="segment" location="segment" />
 	</bong:path>
+	<bong:path name="common" scope="bong" location="usr/common">
+		<bong:path name="template" location="template">
+			<bong:path name="prj" location="project" />
+		</bong:path>
+	</bong:path>
 	<bong:path name="share" scope="bong" location="usr/share">
 		<bong:path name="apps" location="apps">
 			<bong:path name="layout" location="layout" />

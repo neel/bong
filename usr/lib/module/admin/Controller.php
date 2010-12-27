@@ -81,9 +81,18 @@ $methodStr
 }
 ?>
 CLASSSTR;
-		$fp = fopen($this->filePath(), 'w');
+		$presentationDir = \Path::instance(':'.$this->project()->name().'.apps.view.+'.$this->name());
+		if(!is_dir($presentationDir)){
+			if(!@mkdir($presentationDir, 0777, true)){
+				return false;
+			}
+		}
+		$fp = @fopen($this->filePath(), 'w');
+		if(!$fp)
+			return false;
 		fwrite($fp, $classStr, strlen($classStr));
 		fclose($fp);
+		return true;
 	}
 	abstract protected function interfaces();
 	abstract protected function controllerBase();

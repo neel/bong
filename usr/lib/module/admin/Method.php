@@ -4,11 +4,11 @@ class Method extends Struct{
 	const ControllerMethod = 0x0012;
 	const SpiritMethod = 0x0024;
 	
-	private $_controller;
-	private $_name;
-	private $_public;
-	private $_arguments = array();
-	private $_views = array();
+	protected $_controller;
+	protected $_name;
+	protected $_public = true;
+	protected $_arguments = array();
+	protected $_views = array();
 	private $_hasDefaultView = false;
 	protected $_type;
 	protected $_startLine;
@@ -23,7 +23,7 @@ class Method extends Struct{
 	 * @param bool $public
 	 * @param array<Argument> $args
 	 */
-	public function instance($controller, $reflectionOrName, $public=null, $args=array()){
+	public function instance($controller, $reflectionOrName, $public=true, $args=array()){
 		$this->_controller = $controller;
 		if(is_string($reflectionOrName)){
 			$name = $reflectionOrName;

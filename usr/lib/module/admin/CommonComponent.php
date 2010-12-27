@@ -13,6 +13,12 @@ class CommonComponent extends Struct{
 		return file_get_contents($this->filePath());
 	}
 	public function generate($data=""){
+		$baseDir = pathinfo($this->filePath(), PATHINFO_DIRNAME);
+		if(!is_dir($baseDir)){
+			if(!@mkdir($baseDir, 0777, true)){
+				return false;
+			}
+		}
 		if(is_writable(pathinfo($this->filePath(), PATHINFO_DIRNAME))){
 			$ret = file_put_contents($this->filePath(), $data) !== false;
 			return $ret;

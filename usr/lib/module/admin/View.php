@@ -16,13 +16,23 @@ abstract class View extends Struct{
 		$viewStr = <<<VIEWSTR
 <?php
 /**
- * \view {$this->_method->controller()->className()}:{$this->_method->name()}:{$this->name()}
+ * \View {$this->_method->controller()->className()}:{$this->_method->name()}:{$this->name()}
  */
 ?>
 VIEWSTR;
-		$fp = fopen($this->filePath(), 'w');
+		$baseDir = pathinfo($this->filePath(), PATHINFO_DIRNAME);
+		if(!is_dir($baseDir)){
+			if(!@mkdir($baseDir, 0777, true)){
+				return false;
+			}
+		}
+		$fp = @fopen($this->filePath(), 'w');
+		if(!$fp){
+			return false;
+		}
 		fwrite($fp, $viewStr, strlen($viewStr));
 		fclose($fp);
+		return true;
 	}
 	public function _create($name){
 		$this->_name = $name;
