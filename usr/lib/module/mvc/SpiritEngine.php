@@ -32,7 +32,11 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 		$method = $this->method($controller, $methodName);
 		if($method){
 			$controller->setCurrentMethodName($methodName);
-			$method->invokeArgs($controller, $args);
+			if(count($args) < $method->getNumberOfRequiredParameters()){
+				throw new ArgumentNotGivenException($methodName, $spiritName, $this->projectName);
+			}else{
+				$method->invokeArgs($controller, $args);
+			}
 		}else{
 			assert('/*Exception Not Handled*/');
 		}

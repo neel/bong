@@ -27,6 +27,7 @@ final class AppController extends Controller{
 	}
 	
 	protected function _create($name, $methods=array()){
+		$this->_name = $name;
 		parent::_create($name.'Controller', $methods);
 		$this->_filePath = \Path::instance()->evaluate(':'.$this->project()->name().".apps.controller.@$name.php");
 	}

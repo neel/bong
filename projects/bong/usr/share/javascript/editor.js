@@ -197,13 +197,14 @@ bong.editor = function(config){
 		file: '',
 		parsers: [],
 		styles: [],
+		title: '',
 		save: function(){}
 	});
 	this.conf = conf;
 	var handle = {};
 	var editorDialog = bong.domify('<div class="bong-admin-editor">\
 	<div class="bong-admin-editor-title">\
-		Bong Code Editor '+pathinfo(conf.file, 'PATHINFO_BASENAME').basename+'\
+		Bong CodeMirror Editor '+(conf.title!='' ? conf.title : pathinfo(conf.file, 'PATHINFO_BASENAME').basename)+'\
 	</div>\
 	<div class="bong-admin-editor-body">\
 		<div class="bong-admin-editor-filename">\
@@ -220,7 +221,7 @@ bong.editor = function(config){
 	</div>\
 </div>', handle);
 	var minimizeTab = bong.domify('<div class="bong-admin-editor-minimize-tab"> '
-		+pathinfo(conf.file, 'PATHINFO_BASENAME').basename+
+		+(conf.title!='' ? conf.title : pathinfo(conf.file, 'PATHINFO_BASENAME').basename)+
 		'<div class="bong-admin-editor-minimize-tab-close"></div></div>');
 	this.codemirror = null;
 	bong._editor.hideAll();

@@ -1,4 +1,5 @@
 		<h6 class="bong-admin-component-headline bong-admin-component-method-headline">Methods<?php $controller->spirit('MethodList')->addNew() ?></h6>
+		<div class="bong-admin-component-method bong-admin-component-method-hide"></div>
 		<?php foreach($data->controller->methods() as $method): ?>
 		<div class="bong-admin-component-method">
 			<a class="bong-admin-component-method-cross"></a>
@@ -79,6 +80,13 @@
 					bong.href('/bong/~bong/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'controllerMethod' : 'spiritMethod').'/'.$method->name() ?>/<?php echo $method->name() ?>').eval();
 				</script>		
 			</a>
+			<?php if($method->type() == Structs\Admin\Method::ControllerMethod): ?>
+			<a href="#" class="bong-admin-component-method-link">
+				<script type="text/bongscript" event="click">
+					bong.href('/bong/~bong/project/methodLink/<?php echo $method->name() ?>').eval();
+				</script>
+			</a>
+			<?php endif; ?>
 			<div class="bong-admin-component-method-views">
 				<?php if($method->numViews() > 0): ?>
 				<?php foreach($method->views() as $view): ?>

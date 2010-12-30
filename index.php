@@ -29,6 +29,7 @@ require 'usr/lib/include/exceptions/ProjectDirNotReadableException.php';
 require 'usr/lib/include/exceptions/ControllerNotFoundException.php';
 require 'usr/lib/include/exceptions/ControllerNotReadableException.php';
 require 'usr/lib/include/exceptions/MethodNotFoundException.php';
+require 'usr/lib/include/exceptions/ArgumentNotGivenException.php';
 //}
 
 //{ Utility data Structures
@@ -116,6 +117,5 @@ HTTPHeaders::send();
 $engine->writeResponse();
 
 //var_dump(Path::instance()->evaluate(":mkt.apps.view.+&controller.-&method.@&method.view.php"));
-
 
 ?>

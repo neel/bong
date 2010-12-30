@@ -36,9 +36,13 @@ class MVCEngine extends ContentEngine{
 				throw new MethodNotFoundException($this->navigation->methodName, $this->navigation->controllerName, $this->projectName);
 			}
 			if($methodReflection){
-				$methodReflection->invokeArgs($controller, $this->navigation->args);
-				$this->_actionParams = $controller->params();
-				$controller->flushParams();
+				if(count($this->navigation->args) < $methodReflection->getNumberOfRequiredParameters()){
+					throw new ArgumentNotGivenException($this->navigation->methodName, $this->navigation->controllerName, $this->projectName);
+				}else{
+					$methodReflection->invokeArgs($controller, $this->navigation->args);
+					$this->_actionParams = $controller->params();
+					$controller->flushParams();
+				}
 			}
 		}
 		$controller->setParams($this->_arrangedParams);

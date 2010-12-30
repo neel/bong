@@ -18,6 +18,9 @@
 			bong.editor({
 				file: '<?php echo $data->file ?>',
 				url: '<?php echo Resource::self('?source') ?>',
+				<?php if(isset($data->titleText) && $data->titleText): ?>
+				title: '<?php echo $data->titleText ?>',
+				<?php endif; ?>
 				save: function(data){
 					bong.href('<?php echo Resource::self() ?>', {
 						method: 'post',

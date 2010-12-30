@@ -11,7 +11,7 @@
 							action: function(){
 								var methodName = this.methodName.value;
 								var viewName = this.viewName.value;
-								bong.href('/bong/~bong/project/addControllerView/'+this.methodName.value+'/'+this.viewName.value).async(function(data){
+								bong.href('/bong/~bong/project/<?php echo (get_class($data->controller) == 'Structs\Admin\SpiritController' ? 'addSpiritMethodView' : 'addControllerView') ?>/'+this.methodName.value+'/'+this.viewName.value).async(function(data){
 									bong.dialog({
 										title: data.title,
 										content: data.msg,
@@ -31,7 +31,7 @@
 										var dom = bong.domify('<div class="bong-admin-component-method-view">'+viewName+'<a class="bong-admin-sidebar-components-view-cross" bong:handle="cross"></a></div>', handle)
 										$(self).parent()[0].appendChild(dom);
 										bong.addEvent(dom, 'click', function(){
-											bong.href('/bong/~bong/source/view/'+methodName+'/'+viewName).eval();
+											bong.href('/bong/~bong/source/<?php echo (get_class($data->controller) == 'Structs\Admin\SpiritController' ? 'spiritView' : 'view') ?>/'+methodName+'/'+viewName).eval();
 										});
 									}
 								});

@@ -7,7 +7,7 @@
 			label: 'Create',
 			isDefault: true,
 			action: function(){
-				bong.href('/bong/~bong/project/addControllerMethod/'+this.methodName.value).eval();
+				bong.href('/bong/~bong/project/<?php echo (get_class($data->controller) == 'Structs\Admin\SpiritController' ? 'addSpiritMethod' : 'addControllerMethod') ?>/'+this.methodName.value).eval();
 				bong.activeDialog().hide();
 			}
 		},{

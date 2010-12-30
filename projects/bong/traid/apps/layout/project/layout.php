@@ -23,12 +23,7 @@
 		<div id="bong-admin-body">
 			<?php echo $this->viewContents ?>
 		</div>
-		<div id="bong-admin-editor-minimize-area">
-			<!--
-				<div class="bong-admin-editor-minimize-tab">layout.php<div class="bong-admin-editor-minimize-tab-close"></div></div>
-				<div class="bong-admin-editor-minimize-tab">params.php<div class="bong-admin-editor-minimize-tab-close"></div></div>
-			-->
-		</div>
+		<div id="bong-admin-editor-minimize-area"></div>
 	</body>
 </html>
 <?php http::contentType('text/html'); ?>

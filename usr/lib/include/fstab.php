@@ -29,12 +29,13 @@ final class Fstab extends ConfigurationAdapter{
 		$projectNode->setAttribute('name', $projectName);
 		$projectNode->setAttribute('location', $projectDir);
 		$projectNode->setAttribute('default', 'false');
-		$repo->appendChild($projectNode);
+		$repo->item(0)->appendChild($projectNode);
+		return true;
 	}
 	public function save(){
-		$this->dom->formatOutput = true
-		$this->dom->preserveWhiteSpace = false
-		return $this->dom->save();
+		$this->dom->formatOutput = true;
+		$this->dom->preserveWhiteSpace = false;
+		return $this->dom->save($this->filePath);
 	}
 	private function __validateDefault(){
 		return $this->xpath->evaluate("count(//bong:reposetory/bong:project[@default='true'])") == 1;

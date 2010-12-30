@@ -11,12 +11,12 @@ class ProjectController extends BongAppController{
 	}
 	public function createProject($projectName, $projectDir){
 		ControllerTray::instance()->renderLayout = false;
+		$this->data->success = false;
 		$this->data->projectName = $projectName;
 		if(!\Fstab::instance()->addProject($projectName, $projectDir)){
 			return false;
 		}
 		\Fstab::instance()->save();
-		$this->data->success = false;
 		$commonProject = \Path::instance()->evaluate("common.template.prj");
 		$projectPath = \Path::instance()->evaluate(":$projectName.root")."$projectDir";
 		if(!is_dir($projectPath)){
@@ -171,10 +171,11 @@ class ProjectController extends BongAppController{
 		$this->data->controller = $controller;
 		ControllerTray::instance()->renderLayout = false;
 		http::contentType('application/json');
-		$view = Structs\Admin\SpiritView::create($methodName, $viewName);
 		$method = $controller->methodByName($methodName);
+		$view = Structs\Admin\SpiritView::create($method, $viewName);
 		$method->addView($view);
-		$view->generate();
+		$this->data->success = false;
+		$this->data->success = $view->generate();
 		$this->data->method = $method;
 		$this->data->view = $view;
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
@@ -215,8 +216,31 @@ class ProjectController extends BongAppController{
 		$this->data->success = $method->genParams();
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
-	public function createControllerLayout($methodName){
+	public function createControllerLayout(){
 		
+	}
+	public function createControllerParams(){
+		
+	}
+	public function createControllerView(){
+		
+	}
+	public function methodLink($methodName){
+		$backend = null;
+		if(Backend::ExistsUnSessioned('explorer.'.$this->xdo->project->name)){
+			$explorer = Backend::LoadUnSessioned('explorer.'.$this->xdo->project->name);
+		}else{
+			$explorer = Structs\Admin\Project::create($this->xdo->project->name);/*Create From reflection*/
+		}
+		$this->data->controllerName = $this->xdo->controllerName;
+		$controller = $explorer->controllerByName($this->xdo->controllerName);
+		$this->data->controller = $controller;
+		ControllerTray::instance()->renderLayout = false;
+		$method = $controller->methodByName($methodName);
+		$this->data->method = $method;
+		$this->data->methodName = $methodName;
+		$this->data->arguments = $method->arguments();
+		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
 	public function fnc(){
 

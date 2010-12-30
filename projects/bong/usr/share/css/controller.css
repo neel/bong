@@ -354,11 +354,11 @@
 	background-position: 0px 15px;
 }
 .bong-admin-component-method-name{
-	display: block;
+	display: inline-block;
 	padding-bottom: 7px;
 	font-size: 12px;
 	font-weight: bold;
-	margin-top: 4px;
+	margin-top: 0px;
 	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
 	line-height: 19px;
 	color: #3B5998;
@@ -524,4 +524,18 @@ button.bong-admin-component-method-param-noexists:after{
 }
 .bong-admin-component-method:hover .bong-admin-component-method-hide{
 	display: none;
+}
+.bong-admin-component-method-hide{
+	display: none;
+}
+.bong-admin-component-method-link{
+	display: none;
+	float: left;
+	font-weight: normal;
+	background: url(<?php echo Resource::image('link.png') ?>) 0 0;
+	height: 48px;
+	width: 48px;
+}
+.bong-admin-component-method:hover .bong-admin-component-method-link{
+	display: block;
 }

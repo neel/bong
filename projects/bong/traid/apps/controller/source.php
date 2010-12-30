@@ -112,6 +112,7 @@ class SourceController extends BongAppController{
 		}
 	}
 	public function view($methodName, $viewName='view'){
+		$this->data->titleText = "{$methodName}:$viewName.php";
 		$this->data->title = "{$this->_controllerName}:{$methodName}() \'s View $viewName";
 		if(isset($_POST['contents'])){
 			return $this->save($this->_backend->controllerByName($this->_controllerName)->methodByName($methodName)->viewByName($viewName), $_POST['contents']);
@@ -128,6 +129,7 @@ class SourceController extends BongAppController{
 		}		
 	}
 	public function spiritView($methodName, $viewName='view'){
+		$this->data->titleText = "{$methodName}:$viewName.php";
 		if(isset($_POST['contents'])){
 			return $this->save($this->_backend->spiritByName($this->_xdo->spiritName)->methodByName($methodName)->viewByName($viewName), $_POST['contents']);
 		}else{
@@ -144,6 +146,7 @@ class SourceController extends BongAppController{
 		if($method){
 			$this->data->exists = true;
 			$this->data->source = $method->code();
+			$this->data->titleText = $this->_controllerName.'::'.$methodName;
 		}
 		if($this->data->exists && isset($_GET['source'])){
 			$this->data->sourceRequested = true;
@@ -161,6 +164,7 @@ class SourceController extends BongAppController{
 		if($method){
 			$this->data->exists = true;
 			$this->data->source = $method->code();
+			$this->data->titleText = $this->_xdo->spiritName.'::'.$methodName;
 		}		
 		if($this->data->exists && isset($_GET['source'])){
 			$this->data->sourceRequested = true;
@@ -173,7 +177,7 @@ class SourceController extends BongAppController{
 		$this->data->filePath = $component->filePath();
 		$this->data->saveSuccess = false;
 		if(is_writable($component->filePath())){
-			$fd = @fopen($component->filePath(), 'rb+');
+			$fd = @fopen($component->filePath(), 'w');
 			if(!$fd)
 				return false;
 			$codeFd = fopen('data:text/plain,'.$contents, 'rb');
