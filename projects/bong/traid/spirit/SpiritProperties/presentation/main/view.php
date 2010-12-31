@@ -1,6 +1,6 @@
 		<div class="bong-admin-component-source"><button class="bong-dialog-btn">Source
 		<script type="text/bongscript" event="click">
-			bong.href('/bong/~bong/source/sspirit').eval();
+			bong.href('<?php echo Resource::link() ?>/source/sspirit').eval();
 		</script>
 		</button></div>
 		<h6 class="bong-admin-component-headline"><?php echo $data->controller->name() ?>Abstractor<button id="spiritPropertiesApply" class="bong-dialog-btn bong-dialog-btn-default">Apply</button></h6>

@@ -7,7 +7,7 @@
 			label: 'Create',
 			isDefault: true,
 			action: function(){
-				bong.href('/bong/~bong/project/<?php echo (get_class($data->controller) == 'Structs\Admin\SpiritController' ? 'addSpiritMethod' : 'addControllerMethod') ?>/'+this.methodName.value).eval();
+				bong.href('<?php echo Resource::link() ?>/project/<?php echo (get_class($data->controller) == 'Structs\Admin\SpiritController' ? 'addSpiritMethod' : 'addControllerMethod') ?>/'+this.methodName.value).eval();
 				bong.activeDialog().hide();
 			}
 		},{

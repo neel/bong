@@ -31,14 +31,14 @@ var methods = $('.bong-admin-component-method');
 $(methods[methods.length-1]).after(dom);
 console.log(dom);
 bong.addEvent(handle.name, 'click', function(){
-	bong.href('/bong/~bong/source/controllerMethod/<?php echo $data->method->name() ?>').eval();	
+	bong.href('<?php echo Resource::link() ?>/source/controllerMethod/<?php echo $data->method->name() ?>').eval();	
 })
 bong.addEvent(handle.layoutEdit, 'click', function(){
-	bong.href('/bong/~bong/source/controllerMethodLayout/<?php echo $data->method->name() ?>').eval();
+	bong.href('<?php echo Resource::link() ?>/source/controllerMethodLayout/<?php echo $data->method->name() ?>').eval();
 });
 bong.addEvent(handle.layoutCreate, 'click', function(){
 	var self = this;
-	bong.href('/bong/~bong/project/createControllerMethodLayout/<?php echo $data->method->name() ?>').async(function(data){
+	bong.href('<?php echo Resource::link() ?>/project/createControllerMethodLayout/<?php echo $data->method->name() ?>').async(function(data){
 		console.log(data);
 		bong.dialog({
 			title: data.title,
@@ -60,11 +60,11 @@ bong.addEvent(handle.layoutCreate, 'click', function(){
 	});
 })
 bong.addEvent(handle.paramsEdit, 'click', function(){
-	bong.href('/bong/~bong/source/controllerMethodParams/<?php echo $data->method->name() ?>').eval();
+	bong.href('<?php echo Resource::link() ?>/source/controllerMethodParams/<?php echo $data->method->name() ?>').eval();
 })
 bong.addEvent(handle.paramsCreate, 'click', function(){
 	var self = this;
-	bong.href('/bong/~bong/project/createControllerMethodParams/<?php echo $data->method->name() ?>').async(function(data){
+	bong.href('<?php echo Resource::link() ?>/project/createControllerMethodParams/<?php echo $data->method->name() ?>').async(function(data){
 		console.log(data);
 		bong.dialog({
 			title: data.title,
@@ -97,7 +97,7 @@ bong.addEvent(handle.addNewView, 'click', function(){
 			action: function(){
 				var methodName = this.methodName.value;
 				var viewName = this.viewName.value;
-				bong.href('/bong/~bong/project/addControllerView/'+this.methodName.value+'/'+this.viewName.value).async(function(data){
+				bong.href('<?php echo Resource::link() ?>/project/addControllerView/'+this.methodName.value+'/'+this.viewName.value).async(function(data){
 					bong.dialog({
 						title: data.title,
 						content: data.msg,
@@ -117,7 +117,7 @@ bong.addEvent(handle.addNewView, 'click', function(){
 						var dom = bong.domify('<div class="bong-admin-component-method-view">'+viewName+'<a class="bong-admin-sidebar-components-view-cross" bong:handle="cross"></a></div>', handle)
 						$(self).parent()[0].appendChild(dom);
 						bong.addEvent(dom, 'click', function(){
-							bong.href('/bong/~bong/source/view/'+methodName+'/'+viewName).eval();
+							bong.href('<?php echo Resource::link() ?>/source/view/'+methodName+'/'+viewName).eval();
 						});
 					}
 				});

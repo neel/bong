@@ -11,14 +11,14 @@
 				
 				<button class="bong-admin-component-method-layout-edit bong-dialog-btn bong-admin-component-method-layout-exists <?php echo (!$method->hasLayout()) ? 'bong-admin-component-method-hide' : '' ?>">
 					<script type="text/bongscript" event="click">
-						bong.href('/bong/~bong/source/controllerMethodLayout/<?php echo $method->name() ?>').eval();
+						bong.href('<?php echo Resource::link() ?>/source/controllerMethodLayout/<?php echo $method->name() ?>').eval();
 					</script>
 				</button>
 				
 				<button class="bong-admin-component-method-layout-edit bong-dialog-btn bong-admin-component-method-layout-noexists <?php echo ($method->hasLayout()) ? 'bong-admin-component-method-hide' : '' ?>">
 					<script type="text/bongscript" event="click">
 						var self = this;
-						bong.href('/bong/~bong/project/createControllerMethodLayout/<?php echo $method->name() ?>').async(function(data){
+						bong.href('<?php echo Resource::link() ?>/project/createControllerMethodLayout/<?php echo $method->name() ?>').async(function(data){
 							console.log(data);
 							bong.dialog({
 								title: data.title,
@@ -43,14 +43,14 @@
 								
 				<button class="bong-admin-component-method-param-edit bong-dialog-btn bong-admin-component-method-param-exists <?php echo (!$method->hasParams()) ? 'bong-admin-component-method-hide' : '' ?>">
 					<script type="text/bongscript" event="click">
-						bong.href('/bong/~bong/source/controllerMethodParams/<?php echo $method->name() ?>').eval();
+						bong.href('<?php echo Resource::link() ?>/source/controllerMethodParams/<?php echo $method->name() ?>').eval();
 					</script>
 				</button>
 				
 				<button class="bong-admin-component-method-param-edit bong-dialog-btn bong-admin-component-method-param-noexists <?php echo ($method->hasParams()) ? 'bong-admin-component-method-hide' : '' ?>">
 					<script type="text/bongscript" event="click">
 						var self = this;
-						bong.href('/bong/~bong/project/createControllerMethodParams/<?php echo $method->name() ?>').async(function(data){
+						bong.href('<?php echo Resource::link() ?>/project/createControllerMethodParams/<?php echo $method->name() ?>').async(function(data){
 							console.log(data);
 							bong.dialog({
 								title: data.title,
@@ -77,13 +77,13 @@
 			</div>
 			<a class="bong-admin-component-method-name" href="#"><?php echo $method->name() ?>
 				<script type="text/bongscript" event="click">
-					bong.href('/bong/~bong/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'controllerMethod' : 'spiritMethod').'/'.$method->name() ?>/<?php echo $method->name() ?>').eval();
+					bong.href('<?php echo Resource::link() ?>/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'controllerMethod' : 'spiritMethod').'/'.$method->name() ?>/<?php echo $method->name() ?>').eval();
 				</script>		
 			</a>
 			<?php if($method->type() == Structs\Admin\Method::ControllerMethod): ?>
 			<a href="#" class="bong-admin-component-method-link">
 				<script type="text/bongscript" event="click">
-					bong.href('/bong/~bong/project/methodLink/<?php echo $method->name() ?>').eval();
+					bong.href('<?php echo Resource::link() ?>/project/methodLink/<?php echo $method->name() ?>').eval();
 				</script>
 			</a>
 			<?php endif; ?>
@@ -93,7 +93,7 @@
 				<div class="bong-admin-component-method-view">
 					<?php echo $view->name() ?>
 					<script type="text/bongscript" event="click">
-					bong.href('/bong/~bong/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'view' : 'spiritView') ?>/<?php echo $method->name() ?>/<?php echo $view->name() ?>').eval();
+					bong.href('<?php echo Resource::link() ?>/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'view' : 'spiritView') ?>/<?php echo $method->name() ?>/<?php echo $view->name() ?>').eval();
 					</script>
 					<a class="bong-admin-sidebar-components-view-cross"></a>
 				</div>

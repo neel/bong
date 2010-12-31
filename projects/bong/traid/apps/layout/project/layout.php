@@ -16,7 +16,7 @@
 	<body>
 		<div id="bong-admin-header">
 			<input type="text" name="search" class="bong-admin-doc-search" value="Search" />
-			<a href="/bong/~bong/user/logout" class="bong-admin-header-cntrl">Logout</a>
+			<a href="<?php echo Resource::link() ?>/user/logout" class="bong-admin-header-cntrl">Logout</a>
 			<a href="#" class="bong-admin-header-cntrl">Settings</a>
 			<a href="#" class="bong-admin-home">bong</a>
 		</div>

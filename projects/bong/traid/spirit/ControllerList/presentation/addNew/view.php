@@ -10,7 +10,7 @@
 							label: 'Create',
 							isDefault: true,
 							action: function(){
-								bong.href('/bong/~bong/project/addController/'+this.controllerName.value).eval();
+								bong.href('<?php echo Resource::link() ?>/project/addController/'+this.controllerName.value).eval();
 								bong.activeDialog().hide();
 							}
 						},{

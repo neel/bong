@@ -217,7 +217,20 @@ class ProjectController extends BongAppController{
 		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
 	public function createControllerLayout(){
-		
+		$backend = null;
+		if(Backend::ExistsUnSessioned('explorer.'.$this->xdo->project->name)){
+			$explorer = Backend::LoadUnSessioned('explorer.'.$this->xdo->project->name);
+		}else{
+			$explorer = Structs\Admin\Project::create($this->xdo->project->name);/*Create From reflection*/
+		}
+		$this->data->controllerName = $this->xdo->controllerName;
+		$controller = $explorer->controllerByName($this->xdo->controllerName);
+		$this->data->controller = $controller;
+		ControllerTray::instance()->renderLayout = false;
+		http::contentType('application/json');
+		$this->data->success = false;
+		$this->data->success = $controller->genParams();
+		//Backend::saveUnSessioned('explorer.'.$this->xdo->project->name, $explorer);
 	}
 	public function createControllerParams(){
 		

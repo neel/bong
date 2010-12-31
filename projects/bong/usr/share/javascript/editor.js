@@ -301,7 +301,7 @@ bong.editor = function(config){
 }
 /*
 bong.editor({
-    url: '/bong/~bong/project/projectLayout',
+    url: '<?php echo Resource::link() ?>/project/projectLayout',
     embeddedPhpDoc: true
 });
 */

@@ -8,7 +8,7 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 								<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/projectLayout').eval();
+								bong.href('<?php echo Resource::link() ?>/source/projectLayout').eval();
 								</script>
 							</button>
 						<?php else: ?>
@@ -30,7 +30,7 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 								<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/projectParams').eval();
+								bong.href('<?php echo Resource::link() ?>/source/projectParams').eval();
 								</script>
 							</button>
 						<?php else: ?>
@@ -52,7 +52,7 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 								<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/projectView').eval();
+								bong.href('<?php echo Resource::link() ?>/source/projectView').eval();
 								</script>
 							</button>
 						<?php else: ?>

@@ -8,14 +8,14 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 							<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/controllerLayout').eval();
+								bong.href('<?php echo Resource::link() ?>/source/controllerLayout').eval();
 							</script>
 							</button>
 						<?php else: ?>
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-notfound"></div>
 							<button class="bong-dialog-btn bong-dialog-btn-default bong-admin-property-create">
 							<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/controllerLayout').eval();
+								bong.href('<?php echo Resource::link() ?>/source/controllerLayout').eval();
 							</script>
 							</button>
 						<?php endif; ?>
@@ -34,7 +34,7 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 							<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/controllerParams').eval();
+								bong.href('<?php echo Resource::link() ?>/source/controllerParams').eval();
 							</script>
 							</button>
 						<?php else: ?>
@@ -56,7 +56,7 @@
 							<div class="bong-admin-property-found-status bong-admin-property-found-status-found"></div>
 							<button class="bong-dialog-btn bong-admin-property-edit">
 							<script type="text/bongscript" event="click">
-								bong.href('/bong/~bong/source/controllerView').eval();
+								bong.href('<?php echo Resource::link() ?>/source/controllerView').eval();
 							</script>
 							</button>
 						<?php else: ?>

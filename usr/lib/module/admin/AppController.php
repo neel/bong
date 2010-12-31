@@ -55,7 +55,22 @@ final class AppController extends Controller{
 	protected function controllerBase(){
 		return 'BongAppController';
 	}
-	
+	public function genLayout(){
+		if(!$this->_layout){
+			$viewPath = \Path::instance()->evaluate(':'.$this->project()->name().".apps.layout.+{$this->name()}.@layout.php");
+			$this->_layout = ControllerLayout::create($viewPath.'/layout.php');
+			return $this->_layout->generate();
+		}
+		return false;
+	}
+	public function genParams(){
+		if(!$this->_params){
+			$viewPath = \Path::instance()->evaluate(':'.$this->project()->name().".apps.layout.+{$this->name()}.@params.php");
+			$this->_params = Params::create($viewPath.'/params.php');
+			return $this->_params->generate();
+		}
+		return false;
+	}
 	public function layout(){
 		return $this->_layout;
 	}

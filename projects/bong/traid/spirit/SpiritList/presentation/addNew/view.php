@@ -13,7 +13,7 @@
 							label: 'Create',
 							isDefault: true,
 							action: function(){
-								bong.href('/bong/~bong/project/addSpirit/').post(this.spirit).eval();
+								bong.href('<?php echo Resource::link() ?>/project/addSpirit/').post(this.spirit).eval();
 								bong.activeDialog().hide();
 							}
 						},{
