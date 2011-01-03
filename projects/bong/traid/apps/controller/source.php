@@ -18,6 +18,7 @@ class SourceController extends BongAppController{
 			$this->_controllerName = $this->_xdo->controllerName;
 	}
 	private function source($component){
+		ControllerTray::instance()->bongParsing = false;
 		$this->data->exists = false;
 		$this->data->sourceRequested = false;
 		if($component){

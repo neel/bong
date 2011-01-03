@@ -14,11 +14,11 @@ class BongParser extends \SuSAX\AbstractParser{
 	}
 	public function close($tag){
 		if($tag->name() == $this->_currentTag){
-			$spiritName = $tag->attrByname('name')->value();
-			$methodName = $tag->attrByname('call') ? $tag->attrByname('call')->value() : 'main';
+			$spiritName = $this->parent()->attrByname('name')->value()->value();
+			$methodName = $this->parent()->attrByname('call') ? $this->parent()->attrByname('call')->value()->value() : 'main';
 			$args = $this->_params;
 			$this->_params = array();
-			return $this->_ftor($spiritName, $methodName, $tagName, $args);
+			return $this->_ftor($spiritName, $methodName, $args, $tag->name());
 		}else if($tag->name() == 'param'){
 			return '';
 		}
@@ -27,15 +27,20 @@ class BongParser extends \SuSAX\AbstractParser{
 		$tagName = $tag->name();
 		if(in_array($tagName, array('spirit', 'embed'))){
 			$this->_params = array();
-			$spiritName = $tag->attrByname('name')->value();
-			$methodName = $tag->attrByname('call') ? $tag->attrByname('call')->value() : 'main';
-			return $this->_ftor($spiritName, $methodName, $tagName, array());
+			$spiritName = $tag->attrByname('name')->value()->value();
+			$methodName = $tag->attrByname('call') ? $tag->attrByname('call')->value()->value() : 'main';
+			$instanceId = $tag->attrByname('instance') ? $tag->attrByname('instance')->value()->value() : null;
+			return $this->_ftor($spiritName, $methodName, array(), $tagName, $instanceId);
 		}else if($tagName == 'param'){
-			$key = $tag->attrByname('name')->value();
-			$value = $tag->attrByname('value')->value();
-			$this->_params[$key] = $value;
+			$value = $tag->attrByname('value')->value()->value();
+			$this->_params[] = $value;
 			return '';
 		}
 	}
+    public function __call($method, $args){
+        if(is_callable(array($this, $method))){
+            return call_user_func_array($this->$method, $args);
+        }
+    }
 }
 ?>

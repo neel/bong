@@ -109,6 +109,18 @@ class MVCEngine extends ContentEngine{
 		$scope();
 		$this->viewContents = ob_get_contents();
 		ob_end_clean();
+		if(ControllerTray::instance()->bongParsing){
+			$parser = new \SuSAX\Parser(new BongParser(function($spiritName, $methodName, $arguments, $tagName, $instanceId=null) use($controller){
+				switch($tagName){
+					case 'spirit':
+						return !$instanceId ? $controller->spirit($spiritName)->call($methodName, $arguments) : $controller->spirit($spiritName)->instance($instanceId)->call($methodName, $arguments);
+					break;
+				}
+			}));
+			$parser->setNsFocus('bong');
+			$parser->setText($this->viewContents);
+			$this->viewContents = $parser->parse();
+		}
 		if($this->_systemView){
 			$controller->dumpStrap();
 		}

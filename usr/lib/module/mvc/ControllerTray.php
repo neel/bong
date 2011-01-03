@@ -19,6 +19,10 @@ final class ControllerTray extends AbstractDataTray {
 	public $renderLayout = true;
 	public $trim = false;
 	public $stripWhiteSpaces = true;
+	/**
+	 * If True <bong:*> tags are Parsed from the response
+	 */
+	public $bongParsing = true;
 	
 	public function responceMainType(){
 		$r = explode('/', $this->responceType);

@@ -38,7 +38,7 @@
 								$(self).prev().prev().prev().addClass('bong-admin-component-method-layout-exists');
 							}
 						});
-					</script>	
+					</script>  
 				</button>
 								
 				<button class="bong-admin-component-method-param-edit bong-dialog-btn bong-admin-component-method-param-exists <?php echo (!$method->hasParams()) ? 'bong-admin-component-method-hide' : '' ?>">
@@ -70,7 +70,7 @@
 								$(self).prev().prev().prev().prev().addClass('bong-admin-component-method-param-exists');
 							}
 						});
-					</script>	
+					</script>  
 				</button>
 				
 				<?php endif; ?>
@@ -78,7 +78,7 @@
 			<a class="bong-admin-component-method-name" href="#"><?php echo $method->name() ?>
 				<script type="text/bongscript" event="click">
 					bong.href('<?php echo Resource::link() ?>/source/<?php echo ($method->type() == Structs\Admin\Method::ControllerMethod ? 'controllerMethod' : 'spiritMethod').'/'.$method->name() ?>/<?php echo $method->name() ?>').eval();
-				</script>		
+				</script>    
 			</a>
 			<?php if($method->type() == Structs\Admin\Method::ControllerMethod): ?>
 			<a href="#" class="bong-admin-component-method-link">
@@ -103,7 +103,9 @@
 				
 				</div>
 				<?php endif; ?>
-				<?php $controller->spirit('MethodList')->addNewView($method->name()) ?>
+				<bong:spirit name="MethodList" call="addNewView">
+					<bong:param value="<?php echo $method->name() ?>" />
+				</bong:spirit>
 			</div>
-		</div>		
+		</div>    
 		<?php endforeach ?>

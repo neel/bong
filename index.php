@@ -86,6 +86,7 @@ require 'usr/lib/include/engines/ResourceEngine.php';
 require 'usr/lib/include/common.php';
 require 'usr/lib/include/resourcehelper.php';
 require 'usr/lib/include/susax.php';
+require 'usr/lib/include/bongparser.php';
 //}
 
 require 'usr/lib/include/urlanalyzer.php';

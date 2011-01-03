@@ -29,7 +29,7 @@ class Tag extends Node{
 		$this->_namespace = $ns;
 	}
 	public function attrByName($name){
-		foreach($this->_arguments as $args){
+		foreach($this->_arguments as $arg){
 			if($arg->name() == $name){
 				return $arg;
 			}
