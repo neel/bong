@@ -361,7 +361,11 @@ var bong = {
 							response = request.responseText;
 						}
 						if(conf.loading)conf.loading(url, false);
-						callback(response);
+						if(conf.scope){
+							callback.call(conf.scope, response);
+						}else{
+							callback(response);
+						}
 					}else{
 						conf.error(request.status);
 					}

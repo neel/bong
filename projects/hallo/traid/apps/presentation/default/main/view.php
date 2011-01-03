@@ -3,3 +3,4 @@
  * \View defaultController:main:view
  */
 ?>
+Hallo World

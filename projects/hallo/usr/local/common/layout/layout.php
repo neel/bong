@@ -14,7 +14,7 @@
 		
 	</head>
 	<body>
-		<?php echo $this->viewContents ?>
-	 </body>
+		 <?php echo $this->viewContents ?>
+	</body>
 </html>
 <?php http::contentType('text/html'); ?>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bong:xdo xmlns:bong="http://lab.zigmoyd.net/xmlns/bong" bong:type="object" bong:class="ControllerXDO" timestamp="1293806867" controllerName="default" spiritName="ControllerList"><bong:meta ts="1293806868"/><project bong:type="object" bong:class="Project" name="hallo" location="hallo" isDefault="" path="/var/www/bong/projects/hallo"/></bong:xdo>

@@ -539,3 +539,6 @@ button.bong-admin-component-method-param-noexists:after{
 .bong-admin-component-method:hover .bong-admin-component-method-link{
 	display: block;
 }
+.bong-admin-property-hide{
+	display: none;
+}

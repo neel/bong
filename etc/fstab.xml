@@ -12,5 +12,4 @@
 		</bong:filter>
 	</bong:project>
 	<bong:project name="mkt" location="market" default="false"/>
-	<bong:project name="hallo" location="hallo" default="false"/>
-</bong:reposetory>
+<bong:project name="hallo" location="hallo" default="false"/></bong:reposetory>
