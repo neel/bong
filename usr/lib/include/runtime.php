@@ -29,6 +29,7 @@ final class Runtime{
 	 */
 	public static function loadModule($moduleName){
 		if(!self::moduleExists($moduleName)){
+			debug_print_backtrace();
 			throw new ModuleNotFoundException($moduleName);
 		}
 		if(self::moduleLoaded($moduleName)){

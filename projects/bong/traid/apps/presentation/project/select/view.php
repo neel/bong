@@ -1,6 +1,4 @@
-<div class="bong-admin-sidebar">
-	<?php $controller->spirit('Sidebar')->main(); ?>
-</div>
+<?php $controller->spirit('Sidebar')->main(); ?>
 <div class="bong-admin-central">
 	<?php /*Dump::r($data->explorer);*/ ?>
 	<div class="bong-admin-central-right">

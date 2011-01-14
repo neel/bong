@@ -25,7 +25,7 @@ $(document).ready(function(){
 				h: e.clientY-o.offsetTop
 			};
 			o.isDraggable = true;
-			o.style.opacity = 0.5;
+			o.style.opacity = 0.7;
 			var bak = document.onmousemove;
 			var baku = document.onmouseup;
 			document.onmouseup = function(ev){

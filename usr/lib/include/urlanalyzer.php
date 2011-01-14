@@ -44,8 +44,14 @@ class URLAnalyzer extends Singleton implements Decider{
 		 * ~projectName/controllerName.extension/methodName
 		 * ~projectName/image.png
 		 */
+		$projectExt = null;
 		if(substr_count($urlparts[0], '~') == 1){
 			$projectName = substr(array_shift($urlparts), 1);
+			if(substr_count($projectName, '.') == 1){
+				$parts = explode($projectName);
+				$projectName = $parts[0];
+				$projectExt = $parts[1];
+			}
 		}elseif(substr_count($urlparts[0], '~') > 1){
 			throw new MalformedUrlException();
 		}else{
@@ -72,7 +78,13 @@ class URLAnalyzer extends Singleton implements Decider{
 		MemPool::instance()->set("bong.url.base", $urlbase);
 
 		$urlExtracted = '/'.implode('/',$urlparts);
+		//{ Start FSM Handling 
+		/**
+		 * Now if invoked /~project.fsm
+		 * load the fsm display
+		 */
 		
+		//} end FSM Handling
 		$patterns = array(
 			'resource.local' => Conf::instance()->evaluate('urlpatterns.resource.local'),
 			'resource.sys' => Conf::instance()->evaluate('urlpatterns.resource.sys'),

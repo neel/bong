@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bong:module name="orm" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+<bong:module name="validation" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
 	<bong:meta>
 		<bong:info name="author" value="Neel Basu" />
 		<bong:info name="version" value="0.0.0.1" />
@@ -8,9 +8,11 @@
 
 	</bong:initialization>
 	<bong:dependencies>
-		<bong:dependency module="rom" />
+
 	</bong:dependencies>
 	<bong:includes>
-
+		<bong:include file="validation.php" />
+		<bong:include file="rom.php" />
+		<bong:include file="fsm.php" />
 	</bong:includes>
 </bong:module>

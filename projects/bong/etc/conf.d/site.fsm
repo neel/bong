@@ -1,0 +1,39 @@
+(GET /project/ls) > (GET /project/addProject)
+(GET /project/ls) > (GET /project/select)
+
+(GET /project/select) > (GET /project/controller)
+(GET /project/select) > (GET /project/sspirit)
+
+(GET /project/controller) > (GET /project/addController)
+(GET /project/controller) > (GET /project/addControllerMethod)
+(GET /project/controller) > (GET /project/addControllerView)
+(GET /project/controller) > (GET /project/addControllerMethodLayout)
+(GET /project/controller) > (GET /project/addControllerMethodParams)
+(GET /project/controller) > (GET /project/createControllerView)
+
+(GET /project/sspirit) > (GET /project/addSpirit)
+(GET /project/sspirit) > (GET /project/addSpiritMethod)
+(GET /project/sspirit) > (GET /project/addSpiritMethodView)
+(GET /project/sspirit) > (GET /project/addControllerMethodLayout)
+(GET /project/sspirit) > (GET /project/addControllerMethodParams)
+(GET /project/sspirit) > (GET /project/createControllerView)
+
+(GET /project/controller) > (GET /project/methodLink)
+(GET /project/sspirit) > (GET /project/methodLink)
+
+(GET /project/select) > (GET /source/projectLayout) > (POST /source/projectLayout)
+(GET /project/select) > (GET /source/projectParams) > (POST /source/projectParams)
+(GET /project/select) > (GET /source/projectView) > (POST /source/projectView)
+
+(GET /project/controller) > (GET /source/controller) > (POST /source/controller)
+(GET /project/controller) > (GET /source/controllerMethod) > (POST /source/controllerMethod)
+(GET /project/controller) > (GET /source/controllerLayout) > (POST /source/controllerLayout)
+(GET /project/controller) > (GET /source/controllerParams) > (POST /source/controllerParams)
+(GET /project/controller) > (GET /source/controllerView) > (POST /source/controllerView)
+(GET /project/controller) > (GET /source/controllerMethodLayout) > (POST /source/controllerMethodLayout)
+(GET /project/controller) > (GET /source/controllerMethodParams) > (POST /source/controllerMethodParams)
+(GET /project/controller) > (GET /source/view) > (POST /source/view)
+
+(GET /project/sspirit) > (GET /source/sspirit) > (POST /source/sspirit)
+(GET /project/sspirit) > (GET /source/sspiritMethod) > (POST /source/sspiritMethod)
+(GET /project/sspirit) > (GET /source/sspiritView) > (POST /source/sspiritView)

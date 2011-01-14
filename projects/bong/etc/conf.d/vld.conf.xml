@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<bong:form xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+	<bong:field name="name" required="true">
+		<bong:criteria name="String::Max" value="10" msg="Name must be less than 10 Characters Long" />
+	</bong:field>
+	<bong:field name="age" required="false" default="13">
+		<bong:criteria name="Type::Int" msg="age must be an Integer" />
+		<bong:criteria name="Real::Min" value="13" msg="You must be at least 13 or older" />
+	</bong:field>
+</bong:form>

@@ -7,7 +7,7 @@
 	<bong:initialization></bong:initialization>
 	<bong:dependencies>
 		<bong:dependency module="xdo" />
-		<bong:dependency module="validation" />
+		<bong:dependency module="rom" />
 		<bong:dependency module="orm" />
 	</bong:dependencies>
 	<bong:includes>
