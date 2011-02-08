@@ -1,12 +1,17 @@
 <?php
 namespace FSM;
 class State{
+	private static $_counter = 0;
 	/**
 	 * Request Method
 	 * \Rom\Request::GET or \Rom\Request::POST
 	 */
 	private $_method;
 	private $_url;
+	/**
+	 * every State would have an auto incremented Id
+	 */
+	private $_id;
 
 	/**
 	 * array of States that must be visited before visiting this State
@@ -16,10 +21,14 @@ class State{
 	 * array of States that can be visited after visiting this State
 	 */
 	private $_children = array();	
-	
+
+	public function id(){
+		return $this->_id;
+	}	
 	public function __construct($method, $url){
 		$this->_method = $method;
 		$this->_url = $url;
+		$this->_id = self::$_counter++;
 	}
 	public function addParent(&$parent){
 		$this->_parents[] = $parent;
@@ -75,6 +84,18 @@ class State{
 			}
 			return false;
 		}
+	}
+	public function children(){
+		return $this->_children;
+	}
+	public function outDegree(){
+		return count($this->_children);
+	}
+	public function inDegree(){
+		return count($this->_parents);
+	}
+	public function degree(){
+		return ($this->inDegree()+$this->outDegree());
 	}
 }
 class Engine extends \Singleton{

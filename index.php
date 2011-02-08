@@ -64,6 +64,7 @@ require 'usr/lib/include/routers/ServiceRouter.php';
 require 'usr/lib/include/routers/AppServiceRouter.php';
 require 'usr/lib/include/routers/SpiritServiceRouter.php';
 require 'usr/lib/include/routers/staticcontentrouter.php';
+require 'usr/lib/include/routers/fsmrouter.php';
 //}
 
 require 'usr/lib/include/Runnable.php';//Interface
@@ -80,6 +81,7 @@ require 'usr/lib/include/engines/AbstractMicroEngine.php';
 require 'usr/lib/include/engines/ContentEngine.php';
 require 'usr/lib/include/engines/MVCEngine.php';
 require 'usr/lib/include/engines/ResourceEngine.php';
+require 'usr/lib/include/engines/FSMEngine.php';
 //}
 
 //{ Helpers and Utils
@@ -110,7 +112,7 @@ MemPool::instance()->set("bong.root", rtrim(getcwd(), "/"));
  */
 MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
 
-
+Runtime::loadModule('rom');
 /*AbstractContentRouter* */ $router = URLAnalyzer::instance()->decide();
 /*AbstractContentEngine* */ $engine = $router->engine();
 $engine->run();
