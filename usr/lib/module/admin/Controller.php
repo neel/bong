@@ -81,7 +81,7 @@ $methodStr
 }
 ?>
 CLASSSTR;
-		if($$genPresentation){
+		if($genPresentation){
 			$presentationDir = \Path::instance()->evaluate(':'.$this->project()->name().'.apps.view.+'.$this->name());
 			if(!is_dir($presentationDir)){
 				if(!@mkdir($presentationDir, 0777, true)){
