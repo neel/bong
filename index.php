@@ -1,7 +1,7 @@
 <?php
 error_reporting(255);
 ini_set('display_errors','On');
-
+date_default_timezone_set('Asia/Calcutta');
 header('Content-Type: text/plain');
 header('X-Platform: Bong');
 //{ Exceptions
@@ -111,14 +111,20 @@ MemPool::instance()->set("bong.root", rtrim(getcwd(), "/"));
  * e.g. exploding it with '/' will extract all URL Parts in an array
  */
 MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
-
 Runtime::loadModule('rom');
+\ROM\BongCurrentUserData::startSession();
 /*AbstractContentRouter* */ $router = URLAnalyzer::instance()->decide();
+\ROM\BongCurrentUserData::instance()->load();
+if(!\ROM\BongCurrentUserData::instance()->identical()){
+	\ROM\BongCurrentUserData::reset();
+}
+$urlReq = new \ROM\UrlRequest(time(), session_id(), $_SERVER['SCRIPT_NAME']);
+\ROM\BongCurrentUserData::instance()->addUrlRequest($urlReq);
 /*AbstractContentEngine* */ $engine = $router->engine();
 $engine->run();
 HTTPHeaders::send();
 $engine->writeResponse();
-
+\ROM\BongCurrentUserData::instance()->dump();
 //var_dump(Path::instance()->evaluate(":mkt.apps.view.+&controller.-&method.@&method.view.php"));
 
 ?>

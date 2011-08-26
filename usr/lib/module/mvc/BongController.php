@@ -22,9 +22,6 @@ abstract class BongController{
 		return $this->xdo->storage();
 	}
 	public function __construct(){
-		if(!session_id()){
-			session_start();
-		}
 		if(isset($_POST) && isset($_POST['__bong_argument'])){
 			$this->arguments = json_decode($_POST['__bong_argument']);
 		}

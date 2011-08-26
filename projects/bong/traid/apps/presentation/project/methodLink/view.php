@@ -1,9 +1,25 @@
 <?php if(count($data->arguments) == 0): ?>
-	window.open('<?php echo Resource::link("/".$data->method->controller()->name()."/".$data->method->name()) ?>/', '_blank');
+bong.dialog({
+	title: 'Visit',
+	content: 'url: <tt><?php echo Resource::link("/".$data->method->controller()->name()."/".$data->method->name()) ?></tt> will open in a New Window',
+	buttons: [{
+		label: 'Go',
+		isDefault: true,
+		action: function(){
+			window.open('<?php echo Resource::link("/".$data->method->controller()->name()."/".$data->method->name()) ?>/', '_blank');
+		}
+	},{
+		label: 'Cancel',
+		action: function(){
+			bong.activeDialog().hide();
+		}
+	}]
+});
 <?php else: ?>
 bong.dialog({
 	title: 'Visit',
-	content: '<form method="post" action="#" bong:handle="method">\
+	content: '  base url <tt><?php echo Resource::link("/".$data->method->controller()->name()."/".$data->method->name()) ?>/</tt>\
+	            <form method="post" action="#" bong:handle="method">\
 					<div class="bong-dialog-form">\
 						<div class="bong-dialog-form-field">\
 							<label>Method</label> <input bong:handle="methodName" type="text" name="name" value="<?php echo $data->methodName ?>" disabled />\

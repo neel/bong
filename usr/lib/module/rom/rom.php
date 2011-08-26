@@ -55,7 +55,7 @@ class Request{
 		\Validation\Validation::parse($conf, $this->items());
 	}
 }
-class Client{
+class Client extends \Singleton{
 	public $browser='';
 	public $userAgent='';
 	public $host='';
@@ -325,7 +325,7 @@ class Client{
 		if(!defined('IS_NETSCAPE'))define('IS_NETSCAPE', false);		
 	}
 }
-class Server{
+class Server extends \Singleton{
 	public $software;
 	public $signature;
 	public $port;
@@ -344,7 +344,7 @@ class Server{
 		$this->protocol = @$_SERVER['SERVER_PROTOCOL'];		
 	}
 }
-class Rom{
+class Rom extends \Singleton{
 	public $get = null;
 	public $post = null;
 	public $upload = null;
@@ -369,8 +369,8 @@ class Rom{
 				$this->_method = Request::POST;
 				break;
 		}
-		$this->_client = new Client();
-		$this->_server = new Server();
+		$this->_client = Client::instance();
+		$this->_server = Server::instance();
 	}
 	public function requestMethod(){
 		return $this->_method;

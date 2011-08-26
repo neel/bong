@@ -85,7 +85,7 @@ abstract class AbstractXDO{
 	}
 	
 	private function __sessionFilePath(){
-		$sessionDir = Path::instance()->currentProject('run');
+		$sessionDir = \Path::instance()->currentProject('run');
 		return ($sessionDir.'/'.$this->uName());
 	}
 	public function uName(){
@@ -100,6 +100,9 @@ abstract class AbstractXDO{
 	 */
 	public function load($filePath){
 		$this->__rawUName = $filePath;
+	}
+	public function sessionFilePath(){
+		return $this->__sessionFilePath();
 	}
 }
 ?>

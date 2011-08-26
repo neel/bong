@@ -9,6 +9,7 @@ class SpiritXDO extends AbstractXDO{
 	
 	
 	public function setAbstractor(&$abstractor){
+		//var_dump(">> set ". get_class($abstractor));
 		$this->_abstractor = $abstractor;
 	}
 	protected function abstractor(){
@@ -30,17 +31,16 @@ class SpiritXDO extends AbstractXDO{
 		return $this->_uid;
 	}
 	protected function fileName(){
-		$filePath = (
+		$filePath = md5(
 						($this->_abstractor->sessioned() == SpiritAbstractor::Sessioned ? $this->sessionId() : '').
 						($this->_abstractor->feeder() == SpiritAbstractor::SelfFeeded ? '' : Mempool::instance()->get("bong.mvc.controller")).
 						$this->_spiritName.
-						($this->_abstractor->binding() == SpiritAbstractor::StaticBinding ? '' : $this->uid()).
-						'.sxdo'
-				    );
+						($this->_abstractor->binding() == SpiritAbstractor::StaticBinding ? '' : $this->uid())
+				    ).'.sxdo';
 		
 		/*{ Experimental*/
 		if($this->_abstractor->feeder() == SpiritAbstractor::SpiritFeeded){
-			return $this->_abstractor->controller->xdo->uName().$filePath;
+			return md5($this->_abstractor->controller->xdo->uName().$filePath).'.sxdo';
 		}
 		/*} */
 		
@@ -50,13 +50,13 @@ class SpiritXDO extends AbstractXDO{
 	}
 	public static function unpack($spiritName, $controllerName=null, $instanceId=null){
 		$spiritAbstractor = $spiritName.'Abstractor';
-		$filePath = (
+		$filePath = md5(
 						($spiritAbstractor::sessioned() == SpiritAbstractor::Sessioned ? self::sessionId() : '').
 						($spiritAbstractor::feeder() == SpiritAbstractor::SelfFeeded ? '' : $controllerName).
 						$spiritName.
-						($spiritAbstractor::binding() == SpiritAbstractor::StaticBinding ? '' : $instanceId).
-						'.sxdo'
-				    );
+						($spiritAbstractor::binding() == SpiritAbstractor::StaticBinding ? '' : $instanceId)
+						
+				    ).'.sxdo';
 		$ret = new SpiritXDO();
 		$ret->load($filePath);
 		return $ret;

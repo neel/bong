@@ -9,6 +9,9 @@ abstract class BongAppController extends BongController{
 		$this->xdo = new ControllerXDO();
 		if($this->xdo->serialized())
 			$this->xdo->unserialize();
+		$controllerName = get_class($this);
+		$desc = new \ROM\BongXDODescriptor(\ROM\BongXDODescriptor::ControllerXDO, $controllerName, $this->xdo->sessionFilePath());
+		\ROM\BongCurrentUserData::instance()->addXDO($desc);
 		$this->spiritEngine = EngineFactory::produce("SpiritEngine", array(&$this));
 		$this->ctor();
 	}

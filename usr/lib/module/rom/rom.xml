@@ -14,5 +14,6 @@
 		<bong:include file="validation.php" />
 		<bong:include file="rom.php" />
 		<bong:include file="fsm.php" />
+		<bong:include file="user.php" />
 	</bong:includes>
 </bong:module>

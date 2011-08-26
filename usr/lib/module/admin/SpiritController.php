@@ -63,7 +63,7 @@ final class SpiritController extends Controller{
 		if(!file_exists($dirPath."/presentation")){
 			mkdir($dirPath."/presentation", 0777);
 		}
-		parent::generate();
+		parent::generate(false);
 	}
 	public function binding(){
 		return $this->_binding;

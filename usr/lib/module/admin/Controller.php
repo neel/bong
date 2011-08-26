@@ -63,7 +63,7 @@ abstract class Controller extends Struct{
 	public function source(){
 		return file_get_contents($this->_filePath);
 	}
-	public function generate(){
+	public function generate($genPresentation=true){
 		$methodStr = "";
 		foreach($this->_methods as $method){
 			$methodStr .= $method->generate(true);
@@ -81,10 +81,12 @@ $methodStr
 }
 ?>
 CLASSSTR;
-		$presentationDir = \Path::instance()->evaluate(':'.$this->project()->name().'.apps.view.+'.$this->name());
-		if(!is_dir($presentationDir)){
-			if(!@mkdir($presentationDir, 0777, true)){
-				return false;
+		if($$genPresentation){
+			$presentationDir = \Path::instance()->evaluate(':'.$this->project()->name().'.apps.view.+'.$this->name());
+			if(!is_dir($presentationDir)){
+				if(!@mkdir($presentationDir, 0777, true)){
+					return false;
+				}
 			}
 		}
 		$fp = @fopen($this->filePath(), 'w');

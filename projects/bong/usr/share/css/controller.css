@@ -163,9 +163,32 @@
 	font-weight: normal;
 	line-height: 12px;
 	font-family: 'Courier New';
+	display: block;
+}
+.bong-admin-component-session{
+	padding-left: 40px;
+	font-size: 11px;
+	font-weight: normal;
+	line-height: 12px;
+	font-family: 'Courier New';
+}
+.bong-admin-component-session:hover{
+	padding-left: 10px;
 }
 .bong-admin-component-xdo:hover{
 	font-weight: bold;
+	font-size: 12px;
+	background-color: #F2F6FC;
+	height: 15px;
+	border-top: 1px solid #D9E0EA;
+	border-bottom: 1px solid #D9E0EA;
+	border-left: 1px solid #D9E0EA;
+	-webkit-border-top-left-radius: 17px;
+	-webkit-border-bottom-left-radius: 20px;
+	-moz-border-radius-topleft: 17px;
+	-moz-border-radius-bottomleft: 20px;
+	border-top-left-radius: 17px;
+	border-bottom-left-radius: 20px;
 }
 .bong-admin-component-xdo-more:after{
 	content: "See More";

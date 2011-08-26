@@ -42,15 +42,26 @@ abstract class SpiritAbstractor extends BongController{
 			assert("/*Some Interface Not Implemented Properly Check Previous Errors*/");
 			return false;
 		}
+		
 		parent::__construct();
+		
 		$this->_engine = $engine;
 		$this->meta = new SpiritMeta($spiritName);
-		if(static::serializable() == SpiritAbstractor::SerializableXDO)
+		
+		if(static::serializable() == SpiritAbstractor::SerializableXDO){
 			$this->xdo = new SpiritXDO();
-		else
+		}else{
 			$this->xdo = new SpiritMemoryXDO();//TODO should be new MemoryXDO() Instead.
+		}
 		$this->xdo->setAbstractor($this);
 		$this->xdo->setSpirit($spiritName);
+		
+		if(static::serializable() == SpiritAbstractor::SerializableXDO){
+			$_spiritName = get_class($this);
+			$desc = new \ROM\BongXDODescriptor(\ROM\BongXDODescriptor::SpiritXDO, $_spiritName, $this->xdo->sessionFilePath());
+			\ROM\BongCurrentUserData::instance()->addXDO($desc);
+		}
+		
 		if(static::feeder() == SpiritAbstractor::ControllerFeeded){
 			$this->controller = $engine->currentController();
 		}
