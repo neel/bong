@@ -38,7 +38,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 				$method->invokeArgs($controller, $args);
 			}
 		}else{
-			assert('/*Exception Not Handled*/');
+			assert("/*Exception Not Handled Spirit Method $spiritName::$methodName not found*/");
 		}
 		return $controller;
 	}
@@ -80,8 +80,13 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 					$method->invoke($params);//TODO No Arguments ? Think Again
 				}catch(ReflectionException $ex){
 					//TODO Call the dafult method
+					assert("/*Cannot get method  $coordinatorClassName::$methodName*/");
 				}
+			}else{
+				assert("/*No Class  $coordinatorClassName found*/");
 			}
+		}else{
+			//Coordinator is Optional
 		}
 		//}
 		ob_start();
@@ -207,7 +212,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 		try{
 			$method = $reflection->getMethod($methodName);
 		}catch(ReflectionException $ex){
-			assert("/*Method $methodName for Found TODO throw Exception*/");
+			assert("/*Method `$methodName` for Found TODO throw Exception*/");
 		}
 		return $method ? $method : false;
 	}

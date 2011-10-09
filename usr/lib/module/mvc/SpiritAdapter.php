@@ -23,7 +23,7 @@ final class SpiritAdapter extends AbstractSpiritAdapter{
 	 */
 	public function call($methodName, $args=array()){
 		$this->spiritEngine->setActiveInstance($this->_activeInstanceId);
-		http::freeze();//a Spirit Cannot send any HTTP Header unless It is used as ResponseService
+		http::freeze();//a Spirit Cannot send any HTTP Header unless It is used as ResponseService. as the spirit output is embedded in the app output. so its the app that sends the header. not the spirit
 		$this->spiritEngine->run($this->spiritName, $methodName, $args);
 		http::release();
 		//Engine Automatically Clear's the Active Instance Id So no need to call clear Explecitely 

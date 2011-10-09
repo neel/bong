@@ -1,4 +1,11 @@
 <?php
+/**
+ * abstract perent class of all ContentEngines. Both AbstractMicroEngine and ContentEngine inherits it.
+ * Difference between AbstractMicroEngine and ContentEngine
+ * ContentEngine serves One Application Cycle e.g. a Controller.
+ * MicroEngine serves multiple application cycles in multipleshots e.g. Spirits
+ * @author neel
+ */
 abstract class AbstractContentEngine{
 	protected $navigation;
 	protected $projectName = null;
