@@ -5,7 +5,7 @@
 		<button class="bong-admin-project-cntrl-new">Add New
 			<script type="text/bongscript" event="click">
 					bong.href('<?php echo Resource::link() ?>/project/createProject/'+bong.byId('projectName').value+'/'+bong.byId('projectName').value).eval();
-				</script>
+			</script>
 		</button>
 	</div>
 </div>

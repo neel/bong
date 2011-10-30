@@ -143,6 +143,7 @@ class SourceController extends BongAppController{
 		$this->data->sourceRequested = false;
 		$this->data->file = $this->_backend->controllerByName($this->_controllerName)->filePath();
 		$this->data->filePath = $this->data->file;
+		$this->data->saveSuccess = false;
 		$method = $this->_backend->controllerByName($this->_controllerName)->methodByName($methodName);
 		if($method){
 			$this->data->exists = true;
@@ -161,14 +162,19 @@ class SourceController extends BongAppController{
 		$this->data->exists = false;
 		$this->data->sourceRequested = false;
 		$this->data->file = $this->_backend->spiritByName($this->_xdo->spiritName)->filePath();
+		$this->data->filePath = $this->data->file;
+		$this->data->saveSuccess = false;
 		$method = $this->_backend->spiritByName($this->_xdo->spiritName)->methodByName($methodName);
 		if($method){
 			$this->data->exists = true;
 			$this->data->source = $method->code();
 			$this->data->titleText = $this->_xdo->spiritName.'::'.$methodName;
-		}		
+		}
 		if($this->data->exists && isset($_GET['source'])){
 			$this->data->sourceRequested = true;
+		}else if(isset($_POST['contents'])){
+			$this->data->saveSuccess = false;
+			$this->data->saveSuccess = $method->setCode($_POST['contents']);
 		}
 	}
 	public function spaceToTab($text){

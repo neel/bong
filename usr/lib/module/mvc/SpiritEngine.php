@@ -110,6 +110,9 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 			}));
 			$parser->setNsFocus('bong');
 			$parser->setText($this->viewContents);
+			$this->spiritInfo = new stdClass;
+			$this->spiritInfo->name = $spiritName;
+			$this->spiritInfo->method = $methodName;
 			$this->viewContents = $parser->parse();
 		}
 		if(ControllerTray::instance()->renderLayout){
@@ -235,7 +238,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 			}
 		}
 		//TODO throw Exception as no View found Existing
-		assert('/*Throw SpiritViewNotFound Exception*/');
+		assert('/*Throw SpiritViewNotFound Exception for '.$spiritName.'::'.$methodName.' view file '.$views[0].'*/');
 	}
 	/**
 	 * return's the Path to the Controller
@@ -248,7 +251,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 			return $controller;
 		}
 		//TODO throw Exception as Controller not Existing
-		assert('/*Throw SpiritAbstractorNotFound Exception*/');
+		assert('/*Throw SpiritAbstractorNotFound Exception on path '.$controller.' */');
 	}
 	private function layout($spiritName, $methodName){
 		$layouts = array(
@@ -263,6 +266,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 		}
 		//TODO throw Exception as no Layout found Existing
 		assert('/*Throw SpiritLayoutNotFound Exception*/');
+		print_r($layouts);
 	}
 	private function coordinator($spiritName){
 		return Path::instance()->currentProject("*$spiritName.@coordinator.php");

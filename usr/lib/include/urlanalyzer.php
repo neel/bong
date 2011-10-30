@@ -94,6 +94,7 @@ class URLAnalyzer extends Singleton implements Decider{
 			'service.spirit' => Conf::instance()->evaluate('urlpatterns.service.spirit')
 		);
 		$type = 'mvc';
+		//var_dump($urlExtracted);
 		foreach($patterns as $key => $pattern){
 			//echo ">> {$urlExtracted} => $pattern\n";
 			assert('!empty($pattern)'."/*$key => $pattern*/");
@@ -103,6 +104,7 @@ class URLAnalyzer extends Singleton implements Decider{
 				break;
 			}
 		}
+		
 		MemPool::instance()->set("bong.router.pattern", $type);
 		/* AbstractContentRouter*  */ $router = null;
 		switch($type){
