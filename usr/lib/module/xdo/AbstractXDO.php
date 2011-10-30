@@ -30,7 +30,7 @@ abstract class AbstractXDO{
 	public function serialize(){
 		//echo ">> ".$this->__sessionFilePath()."\n";
 		//debug_print_backtrace();
-		$this->toXML()->save($this->__sessionFilePath());
+		return $this->toXML()->save($this->__sessionFilePath());
 	}
 	
 	/**

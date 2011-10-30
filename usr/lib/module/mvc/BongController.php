@@ -13,7 +13,7 @@ abstract class BongController{
 		//echo get_class($this->xdo)."\n";
 		//if(get_class($this->xdo) == 'SpiritXDO')
 		//	var_dump($this->xdo->spiritName());
-		$this->xdo->serialize();
+		return $this->xdo->serialize();
 	}
 	public function cached(){
 		return $this->xdo->serialized();
