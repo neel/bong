@@ -321,7 +321,7 @@ var bong = {
 			}
 			if(conf.async == null)conf.async=true;
 			if(conf.method == null)conf.method='GET';
-			if(conf.format == null)conf.format='text';
+			//if(conf.format == null)conf.format='text';
 			if(conf.error == null)conf.error=this._ajax._error;
 			if(conf.loading == null)conf.loading=this._ajax._loading;
 			if(!conf.params)conf.params = '';
@@ -347,16 +347,35 @@ var bong = {
 				if(request.readyState == 4){
 					if(request.status == 200){
 						var responseMimeType = request.getResponseHeader('Content-Type');
+						
 						var overridenMimeType = conf.format ? bong.core._ajax._dict(conf.format) : null;
-
-						if(overridenMimeType)
+						
+						if(overridenMimeType){
 							request.overrideMimeType(overridenMimeType);
+							responseMimeType = overridenMimeType;//now it truely overrides the mime Type and parses it as json or xml
+						}
+						
 						var response = null;
 						if(responseMimeType.indexOf('xml') >= 0){
 							response = request.responseXML;
 						}else if(responseMimeType.indexOf('json') >= 0){
 							response = request.responseText.replace(/[\n\r]/g,"");
-							response = eval('('+response+')');
+							try{
+								response = eval('('+response+')');
+							}catch(e){
+								/*bong.dialog({
+									title: "bong.core.ajax::parse:JSON",
+									content: "Failed to Parse The Following content from `"+url+"` as JSON:\n<br />"+response,
+									buttons: [{
+										label: 'Okay',
+										isDefault: true,
+										action: function(){
+											bong.activeDialog().hide();
+										}
+									}]
+								});*/
+								alert("Failed to Parse Response `"+response+"` as Json");
+							}
 						}else{
 							response = request.responseText;
 						}
