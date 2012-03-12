@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bong:module name="validation" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
+<bong:module name="rom" xmlns:bong="http://lab.zigmoyd.net/xmlns/bong">
 	<bong:meta>
 		<bong:info name="author" value="Neel Basu" />
 		<bong:info name="version" value="0.0.0.1" />

@@ -238,6 +238,21 @@ var bong = {
 			isString: function(str){
 				return bong.core.util.type(str) == 'string';
 			},
+			size: function(nBytes){
+				if(nBytes < 1024){
+					return nBytes+"Bytes";
+				}
+				var rem = nBytes / 1024;
+				var i = 1;
+				while(rem > 1024){
+					rem /= 1024;
+					++i;
+				}
+				var n = Math.round(rem*10)/10;
+				var szStr = n+" ";
+				var szUnit = ['B', 'KB', 'MB', 'GB', 'TB'];
+				return szStr+szUnit[i];
+			},
 			type: function(o){
 				if(!o.constructor)
 					return 'null';
@@ -338,16 +353,29 @@ var bong = {
 			request.open(conf.method.toUpperCase(), url, conf.async);
 
 			if(conf.method.toLowerCase()=="post"){
-				request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				request.setRequestHeader("Content-length", conf.params.length);
-				request.setRequestHeader("Connection", "close");
+				if(!conf.params || !conf.params instanceof FormData)
+					request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				//request.setRequestHeader("Content-length", conf.params.length);
+				//request.setRequestHeader("Connection", "close");
+			}
+			if(conf.uploadProgress){
+				(request.upload || request).onprogress = function(e){
+					return conf.progress ? conf.progress(e) : null;
+				};
+			}else if(conf.progress){
+				request.onprogress = function(e){
+					return conf.progress ? conf.progress(e) : null;
+				};
 			}
 			
 			request.onreadystatechange = function(){
 				if(request.readyState == 4){
 					if(request.status == 200){
 						var responseMimeType = request.getResponseHeader('Content-Type');
-						
+						if(!responseMimeType){
+							alert(responseMimeType);
+							console.log("responseMimeType Could Not be Parsed");
+						}
 						var overridenMimeType = conf.format ? bong.core._ajax._dict(conf.format) : null;
 						
 						if(overridenMimeType){
@@ -390,8 +418,21 @@ var bong = {
 					}
 				}
 			}
-
+					
 			request.send(conf.params);
+			if(conf.start)
+				conf.start();
+		}
+	},
+	instantiate: function(conf){
+		conf.handle = {};
+		var lambda = function(templateText){
+			bong.domify(templateText, conf.handle);
+		}
+		if(conf.templateUrl){
+			bong.href(conf.url, conf).async(lambda);
+		}else{
+			lambda(conf.template);
 		}
 	},
 	instanciate: function(conf){
@@ -566,6 +607,68 @@ var bong = {
 				};
 			}
 		}
+	},
+	queue: function(){
+		if(!this.setup){
+			poolSize = 5;
+			jobs = [];
+			pool = [];// pool containing the active jobs
+			_activeCount = 0;// Number of jobs active
+			_vacants = [];// Keep a list of Vacant Indexes
+			if(pool.length == 0){
+				for(var i=0;i<poolSize;i++){
+					_vacants.push(i);
+				}
+			}
+			this.setup = true;
+		}
+		process = function(href, ftor){
+			var job = {
+				_vacancy: null,
+				_init: function(vacancy){
+					_vacancy = vacancy;
+				},
+				run: function(){
+					href.async(function(data){
+							ftor(data);
+							clear(this._vacancy);
+					});
+				}
+			};
+			return job;
+		}
+		execute = function(job){
+			console.log("_activeCount: "+_activeCount, " poolSize: "+poolSize);
+			if(_activeCount < poolSize){
+				var vacancy = _vacants.shift();
+				_activeCount++;
+				console.log("Increasing active count: "+_activeCount);
+				pool[vacancy] = job;
+				//This vacancy must be accessible to job.run();
+				job._init(vacancy);
+				job.run();
+			}else{
+				jobs.push(job);
+			}
+		};
+		clear = function(vacancy){
+			pool[vacancy] = 0x0;
+			_vacants.push(vacancy);
+			
+			--_activeCount;
+			if(jobs.length > 0)
+				execute(jobs.shift());
+		}
+		return {
+			href: function(url, conf){
+				href = bong.href(url, conf);
+				return {
+					async: function(ftor, config){
+						execute(process(href, ftor));
+					}
+				}
+			}
+		};
 	}
 };
 function array_shift (inputArr) {

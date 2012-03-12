@@ -11,6 +11,4 @@
 			<bong:ip address="192.168.0.*"/>
 		</bong:filter>
 	</bong:project>
-	<bong:project name="mkt" location="market" default="false"/>
-	<bong:project name="hallo" location="hallo" default="false"/>
-<bong:project name="ganashakti" location="ganashakti" default="false"/></bong:reposetory>
+<bong:project name="penspeare" location="penspeare" default="false"/><bong:project name="wee" location="wee" default="false"/></bong:reposetory>

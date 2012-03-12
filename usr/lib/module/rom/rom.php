@@ -17,24 +17,24 @@ class Request{
 	}
 	private function _items(){
 		switch($this->_method){
-			case GET:
+			case Request::GET:
 				return $_GET;
 				break;
-			case POST:
+			case Request::POST:
 				return $_POST;
 				break;
-			case UPLOAD:
+			case Request::UPLOAD:
 				return $_FILES;
-			case COOKIE:
+			case Request::COOKIE:
 				return $_COOKIES;
 				break;
-			case SESION:
+			case Request::SESION:
 				return $_SESSION;
 				break;
 		}
 	}
 	public function items(){
-		return $this->items();
+		return $this->_items();
 	}
 	public function exists($name){
 		return array_key_exists($name, $this->items());
@@ -355,11 +355,12 @@ class Rom extends \Singleton{
 	private $_server = null;
 	
 	public function __construct(){
-		$this->get = new Request(Reuquest::GET);
-		$this->post = new Request(Reuquest::POST);
-		$this->upload = new Request(Reuquest::UPLOAD);
-		$this->cookie = new Request(Reuquest::COOKIE);
-		$this->session = new Request(Reuquest::SESSION);
+		
+		$this->get = new Request(Request::GET);		
+		$this->post = new Request(Request::POST);
+		$this->upload = new Request(Request::UPLOAD);
+		$this->cookie = new Request(Request::COOKIE);
+		$this->session = new Request(Request::SESSION);
 		$method = $_SERVER["REQUEST_METHOD"];
 		switch($method){
 			case 'GET':
