@@ -46,6 +46,8 @@ class RuleSet{
 	}
 }
 class Field{
+	private $_form = null;
+
 	private $_required = false;
 	/**
 	 * Array of RuleSet applied to the form field
@@ -64,6 +66,9 @@ class Field{
 		$this->_name = $name;
 		$this->_value = $value;
 	}
+	public function setForm($form){
+		$this->_form = $form;
+	}
 	public function addRuleSet($ruleSet){
 		$this->_rules[] = $ruleSet;
 	}
@@ -75,7 +80,7 @@ class Field{
 	}
 	public function value(){
 		if($this->_value)
-			return $this->value;
+			return $this->_value;
 		else
 			return ($this->_default ? $this->_default : null);
 	}
@@ -86,7 +91,7 @@ class Field{
 		return $this->_required;
 	}
 	public function name(){
-		$this->_name;
+		return $this->_name;
 	}
 	/**
 	 * returns a FieldValidation report regarding the field
@@ -97,7 +102,8 @@ class Field{
 		foreach($this->_rules as $i => $rule){
 			$report->name = $this->_name;
 			$report->value = $this->_value;
-			$status = Validation::validate($this->_value, $rule->rule(), $rule->arg());
+			$status = Validation::validate($this->_form, $this->_value, $rule->rule(), $rule->arg());
+			//echo '<pre>'.$this->_name.' > '.$this->_value.' > '.$i.'/'.count($this->_rules).' : '.$rule->rule()." ".$status."\n</pre>";
 			if(!$status){
 				$report->isValid = false;
 				$report->error = $rule->msg();
@@ -127,10 +133,24 @@ class Form{
 	 * @param Field $field
 	 */
 	public function addField($field){
+		$field->setForm($this);
 		$this->_fields[] = $field;
 	}
 	public function fields(){
 		return $this->_fields;
+	}
+	public function field($name){
+		/*
+		if(isset($this->_fields[$name])){
+			return $this->_fields[$name];
+		}
+		*/
+		foreach ($this->_fields as $i => $f) {
+			if($f->name() == $name){
+				return $f;
+			}
+		}
+		return null;
 	}
 	/**
 	 * validates all Filds and returns aForm Validation Report
@@ -170,6 +190,9 @@ class FormValidation{
 			}
 		}
 		return $ret;
+	}
+	public function isValid(){
+		return count($this->inValids()) == 0;
 	}
 	public function firstInvalid(){
 		foreach($this->_fieldValidations as $f){
@@ -214,14 +237,17 @@ class FormValidation{
 	}
 }
 class Validation{
-	const String = 'Type::String';
-	const Int = 'Type::Int';
-	const Float = 'Type::Float';
-	const Real = 'Type::Real';
+	const String   = 'Type::String';
+	const Int      = 'Type::Int';
+	const Float    = 'Type::Float';
+	const Real     = 'Type::Real';
+	const Presence = 'Type::Presence';
 	
-	const Length = 'String::Length';
+	const Length    = 'String::Length';
 	const MaxLength = 'String::Max';
 	const MinLength = 'String::Min';
+	const Repeat    = 'String::Repeat';//Retype Password or re-enter Email Field
+	const Equals    = 'String::Equals';
 	
 	const Max = 'Real::Max';
 	const Min = 'Real::Min';
@@ -234,7 +260,8 @@ class Validation{
 	
 	const Callback = 'Callback';
 	
-	public static function validate($value, $rule, $arg=null){
+	public static function validate($form, $value, $rule, $arg=null){
+		//echo $rule.': '.$value."\n";
 		switch($rule){
 			case Validation::String:
 				return preg_match('~\D~', $value) !== false;
@@ -257,26 +284,35 @@ class Validation{
 			case Validation::MinLength:
 				return strlen($value) >= $arg;
 				break;
+			case Validation::Presence:
+				return self::validate($form, $value, self::MinLength, 1);
+				break;
 			case Validation::Max:
-				return self::validate($value, self::Int) && $value <= $arg;
+				return self::validate($form, $value, self::Int) && $value <= $arg;
 				break;
 			case Validation::Min:
-				return self::validate($value, self::Int) && $value >= $arg;
+				return self::validate($form, $value, self::Int) && $value >= $arg;
 				break;
 			case Validation::Regex:
 				return preg_match($arg, $value);
 				break;
 			case Validation::Url:
-				return preg_match('~(?:\w+)\:\/\/[\w\d\_\-]+(?:\.[\w\d\_\-]+)*~');
+				return preg_match('~(?:\w+)\:\/\/[\w\d\_\-]+(?:\.[\w\d\_\-]+)*~', $value);
 				break;
 			case Validation::Email:
-				return preg_match('~[\w\d\_\-]+\@[\w\d\_\-]+(?:\.[\w\d\_\-]+)~');
+				return preg_match('~[\w\d\_\-]+\@[\w\d\_\-]+(?:\.[\w\d\_\-]+)~', $value);
 				break;
 			case Validation::Ip:
-				return preg_match('~\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}~');
+				return preg_match('~\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}~', $value);
+				break;
+			case Validation::Repeat:
+				return $form->field($arg) && $form->field($arg)->value() == $value;
+				break;
+			case Validation::Equals:
+				return $value == $arg;
 				break;
 			case Validation::Callback:
-				
+				return $arg($value);
 				break;
 			default:
 				throw new \RuntimeException("Invalid Validation RuleName ".$rule);
