@@ -67,42 +67,8 @@ class OpenIdClient{
 		$params = $this->merge_params($params, $params_additional);
 
 		$url = $this->_url.'?'.http_build_query($params);
-		/*
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_VERBOSE, 1); 
-		curl_setopt($curl, CURLOPT_HEADER, 1);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		$res_buff = curl_exec($curl);
-		curl_close($curl);
-
-		list($headers, $body) = explode("\r\n\r\n", $res_buff, 2);
-		$headers = $this->disect($headers);
-		print_r($headers);
-		return trim($headers['Location']);
-		*/
 		return $url;
 	}
-	/*
-	public static function authenticate($request){
-		$params = array();
-		$url = $request['openid_op_endpoint'];
-		foreach($request as $key => $value){
-			$params[str_replace('openid_', 'openid.', $key)] = $value;
-		}
-		$params['openid.mode'] = 'check_authentication';
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_VERBOSE, 1); 
-		curl_setopt($curl, CURLOPT_HEADER, 1);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
-		print_r($params);
-		$res_buff = curl_exec($curl);
-		print_r(self::disect($res_buff));
-	}
-	*/
 	public static function authenticate($request){
 		$params = array(
 			'openid.ns' => $request['openid_ns'],
