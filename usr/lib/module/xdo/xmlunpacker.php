@@ -159,7 +159,6 @@ class XMLUnPacker{
 			case $nodeType->isMeta():{
 				
 			}break;
-			default:
 				exit('Unexpected '.__FILE__.':'.__LINE__);
 		}
 	}

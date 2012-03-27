@@ -11,6 +11,7 @@
 
 	</bong:dependencies>
 	<bong:includes>
+		<bong:include file="openid.constants.php" />
 		<bong:include file="openid.php" />
 		<bong:include file="openid.ax.php" />
 		<bong:include file="openid.google.php" />

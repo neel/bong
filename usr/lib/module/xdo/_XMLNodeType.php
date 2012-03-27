@@ -6,7 +6,7 @@ class _XMLType{
 		$this->_type = $typeName;
 	}
 	public function isScaler(){
-		return in_array($this->_type, array('integer', 'string', 'null', 'boolean'));
+		return in_array($this->_type, array('integer', 'string', 'null', 'boolean', 'double'));
 	}
 	public function type(){
 		return $this->_type;

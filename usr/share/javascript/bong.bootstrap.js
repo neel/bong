@@ -353,7 +353,7 @@ var bong = {
 			request.open(conf.method.toUpperCase(), url, conf.async);
 
 			if(conf.method.toLowerCase()=="post"){
-				if(!conf.params || !conf.params instanceof FormData)
+				//if(!conf.params || !conf.params instanceof FormData)
 					request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				//request.setRequestHeader("Content-length", conf.params.length);
 				//request.setRequestHeader("Connection", "close");
@@ -418,7 +418,7 @@ var bong = {
 					}
 				}
 			}
-					
+			//alert(conf.params);
 			request.send(conf.params);
 			if(conf.start)
 				conf.start();

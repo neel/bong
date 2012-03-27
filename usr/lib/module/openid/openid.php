@@ -8,7 +8,7 @@ class OpenIdClient{
 		$this->_url = $url;
 		$this->_return = $return_url;
 	}
-	private function disect($response){
+	private static function disect($response){
 		$body = explode("\n", trim($response));
 		foreach($body as $i => $line){
 			@list($key, $val) = explode(':', $line, 2);
@@ -39,7 +39,11 @@ class OpenIdClient{
 		curl_setopt($curl, CURLOPT_HEADER, 1);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$res_buff = curl_exec($curl);
-		list($headers, $body) = explode("\r\n\r\n", $res_buff, 2);
+		$parts = explode("\r\n\r\n", $res_buff, 2);
+		if(count($parts) < 2){
+			return null;
+		}
+		list($headers, $body) = $parts;
 		curl_close($curl);
 		$body = $this->disect($body);
 		if(isset($body['assoc_handle'])){
@@ -52,6 +56,7 @@ class OpenIdClient{
 		$params['openid.ns']                = OpenIDConstants::NS;
 		$params['openid.claimed_id']        = OpenIDConstants::CLAIMED_ID;
 		$params['openid.identity']          = OpenIDConstants::IDENTITY;
+		$params['openid.assoc_handle']      = $assoc_handle;
 
 		$params['openid.mode']              = OpenIDConstants::MODE_CHECKID_SETUP;
 		$params['openid.return_to']         = $this->_return;
@@ -62,6 +67,7 @@ class OpenIdClient{
 		$params = $this->merge_params($params, $params_additional);
 
 		$url = $this->_url.'?'.http_build_query($params);
+		/*
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_VERBOSE, 1); 
@@ -72,12 +78,44 @@ class OpenIdClient{
 
 		list($headers, $body) = explode("\r\n\r\n", $res_buff, 2);
 		$headers = $this->disect($headers);
+		print_r($headers);
 		return trim($headers['Location']);
+		*/
+		return $url;
 	}
+	/*
 	public static function authenticate($request){
-		$params = $request;
-		$params['openid_mode'] = 'check_authentication';
-		//$params['openid.mode'] = 'check_authentication';
+		$params = array();
+		$url = $request['openid_op_endpoint'];
+		foreach($request as $key => $value){
+			$params[str_replace('openid_', 'openid.', $key)] = $value;
+		}
+		$params['openid.mode'] = 'check_authentication';
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_VERBOSE, 1); 
+		curl_setopt($curl, CURLOPT_HEADER, 1);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+		print_r($params);
+		$res_buff = curl_exec($curl);
+		print_r(self::disect($res_buff));
+	}
+	*/
+	public static function authenticate($request){
+		$params = array(
+			'openid.ns' => $request['openid_ns'],
+			'openid.signed' => $request['openid_signed'],
+			'openid.sig'    => $request['openid_sig'],
+			'openid.assoc_handle' => $request['openid_assoc_handle'],
+			'openid.mode'   => 'check_authentication',
+			'openid.claimed_id' => $request['openid_claimed_id']
+		);
+		$keys = explode(',', $request['openid_signed']);
+		foreach($keys as $key){
+			$params['openid.'.$key] = $request['openid_'.str_replace('.', '_', $key)];
+		}
 		$url = $request['openid_op_endpoint'];
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -88,7 +126,18 @@ class OpenIdClient{
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 		$res_buff = curl_exec($curl);
 		curl_close($curl);
-		echo $res_buff;
+		$parts = explode("\r\n\r\n", $res_buff, 2);
+		if(count($parts) < 2){
+			return null;
+		}
+		list($headers, $body) = $parts;
+		$headers = self::disect($headers);
+		$body = self::disect($body);
+		if(!isset($headers['HTTP/1.1 200 OK']))
+			return null;
+		if(!isset($body['is_valid']))
+			return null;
+		return $body['is_valid'];
 	}
 }
 ?>

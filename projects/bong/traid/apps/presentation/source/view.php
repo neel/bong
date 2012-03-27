@@ -24,7 +24,7 @@
 				save: function(data){
 					bong.href('<?php echo Resource::self() ?>', {
 						method: 'post',
-						params: '&contents='+escape(data)
+						params: 'contents='+escape(data)
 					}).eval();
 				},
 				<?php if(isset($data->phpDoc) && $data->phpDoc): ?>
