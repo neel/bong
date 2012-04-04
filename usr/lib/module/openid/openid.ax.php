@@ -13,5 +13,15 @@ class OpenIdAXClient extends OpenIDClient{
 		$this->merge_params($params, $params_additional);
 		return parent::setup($assoc_handle, $params);
 	}
+	public static function extract($request){
+		$res = array();
+		$mappings = static::mapping();
+		foreach($mappings as $key => $value){
+			if(isset($request[$key])){
+				$res[$value] = $request[$key];
+			}
+		}
+		return $res;
+	}
 }
 ?>

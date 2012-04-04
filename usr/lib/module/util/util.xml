@@ -12,5 +12,7 @@
 	</bong:dependencies>
 	<bong:includes>
 		<bong:include file="dump.lib.php" />
+		<bong:include file="link.php" />
+		<bong:include file="secure.php" />
 	</bong:includes>
 </bong:module>

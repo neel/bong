@@ -59,6 +59,7 @@
 			<bong:path name="scrap" location="scrap" />
 			<bong:path name="xslt" location="xslt" />
 		</bong:path>
+		<bong:path name="keys" location="$projectDir/var/keys" />
 		<bong:path name="log" location="$projectDir/var/log" />
 		<bong:path name="run" location="$projectDir/var/run" />
 		<bong:path name="backend" location="$projectDir/var/backend" />

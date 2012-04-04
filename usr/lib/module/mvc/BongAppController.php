@@ -6,9 +6,17 @@ abstract class BongAppController extends BongController{
 	public function __construct(){
 		parent::__construct();
 		$this->meta = new ControllerMeta();
+		/*{ TODO Having an XDO should be optional not all app asks for an XDO*/
 		$this->xdo = new ControllerXDO();
 		if($this->xdo->serialized())
 			$this->xdo->unserialize();
+		/*}*/
+		/*{ TODO Save applies here too. not all app need a session Storage some wants to work real Stateless too*/
+		$this->session = new SessionXDO();
+		if($this->session->serialized())
+			$this->session->unserialize();
+		/**/
+			
 		$controllerName = get_class($this);
 		$desc = new \ROM\BongXDODescriptor(\ROM\BongXDODescriptor::ControllerXDO, $controllerName, $this->xdo->sessionFilePath());
 		\ROM\BongCurrentUserData::instance()->addXDO($desc);

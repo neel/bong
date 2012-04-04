@@ -3,9 +3,18 @@ class HTTPHeaders{
 	private static $_trait = null;
 	private static $_headers = array();
 	private static $_freezed = false;
+	private static $_status = null;
+	private static $_msg = '';
 	
 	public static function init(){
 		self::$_trait = new HTTPHeaderTrait();
+	}
+	public static function setResponseCode($code, $msg = ''){
+		self::$_status = $code;
+		self::$_msg = $msg;
+	}
+	public static function responseCode(){
+		return $this->_status;
 	}
 	public static function addHeader($key, $value){
 		if(self::freezed())
@@ -21,6 +30,9 @@ class HTTPHeaders{
 		return null;
 	}
 	public static function send(){
+		if(self::$_status){
+			header(self::$_status.' '.self::$_msg);
+		}
 		foreach(self::$_headers as &$header){
 			header($header->toString());
 		}

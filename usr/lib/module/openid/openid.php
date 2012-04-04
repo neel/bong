@@ -21,7 +21,7 @@ class OpenIdClient{
 		foreach($additional as $key => $value)
 			$params[$key] = $value;
 		return $params;
-	}
+	}     
 	public function associate($params_additional = array()){
 		$params = array();
 		$params['openid.realm']          = OpenIdClient::CONSUMER_URL;
@@ -70,18 +70,16 @@ class OpenIdClient{
 		return $url;
 	}
 	public static function authenticate($request){
-		$params = array(
-			'openid.ns' => $request['openid_ns'],
-			'openid.signed' => $request['openid_signed'],
-			'openid.sig'    => $request['openid_sig'],
-			'openid.assoc_handle' => $request['openid_assoc_handle'],
-			'openid.mode'   => 'check_authentication',
-			'openid.claimed_id' => $request['openid_claimed_id']
-		);
 		$keys = explode(',', $request['openid_signed']);
 		foreach($keys as $key){
 			$params['openid.'.$key] = $request['openid_'.str_replace('.', '_', $key)];
 		}
+		$params['openid.ns']           = $request['openid_ns'];
+		$params['openid.signed']       = $request['openid_signed'];
+		$params['openid.sig']          = $request['openid_sig'];
+		$params['openid.assoc_handle'] = $request['openid_assoc_handle'];
+		$params['openid.mode']         = 'check_authentication';
+		$params['openid.claimed_id']   = $request['openid_claimed_id'];
 		$url = $request['openid_op_endpoint'];
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -92,17 +90,16 @@ class OpenIdClient{
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
 		$res_buff = curl_exec($curl);
 		curl_close($curl);
-		$parts = explode("\r\n\r\n", $res_buff, 2);
-		if(count($parts) < 2){
-			return null;
+		list($headers, $body) = explode("\r\n\r\n", $res_buff, 2);
+		while(strpos($headers,"100 Continue")!==false){
+			list($headers, $body) = explode("\r\n\r\n", $body , 2);
 		}
-		list($headers, $body) = $parts;
 		$headers = self::disect($headers);
 		$body = self::disect($body);
 		if(!isset($headers['HTTP/1.1 200 OK']))
-			return null;
+			return -2;
 		if(!isset($body['is_valid']))
-			return null;
+			return 0;
 		return $body['is_valid'];
 	}
 }

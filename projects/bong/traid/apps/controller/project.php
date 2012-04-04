@@ -7,6 +7,7 @@ class ProjectController extends BongAppController{
 		$this->jquery();
 	}
 	public function ls(){
+		/*
 		Runtime::loadModule('rom');
 		$items = array(
 			'name' => '',
@@ -15,6 +16,7 @@ class ProjectController extends BongAppController{
 		$form = Validation\Validation::parse('vld', $items);
 		$this->data->form = $form;
 		$this->data->report = $form->validate();
+		*/
 		$this->data->fsm = \FSM\Engine::parse('site');
 	}
 	public function createProject($projectName, $projectDir){

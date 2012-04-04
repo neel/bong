@@ -64,7 +64,8 @@ abstract class AbstractXDO{
 	 * TODO Not Implemented
 	 */
 	public function age(){
-		
+		$currenttime = filemtime($this->__sessionFilePath());
+		return time()-$currenttime;
 	}
 	
 	/**

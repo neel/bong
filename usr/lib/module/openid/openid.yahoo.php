@@ -11,5 +11,15 @@ class YahooOpenIdClient extends OpenIdAXClient{
 		$this->merge_params($params, $params_additional);
 		return parent::setup($assoc_handle, $params);
 	}
+	protected static function mapping(){
+		return array(
+			'openid_ax_value_firstname' => 'firstname',
+			'openid_ax_value_lastname'  => 'lastname',
+			'openid_ax_value_email'     => 'email',
+			'openid_ax_value_language'  => 'language',
+			'openid_ax_value_country'   => 'country',
+			'openid_ax_value_gender'    => 'gender'
+		);
+	}
 }
 ?>

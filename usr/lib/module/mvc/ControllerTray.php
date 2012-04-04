@@ -14,9 +14,11 @@ final class ControllerTray extends AbstractDataTray {
 	 * @var string
 	 */
 	public $responceType = null;
+	public $responseType = 'scrap/plain';
 	public $contentType = null;
 	public $xsltView = false;
 	public $renderLayout = true;
+	public $renderView = true;
 	public $trim = false;
 	public $stripWhiteSpaces = true;
 	/**

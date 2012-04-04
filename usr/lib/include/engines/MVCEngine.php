@@ -11,6 +11,8 @@ class MVCEngine extends ContentEngine{
 	
 	private $_arrangedParams = null;
 	
+	//private $_methodReturn = null;
+		
 	protected function validate(){
 		return (
 			$this->projectName && 
@@ -39,14 +41,17 @@ class MVCEngine extends ContentEngine{
 				if(count($this->navigation->args) < $methodReflection->getNumberOfRequiredParameters()){
 					throw new ArgumentNotGivenException($this->navigation->methodName, $this->navigation->controllerName, $this->projectName);
 				}else{
-					$methodReflection->invokeArgs($controller, $this->navigation->args);
+					$this->_methodReturn = $methodReflection->invokeArgs($controller, $this->navigation->args);
 					$this->_actionParams = $controller->params();
 					$controller->flushParams();
 				}
 			}
 		}
 		$controller->setParams($this->_arrangedParams);
-		$this->storeXDO($controller->xdo);
+		/*This check will be required in future. cause In future it will be possible to have a controler with no XDO attached to it*/
+		if($controller->xdo){
+			$this->storeXDO($controller->xdo);
+		}
 		$controller->serialize();
 		return $controller;	
 	}
@@ -97,35 +102,44 @@ class MVCEngine extends ContentEngine{
 		$controller = $this->executeLogic();
 		//$this->storeXDO($controller->xdo);
 		//{ Make Variables Accessible to View
-		$data = $controller->data;
-		$xdo = $controller->xdo;
-		$meta = $controller->meta;
+		$data        = $controller->data;
+		if(isset($controller->xdo))
+			$xdo     = $controller->xdo;
+		if(isset($controller->session))
+			$session = $controller->session;
+		$meta        = $controller->meta;
 		//}
-		$__viewName = $this->view();
-		ob_start();
-		$scope = function() use($__viewName, $controller, $data, $xdo, $meta){
-			require($__viewName);
-		};
-		$scope();
-		$this->viewContents = ob_get_contents();
-		ob_end_clean();
-		if(ControllerTray::instance()->bongParsing){
-			$parser = new \SuSAX\Parser(new BongParser(function($spiritName, $methodName, $arguments, $tagName, $instanceId=null) use($controller){
-				switch($tagName){
-					case 'spirit':
-						return !$instanceId ? $controller->spirit($spiritName)->call($methodName, $arguments) : $controller->spirit($spiritName)->instance($instanceId)->call($methodName, $arguments);
-					break;
-				}
-			}));
-			$parser->setNsFocus('bong');
-			$parser->setText($this->viewContents);
-			$this->viewContents = $parser->parse();
+		//{ Load The View
+		if(ControllerTray::instance()->renderView){
+			if(isset($this->_methodReturn) && is_int($this->_methodReturn) && $this->_methodReturn == -1){
+				return;
+			}
+			$__viewName = $this->view();
+			ob_start();
+			$scope = function() use($__viewName, $controller, $data, $session, $xdo, $meta){
+				require($__viewName);
+			};
+			$scope();
+			$this->viewContents = ob_get_contents();
+			ob_end_clean();
+			if(ControllerTray::instance()->bongParsing){
+				$parser = new \SuSAX\Parser(new BongParser(function($spiritName, $methodName, $arguments, $tagName, $instanceId=null) use($controller){
+					switch($tagName){
+						case 'spirit':
+							return !$instanceId ? $controller->spirit($spiritName)->call($methodName, $arguments) : $controller->spirit($spiritName)->instance($instanceId)->call($methodName, $arguments);
+						break;
+					}
+				}));
+				$parser->setNsFocus('bong');
+				$parser->setText($this->viewContents);
+				$this->viewContents = $parser->parse();
+			}
+			if($this->_systemView){
+				$controller->dumpStrap();
+			}
 		}
-		if($this->_systemView){
-			$controller->dumpStrap();
-		}
-		
-		if(ControllerTray::instance()->renderLayout){
+		//}		
+		if(ControllerTray::instance()->renderView && ControllerTray::instance()->renderLayout){/// < Layout cannot be rendered If no View is rendered
 			$this->mergeParams();
 			$params = $this->_arrangedParams;
 			ob_start();
@@ -133,7 +147,25 @@ class MVCEngine extends ContentEngine{
 			$this->responseBuffer = ob_get_contents();
 			ob_end_clean();
 		}else{
-			$this->responseBuffer = ControllerTray::instance()->trim ? trim($this->viewContents) : $this->viewContents;
+			if(ControllerTray::instance()->renderView){
+				$this->responseBuffer = ControllerTray::instance()->trim ? trim($this->viewContents) : $this->viewContents;
+			}else{
+				if(isset($this->_methodReturn)){
+					switch(ControllerTray::instance()->responseType){
+						case 'scrap/xml':
+							$packer = new XMLPacker($this->_methodReturn);
+							$this->responseBuffer = $packer->toXML()->saveXML();
+						break;
+						case 'scrap/json':
+							$this->responseBuffer = json_encode($this->_methodReturn);
+						break;
+						case 'scrap/plain':
+						default:
+							$this->responseBuffer = $this->_methodReturn;
+						
+					}
+				}
+			}
 		}
 		if(ControllerTray::instance()->xsltView){
 			$this->processXSLView($controller->storage());

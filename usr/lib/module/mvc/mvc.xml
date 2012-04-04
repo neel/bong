@@ -25,6 +25,7 @@
 		<bong:include file="ControllerTray.php" />
 		<bong:include file="SpiritTray.php" />
 		<bong:include file="ControllerXDO.php" />
+		<bong:include file="SessionXDO.php" />
 		<bong:include file="BongController.php" />
 		<bong:include file="BongAppController.php" />
 		<bong:include file="SpiritXDO.php" />
