@@ -121,6 +121,9 @@ class Field{
 	public function isValid(){
 		return $this->validate()->isValid;
 	}
+	public function isEmpty(){
+		return empty($this->_value);
+	}
 }
 class Form{
 	private $_fields = array();
@@ -172,6 +175,10 @@ class FieldValidation{
 	public $error = null;
 	public $unMatchedIndex = null;
 	public $unMatchedCriteriaName = null;
+
+	public function isEmpty(){
+		return empty($this->value);
+	}
 }
 class FormValidation{
 	private $_fieldValidations = array();
@@ -248,6 +255,7 @@ class Validation{
 	const MinLength = 'String::Min';
 	const Repeat    = 'String::Repeat';//Retype Password or re-enter Email Field
 	const Equals    = 'String::Equals';
+	const AlphaSpace = 'String::AlphaSpace';
 	
 	const Max = 'Real::Max';
 	const Min = 'Real::Min';
@@ -264,16 +272,19 @@ class Validation{
 		//echo $rule.': '.$value."\n";
 		switch($rule){
 			case Validation::String:
-				return preg_match('~\D~', $value) !== false;
+				return preg_match('~\D~', $value) === true;
+				break;
+			case Validation::AlphaSpace:
+				return preg_match('~[a-zA-Z ]+~', $value) === true;
 				break;
 			case Validation::Int:
-				return preg_match('~\d+~', $value) !== false;
+				return preg_match('~\d+~', $value) === true;
 				break;
 			case Validation::Float:
-				return preg_match('~\d+\.\d+~', $value) !== false;
+				return preg_match('~\d+\.\d+~', $value) === true;
 				break;
 			case Validation::Real:
-				return preg_match('~\d+(?:\.\d+)?~', $value) !== false;
+				return preg_match('~\d+(?:\.\d+)?~', $value) === true;
 				break;
 			case Validation::Length:
 				return strlen($value) == $arg;

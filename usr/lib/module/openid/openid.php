@@ -8,7 +8,7 @@ class OpenIdClient{
 		$this->_url = $url;
 		$this->_return = $return_url;
 	}
-	private static function disect($response){
+	protected static function disect($response){
 		$body = explode("\n", trim($response));
 		foreach($body as $i => $line){
 			@list($key, $val) = explode(':', $line, 2);
@@ -22,7 +22,7 @@ class OpenIdClient{
 			$params[$key] = $value;
 		return $params;
 	}     
-	public function associate($params_additional = array()){
+	public function associate(&$mac_key = null, $params_additional = array()){
 		$params = array();
 		$params['openid.realm']          = OpenIdClient::CONSUMER_URL;
 		$params['openid.ns']             = OpenIDConstants::NS;
@@ -46,8 +46,11 @@ class OpenIdClient{
 		list($headers, $body) = $parts;
 		curl_close($curl);
 		$body = $this->disect($body);
+		if(isset($body['mac_key'])){
+			$mac_key = trim($body['mac_key']);
+		}
 		if(isset($body['assoc_handle'])){
-			return $body['assoc_handle'];
+			return trim($body['assoc_handle']);
 		}
 	}
 	public function setup($assoc_handle, $params_additional = array()){
@@ -69,6 +72,17 @@ class OpenIdClient{
 		$url = $this->_url.'?'.http_build_query($params);
 		return $url;
 	}
+	public static function verify_signature($mac_key, $request){
+		if(!isset($request['openid_sig']))
+			return false;
+		$keys = explode(',', $request['openid_signed']);
+		$signed_raw = '';
+		foreach($keys as $key){
+			$signed_raw .= $key.':'.$request['openid_'.str_replace('.', '_', $key)]."\n";
+		}
+		$signature = base64_encode(hash_hmac('sha1', $signed_raw, base64_decode($mac_key), true));
+		return $signature == $request['openid_sig'];
+	}
 	public static function authenticate($request){
 		$keys = explode(',', $request['openid_signed']);
 		foreach($keys as $key){
@@ -80,6 +94,7 @@ class OpenIdClient{
 		$params['openid.assoc_handle'] = $request['openid_assoc_handle'];
 		$params['openid.mode']         = 'check_authentication';
 		$params['openid.claimed_id']   = $request['openid_claimed_id'];
+		
 		$url = $request['openid_op_endpoint'];
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -101,6 +116,16 @@ class OpenIdClient{
 		if(!isset($body['is_valid']))
 			return 0;
 		return $body['is_valid'];
+	}
+	public static function verify($assoc_handle, $mac_key, $request){
+		if($assoc_handle == $request['openid_assoc_handle']){
+			if(static::verify_signature($mac_key, $request)){
+				return true;
+			}else{
+				return static::authenticate($request) == 'true';
+			}
+		}
+		return false;
 	}
 }
 ?>

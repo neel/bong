@@ -31,7 +31,7 @@ class HTTPHeaders{
 	}
 	public static function send(){
 		if(self::$_status){
-			header(self::$_status.' '.self::$_msg);
+			header($_SERVER['SERVER_PROTOCOL'].' '.self::$_status.' '.self::$_msg);
 		}
 		foreach(self::$_headers as &$header){
 			header($header->toString());

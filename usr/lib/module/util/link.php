@@ -1,7 +1,12 @@
 <?php
 class Link{
 	public static function self(){
-		return $_SERVER['REQUEST_URI'];
+		$request_uri = $_SERVER['REQUEST_URI'];
+		$i = strpos($request_uri, '?');
+		if($i > 0){
+			$request_uri = substr_replace($request_uri, "", $i);
+		}
+		return $request_uri;
 	}
 	public static function uri(){
 		return $_SERVER['PATH_INFO'];
