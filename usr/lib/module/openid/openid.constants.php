@@ -15,5 +15,54 @@ class OpenIdConstants{
 	const AX_COUNTRY             = 'http://axschema.org/contact/country/home';
 	const AX_LANGUAGE            = 'http://axschema.org/pref/language';
 	const AX_GENDER              = 'http://axschema.org/person/gender';
+	const AX_NICKNAME            = 'http://axschema.org/namePerson/friendly';
+	const AX_FULLNAME 			 = 'http://axschema.org/namePerson';
 }
+class OpenIdAXConstants{
+	public static function ax_dict(){
+		return array(
+			OpenIdConstants::AX_FIRSTNAME ,
+			OpenIdConstants::AX_LASTNAME  ,
+			OpenIdConstants::AX_EMAIL     ,
+			OpenIdConstants::AX_NICKNAME  ,
+			OpenIdConstants::AX_FULLNAME  ,
+			OpenIdConstants::AX_GENDER    ,
+			OpenIdConstants::AX_LANGUAGE  ,
+			OpenIdConstants::AX_COUNTRY   
+		);
+	}
+	public static function Map($name){
+		static $dict = array(
+			OpenIdConstants::AX_FIRSTNAME => 'firstname',
+			OpenIdConstants::AX_LASTNAME  => 'lastname',
+			OpenIdConstants::AX_EMAIL     => 'email',
+			OpenIdConstants::AX_NICKNAME  => 'nickname',
+			OpenIdConstants::AX_FULLNAME  => 'fullname',
+			OpenIdConstants::AX_GENDER    => 'gender',
+			OpenIdConstants::AX_LANGUAGE  => 'language',
+			OpenIdConstants::AX_COUNTRY   => 'country'
+		);
+		if(array_key_exists($name, $dict)){
+			return $dict[$name];
+		}
+		return null;
+	}
+	public static function MapFriendly($name){
+		static $dict = array(
+			OpenIdConstants::AX_FIRSTNAME => 'First Name',
+			OpenIdConstants::AX_LASTNAME  => 'Last Name',
+			OpenIdConstants::AX_EMAIL     => 'Email Address',
+			OpenIdConstants::AX_NICKNAME  => 'Nick Name',
+			OpenIdConstants::AX_FULLNAME  => 'Full Name',
+			OpenIdConstants::AX_GENDER    => 'Gender',
+			OpenIdConstants::AX_LANGUAGE  => 'Language',
+			OpenIdConstants::AX_COUNTRY   => 'Country'
+		);
+		if(array_key_exists($name, $dict)){
+			return $dict[$name];
+		}
+		return null;
+	}
+}
+
 ?>

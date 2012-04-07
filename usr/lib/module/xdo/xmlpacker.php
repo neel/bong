@@ -23,6 +23,9 @@ class XMLPacker{
 	 */
 	private function createElement($tagName, $attributes=array(), $uuid=null){
 		$uid = $uuid ? $uuid : $this->uniqueId();
+		if(strpos($tagName, ' ')){
+			debug_print_backtrace();
+		}
 		$element = $this->__dom->createElement($tagName);
 		//{ Create an ID
 		$attr_id = $this->__dom->createAttribute('bong:id');
@@ -118,6 +121,9 @@ class XMLPacker{
 						$attr['bong:index'] = $i;
 					$attr['bong:type'] = XMLType($v)->type();
 					//$attr['bong:class'] = $className;
+					if(strpos($className, ' ')){
+						$className = 'bong:item';
+					}
 					$this->createElement($className, $attr);
 					$this->toXML_internal(&$v);
 					$this->__domPtr = $this->__domPtr->parentNode;
