@@ -272,19 +272,19 @@ class Validation{
 		//echo $rule.': '.$value."\n";
 		switch($rule){
 			case Validation::String:
-				return preg_match('~\D~', $value) === true;
+				return preg_match('~^\D$~', $value);
 				break;
 			case Validation::AlphaSpace:
-				return preg_match('~[a-zA-Z ]+~', $value) === true;
+				return preg_match('~^[a-zA-Z\ ]+$~', $value);
 				break;
 			case Validation::Int:
-				return preg_match('~\d+~', $value) === true;
+				return preg_match('~^\d+$~', $value);
 				break;
 			case Validation::Float:
-				return preg_match('~\d+\.\d+~', $value) === true;
+				return preg_match('~^\d+\.\d+$~', $value);
 				break;
 			case Validation::Real:
-				return preg_match('~\d+(?:\.\d+)?~', $value) === true;
+				return preg_match('~^\d+(?:\.\d+)?$~', $value);
 				break;
 			case Validation::Length:
 				return strlen($value) == $arg;

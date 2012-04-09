@@ -15,15 +15,5 @@ class AOLOpenIdClient extends OpenIdAXClient{
 			OpenIdConstants::AX_LANGUAGE
 		);
 	}
-	protected static function mapping(){
-		return array(
-			'openid_ext1_value_firstname' => 'firstname',
-			'openid_ext1_value_lastname'  => 'lastname',
-			'openid_ext1_value_email'     => 'email',
-			'openid_ext1_value_language'  => 'language',
-			'openid_ext1_value_country'   => 'country',
-			'openid_ext1_value_gender'    => 'gender'
-		);
-	}
 }
 ?>

@@ -63,6 +63,22 @@ class OpenIdAXConstants{
 		}
 		return null;
 	}
+	public static function MapIndex($name){
+		static $dict = array(
+			'firstname' => 'First Name',
+			'lastname'  => 'Last Name',
+			'email'     => 'Email Address',
+			'nickname'  => 'Nick Name',
+			'fullname'  => 'Full Name',
+			'gender'    => 'Gender',
+			'language'  => 'Language',
+			'country'   => 'Country'
+		);
+		if(array_key_exists($name, $dict)){
+			return $dict[$name];
+		}
+		return null;
+	}
 }
 
 ?>
