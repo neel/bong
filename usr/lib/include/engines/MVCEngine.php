@@ -23,10 +23,14 @@ class MVCEngine extends ContentEngine{
 	}
 	public function executeLogic(){
 		Runtime::loadModule('util');
+		require($this->model($__i_dmp));
 		require($this->controller());
+		$modelName = $this->modelName();
+		$modelReflection = new ReflectionClass($modelName);
+		$model = $modelReflection->newInstance();
 		$controllerName = ucfirst($this->navigation->controllerName.'Controller');
 		$controllerReflection = new ReflectionClass($controllerName);
-		$controller = $controllerReflection->newInstance();
+		$controller = $controllerReflection->newInstanceArgs(array($model));
 		$this->_ctorParams = $controller->params();
 		$controller->flushParams();
 		if(isset($this->navigation->methodName)){
@@ -271,6 +275,41 @@ class MVCEngine extends ContentEngine{
 				return $view;
 			}
 		}
+	}
+	private function model(&$index){
+		$models = array(
+			Path::instance()->currentProject('apps.model.+&controller.-&method.php'),//Application Model
+			Path::instance()->currentProject('apps.model.+&controller.@model.php'),//Controller Model
+			Path::instance()->currentProject('common.@model.php'),//Project Model
+			Path::instance()->evaluate('share.apps.@model.php')//Bong Model
+		);
+		foreach($models as $i => $model){
+			if(file_exists($model)){
+				$index = $i;
+				return $model;
+			}
+		}
+	}
+	private function modelName(){
+		$index = -1;
+		$modelPath = $this->model($index);
+		switch($index){
+			case 0:
+				$modelName = ucfirst($this->navigation->controllerName).ucfirst($this->navigation->methodName).'Model'; 
+			break;
+			case 1:
+				$modelName = ucfirst($this->navigation->controllerName).'Model'; 
+			break;
+			case 2:
+				$modelName = ucfirst(Runtime::currentProject()->name).'Model'; 
+			break;
+			case 3:
+				$modelName = 'BongAppModel';
+			break;
+			default:
+				//TODO Handle Error
+		}
+		return $modelName;
 	}
 	private function controller(){
 		$controllerPath = Path::instance()->currentProject('apps.+&controller.@&controller.php');

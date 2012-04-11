@@ -2,9 +2,14 @@
 abstract class BongAppController extends BongController{
 	protected $spiritEngine;
 	protected $_params = array();
+	protected $model;
 	
-	public function __construct(){
+	public function __construct($model = null){
 		parent::__construct();
+		if($model){
+			$this->model = $model;
+			$this->model->connect();
+		}
 		$this->meta = new ControllerMeta();
 		/*{ TODO Having an XDO should be optional not all app asks for an XDO*/
 		$this->xdo = new ControllerXDO();
