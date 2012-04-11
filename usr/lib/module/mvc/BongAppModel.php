@@ -5,11 +5,16 @@ abstract class BongAppModel{
 	abstract protected function dsn();
 	abstract protected function user();
 	abstract protected function password();
+	/*virtual*/public function autoconnect(){
+		return true;
+	}
 	/*virtual*/protected function options(){return array();}
 	/*virtual*/protected function schema(){return 0;}
 
 	public function connect(){
 		$this->_pdo = new PDO($this->dsn(), $this->user(), $this->password(), $this->options());
+		$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->_pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 	}
 	public function connected(){
 		return !is_null($this->_pdo);
@@ -37,9 +42,11 @@ abstract class BongAppModel{
 		$procName = $schemaName ? $schemaName.'.'.$name : $name;
         $stmt = $this->_pdo->prepare("SELECT * FROM {$procName}(" .
             implode(', ', $_params) .  ")");
-        $stmt->execute($arguments);
+        $status = $stmt->execute($arguments);
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        return $stmt;
+        if($status)
+        	return $stmt;
+        return $status;
 	}
 	/**
 	 * return's $row_num'th row from the result set
@@ -47,6 +54,18 @@ abstract class BongAppModel{
 	public function result_row($name, $arguments=array(), $row_num=0){
 		$rows = $this->proc($name, $arguments)->fetch(PDO::FETCH_NUM);
 		return $rows[$row_num];
+	}
+	public static function hstore($assoc=array()){
+		$rets = array();
+		foreach($assoc as $key => $val){
+			if(is_string($key)){
+				$first_char = $key[0];
+				if(!is_numeric($first_char)){
+					$rets[] = "{$key}=>\"{$val}\"";
+				}
+			}
+		}
+		return implode(',', $rets);
 	}
 }
 ?>

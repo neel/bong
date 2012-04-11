@@ -43,7 +43,7 @@ final class BongUserData{
 	public $SessionId;
 	public $State;
 	public $xdos = array();
-	public $LstAccess;
+	public $LastAccess;
 	public $requestHistory = array();
 	
 	public function load($fileName){
@@ -84,12 +84,13 @@ final class BongCurrentUserData extends \Singleton{
 	public $SessionId;
 	public $State;
 	public $xdos = array();
-	public $LstAccess;
+	public $LastAccess;
 	public $requestHistory = array();
-	public $store = new stdClass;
+	public $store = null;
 	
 	public function __construct(){
 		$this->SesionId = session_id();
+		$this->store = new \stdClass();
 		$this->load();
 		$this->ClientSignature = \ROM\Client::instance()->userAgent;
 		$this->IpAddress = \ROM\Client::instance()->remoteAddr;
@@ -144,7 +145,7 @@ final class BongCurrentUserData extends \Singleton{
 			$this->xdos = $buff->x;
 			$this->LastAccess = $buff->l;
 			$this->requestHistory = $buff->h;
-			$this->store = $buff->r;
+			$this->store = ($buff->r);
 		}
 	}
 	public function identical(){

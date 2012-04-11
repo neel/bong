@@ -8,7 +8,8 @@ abstract class BongAppController extends BongController{
 		parent::__construct();
 		if($model){
 			$this->model = $model;
-			$this->model->connect();
+			if($this->model->autoconnect())
+				$this->model->connect();
 		}
 		$this->meta = new ControllerMeta();
 		/*{ TODO Having an XDO should be optional not all app asks for an XDO*/
