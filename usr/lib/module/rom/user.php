@@ -86,6 +86,7 @@ final class BongCurrentUserData extends \Singleton{
 	public $xdos = array();
 	public $LstAccess;
 	public $requestHistory = array();
+	public $store = new stdClass;
 	
 	public function __construct(){
 		$this->SesionId = session_id();
@@ -127,6 +128,7 @@ final class BongCurrentUserData extends \Singleton{
 		$buff->x = $this->xdos;
 		$buff->l = $this->LastAccess;
 		$buff->h = $this->requestHistory;
+		$buff->r = $this->store;
 		$sessionDir = \Path::instance()->currentProject('run');
 		return file_put_contents($sessionDir."/".session_id().".usr", serialize($buff));
 	}
@@ -142,6 +144,7 @@ final class BongCurrentUserData extends \Singleton{
 			$this->xdos = $buff->x;
 			$this->LastAccess = $buff->l;
 			$this->requestHistory = $buff->h;
+			$this->store = $buff->r;
 		}
 	}
 	public function identical(){
