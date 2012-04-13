@@ -115,14 +115,15 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 			$this->spiritInfo->method = $methodName;
 			$this->viewContents = $parser->parse();
 		}
-		if(ControllerTray::instance()->renderLayout){
+		/*a Spirit Shold nor depend on `ControllerTray`'s Properties Issue#20 */
+		/*if(ControllerTray::instance()->renderLayout){*/
 			ob_start();
 			require($this->layout($spiritName, $methodName));
 			$this->responseBuffer = ob_get_contents();
 			ob_end_clean();
-		}else{
+		/*}else{
 			$this->responseBuffer = ControllerTray::instance()->trim ? trim($this->viewContents) : $this->viewContents;
-		}
+		}*/
 		//echo $this->viewContents;
 		//echo $this->responseBuffer;
 	}
