@@ -157,10 +157,12 @@ class MVCEngine extends ContentEngine{
 				if(isset($this->_methodReturn)){
 					switch(ControllerTray::instance()->responseType){
 						case 'scrap/xml':
+							http::contentType('text/xml');
 							$packer = new XMLPacker($this->_methodReturn);
 							$this->responseBuffer = $packer->toXML()->saveXML();
 						break;
 						case 'scrap/json':
+							http::contentType('application/json');
 							$this->responseBuffer = json_encode($this->_methodReturn);
 						break;
 						case 'scrap/plain':
