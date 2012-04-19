@@ -167,6 +167,7 @@ class MVCEngine extends ContentEngine{
 						break;
 						case 'scrap/plain':
 						default:
+							http::contentType('text/plain');
 							$this->responseBuffer = $this->_methodReturn;
 						
 					}
