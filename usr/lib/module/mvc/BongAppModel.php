@@ -1,5 +1,5 @@
 <?php
-abstract class BongAppModel{
+abstract class BongAppModel extends \Singleton{
 	protected $_pdo = null;
 	
 	abstract protected function dsn();
@@ -66,6 +66,9 @@ abstract class BongAppModel{
 			}
 		}
 		return implode(',', $rets);
+	}
+	public function query(){
+		return new QueryBuilder($this->_pdo);
 	}
 }
 ?>

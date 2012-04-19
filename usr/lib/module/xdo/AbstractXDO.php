@@ -5,6 +5,7 @@
  */
 abstract class AbstractXDO{
 	private $__rawUName = null;
+	private $_new = true;
 	
 	/**
 	 * Converts the DataObject to XML DOM
@@ -43,6 +44,7 @@ abstract class AbstractXDO{
 				$this->{$key} = $value;
 			}
 			$this->timestamp = time();
+			$this->_new = false;
 		}
 	}
 	
@@ -104,6 +106,9 @@ abstract class AbstractXDO{
 	}
 	public function sessionFilePath(){
 		return $this->__sessionFilePath();
+	}
+	public function isNew(){
+		return $this->_new;
 	}
 }
 ?>

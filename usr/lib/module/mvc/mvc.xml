@@ -8,6 +8,7 @@
 	<bong:dependencies>
 		<bong:dependency module="xdo" />
 		<bong:dependency module="rom" />
+		<bong:dependency module="dal" />
 		<bong:dependency module="orm" />
 	</bong:dependencies>
 	<bong:includes>
