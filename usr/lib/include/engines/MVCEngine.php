@@ -23,8 +23,8 @@ class MVCEngine extends ContentEngine{
 	}
 	public function executeLogic(){
 		Runtime::loadModule('util');
-		require($this->model($__i_dmp));
-		require($this->controller());
+		require_once($this->model($__i_dmp));
+		require_once($this->controller());
 		$modelName = $this->modelName();
 		$modelReflection = new ReflectionClass($modelName);
 		$model = $modelReflection->newInstance();
@@ -317,7 +317,7 @@ class MVCEngine extends ContentEngine{
 	private function controller(){
 		$controllerPath = Path::instance()->currentProject('apps.+&controller.@&controller.php');
 		if(!$controllerPath || !file_exists($controllerPath)){
-			throw new ControllerNotFoundException(MemPool::instance()->get('bong.mvc.controller'));
+			throw new ControllerNotFoundException(MemPool::instance()->get('bong.mvc.controller'), $controllerPath);
 		}else{
 			if(is_readable($controllerPath))
 				return $controllerPath;

@@ -8,10 +8,15 @@
   RewriteCond $1 !^r(/.*)?$ [NC]
   RewriteCond $1 !^rt\.php(.*)?$ [NC]
   RewriteCond $1 !^index\.php(/.*)?$ [NC]
+  RewriteCond $1 !^batch(/.*)?$ [NC]
+  RewriteCond $1 !^batch\.php(/.*)?$ [NC]
   #{ Application Routing Handling
   RewriteRule ^(.*)$ ./index.php/$1 [L]
   #}
   #{ Shared Content Routing Handling
   RewriteRule ^r\/(.+)$	./rt.php/$1 [L]
+  #}
+  #{ Shared Content Routing Handling
+  RewriteRule ^batch\/(.+)$ ./batch.php/$1 [L]
   #}
 </IfModule>

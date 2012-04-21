@@ -98,6 +98,7 @@ require 'usr/lib/include/runtime.php';
 require 'usr/lib/include/AbstractDataTray.php';
 require 'usr/lib/include/backend.php';
 
+
 $urlPathParts = pathinfo($_SERVER['SCRIPT_NAME']);
 MemPool::instance()->set("bong.url.base", rtrim($urlPathParts['dirname'], "/"));
 
@@ -127,5 +128,6 @@ HTTPHeaders::send();
 $engine->writeResponse();
 \ROM\BongCurrentUserData::instance()->dump();
 //var_dump(Path::instance()->evaluate(":mkt.apps.view.+&controller.-&method.@&method.view.php"));
-
+//var_dump($_SERVER);
+//var_dump(MemPool::instance());
 ?>

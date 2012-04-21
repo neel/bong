@@ -7,7 +7,7 @@ abstract class FileSystemException extends BongException{
 		$this->errMsg = $errMsg;
 		$this->_fileException = $fileException;
 		parent::__construct("bong.util.".($this->_fileException ? 'file' : 'dir').".".$exceptionExtension, $errCode);
-		$this->registerParam(new BongExceptionParam("filePath", "File Path", true));
+		$this->registerParam(new BongExceptionParam("filePath", "File Path", false));
 		$this->setParam("filePath", $file);
 	}
 	protected function templatize(){

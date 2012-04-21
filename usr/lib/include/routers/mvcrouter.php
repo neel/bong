@@ -5,7 +5,7 @@ class MVCRouter extends AbstractContentRouter{
 	}
 	
 	public function buildNavigation($path){
-		//print_r($path);
+		//var_dump($path);
 		//http://localhost/bong/index.php/controllerName/methodName/arg1/arg2/+spiritName/methodName/spiritArg1/spiritArg2/+spiritName2/methodName/args
 		$this->navigation->controllerName =  null;
 		$this->navigation->methodName = null;

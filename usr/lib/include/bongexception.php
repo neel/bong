@@ -22,10 +22,12 @@ abstract class BongException extends Exception{
 	/**
 	 * Checks Wheather All Params given in the Exception are Valid
 	 */
-	final protected function valid(){
+	final protected function valid(&$invalidParam=null){
 		foreach($this->params as $param){
-			if(!$param->valid())
+			if(!$param->valid()){
+				$invalidParam = $param->name();
 				return false;
+			}
 		}
 		return true;
 	}
@@ -74,9 +76,12 @@ abstract class BongException extends Exception{
 		$this->setParam('tz', @date_default_timezone_get());
 	}
 	final public function message(){
+		header('Content-Type: text/html');
 		$this->prepare();
-		if(!$this->valid())
-			throw new InvalidExceptionException($this);
+		$missing_param = "";
+		if(!$this->valid(&$missing_param)){
+			throw new InvalidExceptionException($this, $missing_param);
+		}
 		return $this->templatize();
 	}
 	final public function __toString(){

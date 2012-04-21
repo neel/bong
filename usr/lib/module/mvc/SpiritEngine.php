@@ -146,7 +146,7 @@ class SpiritEngine extends AbstractMicroEngine implements EmbeddedRunnable{
 		//{ Include the Controller
 		$spiritClassName = ucfirst($spiritName).'Abstractor';
 		if(!class_exists($spiritClassName))
-			require($this->controller($spiritName));
+			require_once($this->controller($spiritName));
 		//}
 		$spiritAbstractor = null;
 		if($this->instanceRequested($spiritClassName)){

@@ -20,5 +20,8 @@ abstract class Singleton{
 			return self::$__instances[$called_class];
 		}
 	}
+	static public function clearAllInstances(){
+		self::$__instances = array();
+	}
 }
 ?>
