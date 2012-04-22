@@ -14,5 +14,6 @@
 		<bong:include file="xmlpacker.php" />
 		<bong:include file="xmlunpacker.php" />
 		<bong:include file="AbstractXDO.php" />
+		<bong:include file="DummyXDO.php" />
 	</bong:includes>
 </bong:module>
