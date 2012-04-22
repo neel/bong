@@ -11,21 +11,31 @@ abstract class BongAppController extends BongController{
 			if($this->model->autoconnect())
 				$this->model->connect();
 		}
+
 		$this->meta = new ControllerMeta();
 		/*{ TODO Having an XDO should be optional not all app asks for an XDO*/
-		$this->xdo = new ControllerXDO();
-		if($this->xdo->serialized())
-			$this->xdo->unserialize();
+		if(!($this instanceof NoXDO)){
+			$this->xdo = new ControllerXDO();
+			if($this->xdo->serialized())
+				$this->xdo->unserialize();
+		}else{
+			$this->xdo = new MemoryXDO();
+		}
 		/*}*/
 		/*{ TODO Save applies here too. not all app need a session Storage some wants to work real Stateless too*/
-		$this->session = new SessionXDO();
-		if($this->session->serialized())
-			$this->session->unserialize();
+		if(!($this instanceof NoSession)){
+			$this->session = new SessionXDO();
+			if($this->session->serialized())
+				$this->session->unserialize();
+		}else{
+			$this->session = new MemoryXDO();
+		}
 		/**/
-			
 		$controllerName = get_class($this);
-		$desc = new \ROM\BongXDODescriptor(\ROM\BongXDODescriptor::ControllerXDO, $controllerName, $this->xdo->sessionFilePath());
-		\ROM\BongCurrentUserData::instance()->addXDO($desc);
+		if(!($this instanceof NoXDO)){
+			$desc = new \ROM\BongXDODescriptor(\ROM\BongXDODescriptor::ControllerXDO, $controllerName, $this->xdo->sessionFilePath());
+			\ROM\BongCurrentUserData::instance()->addXDO($desc);
+		}
 		$this->spiritEngine = EngineFactory::produce("SpiritEngine", array(&$this));
 		$this->ctor();
 	}

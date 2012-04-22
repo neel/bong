@@ -49,6 +49,9 @@ abstract class BongException extends Exception{
 		}
 		return null;//Should Throw an Exception in this Scenario
 	}
+	final public function params(){
+		return $this->params;
+	}
 	final public function __set($name, $value){
 		return $this->setParam($name, $value);
 	}

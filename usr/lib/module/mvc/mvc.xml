@@ -12,6 +12,8 @@
 		<bong:dependency module="orm" />
 	</bong:dependencies>
 	<bong:includes>
+		<bong:include file="NoXDO.php" />
+		<bong:include file="NoSession.php" />
 		<bong:include file="AbstractDeliveryTrait.php" />
 		<bong:include file="JSONDeliveryTrait.php" />
 		<bong:include file="XMLDeliveryTrait.php" />
