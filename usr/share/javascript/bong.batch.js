@@ -22,12 +22,43 @@ bong.batch = {
 				conf: config
 			};
 			this._queue.push(req);
+		}else{
+			var req = this.byPath(path)
+			var f_current = req.f;
+			var f_replace = function(data){
+				f_current(data);
+				callback(data);
+			}
+			req.f = f_replace;
 		}
 	},
-	exists: function(path){
+	remove: function(path){
 		for(var i=0;i<this._queue.length;++i){
 			if(this._queue[i].url == path)
+				this._queue[i] = null;
 				return true;
+		}
+		return false;
+	},
+	removeByRegx: function(path_regx){
+		for(var i=0;i<this._queue.length;++i){
+			var match = this._queue[i].url.match(path);
+			if(match && match.length == 1 && match[0] == this._queue[i].url)
+				this._queue[i] = null;
+				return true;
+		}
+		return false;
+	},
+	exists: function(path){
+		if(this.byPath(path)){
+			return true;
+		}
+		return false;
+	},
+	byPath: function(path){
+		for(var i=0;i<this._queue.length;++i){
+			if(this._queue[i].url == path)
+				return this._queue[i];
 		}
 		return false;
 	},
@@ -90,3 +121,4 @@ bong.batch = {
 		this._queue = [];
 	}
 }
+bong.batch.start();

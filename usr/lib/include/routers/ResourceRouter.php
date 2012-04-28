@@ -2,6 +2,7 @@
 final class ResourceRouter extends AbstractContentRouter{
 	public function __construct(/*$engineName*/){
 		parent::__construct("ResourceEngine");
+		Runtime::loadModule('util');
 	}
 	/**
 	 * Expects an Array with **Exactly** one Argument Thats teh Shared Component's Name

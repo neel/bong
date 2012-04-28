@@ -113,7 +113,7 @@ MemPool::instance()->set("bong.root", rtrim(getcwd(), "/"));
  * e.g. exploding it with '/' will extract all URL Parts in an array
  */
 MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
-/*try{*/
+try{
 	Runtime::loadModule('rom');
 	\ROM\BongCurrentUserData::startSession();
 	/*AbstractContentRouter* */ $router = URLAnalyzer::instance()->decide();
@@ -128,10 +128,10 @@ MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVE
 	HTTPHeaders::send();
 	$engine->writeResponse();
 	\ROM\BongCurrentUserData::instance()->dump();
-/*}catch(BongException $ex){
+}catch(BongException $ex){
 	header('Content-Type: text/html');
 	include('usr/share/template/common.exception.php');
-}*/
+}
 //var_dump(Path::instance()->evaluate(":mkt.apps.view.+&controller.-&method.@&method.view.php"));
 //var_dump($_SERVER);
 //var_dump(MemPool::instance());

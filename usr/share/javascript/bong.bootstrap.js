@@ -142,6 +142,29 @@ var bong = {
 		}
 		return container.removeChild(dom);
 	},
+	handle: function(dom){
+		var handle = {};
+		var elems = (dom .length ? dom[0] : dom).getElementsByTagName('*');
+		for(var i=0;i<elems.length;++i){
+			if(elems[i].getAttribute('bong:handle')){
+				var handleName = elems[i].getAttribute('bong:handle');
+				if(handleName.indexOf('.')){
+					var handleNameHierarchy = handleName.split('.');
+					var anchor = handle;
+					for(var it = 0;it < handleNameHierarchy.length-1; ++it){
+						var localHandle = handleNameHierarchy[it];
+						if(typeof handle[localHandle] == 'undefined'){
+							handle[localHandle] = {};
+							anchor = handle[localHandle];
+						}
+					}
+				}else{
+					handle[handleName] = elems[i];
+				}
+			}
+		}
+		return handle;
+	},
 	_button: function(handle, conf){
 		var dom = this.domify('<button class="bong-dialog-btn '+(conf.isDefault ? 'bong-dialog-btn-default' : '')+'">'+conf.label+'</button>');
 		dom.onclick = function(){

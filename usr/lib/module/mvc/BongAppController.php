@@ -19,7 +19,7 @@ abstract class BongAppController extends BongController{
 			if($this->xdo->serialized())
 				$this->xdo->unserialize();
 		}else{
-			$this->xdo = new MemoryXDO();
+			$this->xdo = new DummyXDO();
 		}
 		/*}*/
 		/*{ TODO Save applies here too. not all app need a session Storage some wants to work real Stateless too*/
@@ -28,7 +28,7 @@ abstract class BongAppController extends BongController{
 			if($this->session->serialized())
 				$this->session->unserialize();
 		}else{
-			$this->session = new MemoryXDO();
+			$this->session = new DummyXDO();
 		}
 		/**/
 		$controllerName = get_class($this);
