@@ -151,15 +151,18 @@ var bong = {
 				if(handleName.indexOf('.')){
 					var handleNameHierarchy = handleName.split('.');
 					var anchor = handle;
-					for(var it = 0;it < handleNameHierarchy.length-1; ++it){
-						var localHandle = handleNameHierarchy[it];
-						if(typeof handle[localHandle] == 'undefined'){
-							handle[localHandle] = {};
-							anchor = handle[localHandle];
+					for(var it = 0;it < handleNameHierarchy.length; ++it){
+						var localName = handleNameHierarchy[it];
+						if(typeof anchor[localName] == 'undefined'){
+							anchor[localName] = {};
+						}
+						anchor = anchor[localName];
+						if(it == handleNameHierarchy.length-1){
+							anchor.dom = elems[i];
 						}
 					}
 				}else{
-					handle[handleName] = elems[i];
+					handle[handleName].dom = elems[i];
 				}
 			}
 		}
