@@ -117,6 +117,7 @@ $batch = json_decode($payload);
 if(count($batch->loads) != $n){
 	return 0;
 }
+//var_dump(count($batch->loads));
 $installation_base = trim(pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_DIRNAME), "/");
 $response_buff = array();
 foreach($batch->loads as $request){
@@ -135,6 +136,7 @@ foreach($batch->loads as $request){
 	$r_get    = @$request->get;
 	$r_post   = @$request->post;
 	$r_format = @$request->format;
+	$r_checksum = @$request->checksum;
 
 	$_SERVER['SCRIPT_FILENAME']   = str_replace('batch.php', 'index.php', $_SERVER['SCRIPT_FILENAME']);
 	$_SERVER['REQUEST_URI']       = $r_url;
@@ -146,7 +148,7 @@ foreach($batch->loads as $request){
 	$_GET                         = parse_url($_SERVER['QUERY_STRING']);
 
 	unset($_POST['payload']);
-	$_POST                        = @$r_post;
+	$_POST = @$r_post;
 	if(count($_POST) > 0){
 		$_SERVER['REQUEST_METHOD'] = 'POST';
 	}
@@ -176,6 +178,10 @@ foreach($batch->loads as $request){
 	$res = new stdClass;
 	$res->url = $r_url;
 	$res->res = base64_encode($response);
+	$res->checksum = md5($res->res);
+	if(!empty($r_checksum) && $r_checksum == $res->checksum){
+		$res->res = '';
+	}
 	$response = "";
 	$response_buff[] = $res;
 	
@@ -187,5 +193,4 @@ foreach($batch->loads as $request){
 /*}*/
 header('Content-Type: application/json');
 echo json_encode($response_buff);
-
 ?>

@@ -15,11 +15,13 @@ bong.batch = {
 		return payload_json;
 	},
 	add: function(path, callback, config){
+		console.log(path);
 		if(!this.exists(path)){
 			var req = {
 				url: path,
 				f:   callback,
-				conf: config
+				conf: config,
+				checksum: null
 			};
 			this._queue.push(req);
 		}else{
@@ -66,7 +68,9 @@ bong.batch = {
 		var payload_queue = this._queue;
 		var n = payload_queue.length;
 		var payload_str = this._buildRequest();
+		console.log(payload_str);
 		var hash = Crypto.MD5(payload_str, {asString: false});
+		/*If this Hash is not Checked on Serverside Crypto.MD5 dependancy can be removed*/
 		var url = this._batchPath+'?n='+n+'&hash='+hash;
 		(function(loads, self){
 			bong.href(url, {
@@ -82,7 +86,13 @@ bong.batch = {
 					var load = loads[i];
 					for(var j=0;j<data.length;++j){
 						if(data[j].url == load.url){
-							load.f(base64_decode(data[i].res));
+							load.checksum = data[i].checksum
+							console.log(load.checksum);
+							if(data[i].res.length > 0){
+								load.f(base64_decode(data[i].res));
+							}else{
+								console.warn('Skipped '+load.url);
+							}
 						}
 					}
 					if(load.conf && load.conf.loop){
