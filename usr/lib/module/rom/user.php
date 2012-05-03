@@ -87,9 +87,13 @@ final class BongCurrentUserData extends \Singleton{
 	public $LastAccess;
 	public $requestHistory = array();
 	public $store = null;
+	public $csrf_token;
+	public $csrf_rand;
 	
 	public function __construct(){
 		$this->SesionId = session_id();
+		$this->csrf_rand = @$_COOKIE['bong_csrf_rand'];
+		$this->csrf_token = @$_COOKIE['bong_csrf_token'];
 		$this->store = new \stdClass();
 		$this->load();
 		$this->ClientSignature = \ROM\Client::instance()->userAgent;
@@ -130,6 +134,8 @@ final class BongCurrentUserData extends \Singleton{
 		$buff->l = $this->LastAccess;
 		$buff->h = $this->requestHistory;
 		$buff->r = $this->store;
+		$buff->csrf_rand = $this->csrf_rand;
+		$buff->csrf_token = $this->csrf_token;
 		$sessionDir = \Path::instance()->currentProject('run');
 		return file_put_contents($sessionDir."/".session_id().".usr", serialize($buff));
 	}
@@ -146,12 +152,16 @@ final class BongCurrentUserData extends \Singleton{
 			$this->LastAccess = $buff->l;
 			$this->requestHistory = $buff->h;
 			$this->store = ($buff->r);
+			$this->csrf_rand = $buff->csrf_rand;
+			$this->csrf_token = $buff->csrf_token;
 		}
 	}
 	public function identical(){
 		return (
 			$this->ClientSignature == \ROM\Client::instance()->userAgent &&
-			$this->IpAddress == \ROM\Client::instance()->remoteAddr
+			$this->IpAddress == \ROM\Client::instance()->remoteAddr &&
+			$this->csrf_rand == @$_COOKIE['bong_csrf_rand'] &&
+			$this->csrf_token == @$_COOKIE['bong_csrf_token']
 		);
 	}
 	public static function reset(){
@@ -167,8 +177,29 @@ final class BongCurrentUserData extends \Singleton{
 		session_regenerate_id(true);
 	}
 	public static function startSession(){
+		session_name('bong_user_token');
+		$installation_path = \MemPool::instance()->get('bong.url.base');
+		$currentCookieParams = session_get_cookie_params();
+		$currentCookieParams["path"] = $installation_path;
+		$currentCookieParams["httponly"] = true;
+		session_set_cookie_params( 
+			$currentCookieParams["lifetime"], 
+			$currentCookieParams["path"], 
+			$currentCookieParams["domain"], 
+			$currentCookieParams["secure"], 
+			$currentCookieParams["httponly"] 
+		); 
 		if(!session_id()){
 			session_start();
+			if(!array_key_exists('bong_csrf_rand', $_COOKIE) || !array_key_exists('bong_csrf_token', $_COOKIE)){
+				$rand = mt_rand().time().'';
+				$rand_token = trim(str_shuffle($rand), 0);
+				$hash_token = sha1(session_id().$rand);
+				setcookie('bong_csrf_token', $hash_token, 0, $installation_path);
+				setcookie('bong_csrf_rand', $rand_token, 0, $installation_path);
+				$_COOKIE['bong_csrf_token'] = $hash_token;
+				$_COOKIE['bong_csrf_rand'] = $rand_token;
+			}
 		}
 	}
 }

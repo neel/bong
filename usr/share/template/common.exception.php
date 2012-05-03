@@ -136,7 +136,7 @@
 				<?php $traces = $ex->getTRace(); ?>
 				<?php foreach($traces as $trace): ?>
 				<div class="bong-exception-trace">
-					<div class="bong-exception-trace-file"><code><?php echo $trace['file'] ?></code></div>:<div class="bong-exception-trace-line"><code><?php echo $trace['line'] ?></code></div><div class="bong-exception-trace-source"><code><?php echo @$trace['class'] ?>::<?php echo @$trace['function'] ?>()</code></div>
+					<div class="bong-exception-trace-file"><code><?php echo @$trace['file'] ?></code></div>:<div class="bong-exception-trace-line"><code><?php echo @$trace['line'] ?></code></div><div class="bong-exception-trace-source"><code><?php echo @$trace['class'] ?>::<?php echo @$trace['function'] ?>(<?php /*echo json_encode($trace['args'])*/ ?>)</code></div>
 				</div>
 				<?php endforeach; ?>
 			</div>

@@ -8,9 +8,9 @@ class Secure{
 	 * keys get stored in /bong/projects/PROJECT_NAME/var/keys directory
 	 * returns true if generation of both keys are successful, returns false otherwise
 	 */
-	public static function genKeys($uri){
-		$_private_path    = self::_basePath().'/'.md5($uri).'.pri';
-		$_public_path     = self::_basePath().'/'.md5($uri).'.pub';
+	public static function genKeys($uri, $ts){
+		$_private_path    = self::_basePath().'/'.md5($uri.$ts).'.pri';
+		$_public_path     = self::_basePath().'/'.md5($uri.$ts).'.pub';
 		$_private_command = "openssl ecparam -name secp112r1 -genkey -out {$_private_path}";
 		$_public_command  = "openssl ec -conv_form compressed -pubout -in {$_private_path} -out {$_public_path}";
 		$_pri_handle = popen($_private_command, 'r');
@@ -32,45 +32,49 @@ class Secure{
 	/**
 	 * Checks whether both keys exists. returns one if both or one of them is doesn't exist.
 	 */
-	public static function keyExists($uri){
-		return file_exists(self::_basePath().'/'.md5($uri).'.pri') && file_exists(self::_basePath().'/'.md5($uri).'.pub');
+	public static function keyExists($uri, $ts){
+		return file_exists(self::_basePath().'/'.md5($uri.$ts).'.pri') && file_exists(self::_basePath().'/'.md5($uri.$ts).'.pub');
 	}
-	public static function privateExists($uri){
-		return file_exists(self::_basePath().'/'.md5($uri).'.pri');
+	public static function privateExists($uri, $ts){
+		return file_exists(self::_basePath().'/'.md5($uri.$ts).'.pri');
 	}
-	public static function publicExists($uri){
-		return file_exists(self::_basePath().'/'.md5($uri).'.pub');
+	public static function publicExists($uri, $ts){
+		return file_exists(self::_basePath().'/'.md5($uri.$ts).'.pub');
 	}
-	public static function privateKey($uri){
-		if(self::privateExists($uri)){
-			var_dump(openssl_pkey_get_private(self::_basePath().'/'.md5($uri).'.pri'));
-			return openssl_pkey_get_private(self::_basePath().'/'.md5($uri).'.pri');
+	public static function privateKey($uri, $ts){
+		if(self::privateExists($uri, $ts)){
+			return openssl_pkey_get_private(array('file://'.self::_basePath().'/'.md5($uri.$ts).'.pri', ''));
+		}		
+		return false;
+	}
+	public static function publicKey($uri, $ts){
+		if(self::publicExists($uri, $ts)){
+			return openssl_pkey_get_public('file://'.self::_basePath().'/'.md5($uri.$ts).'.pub');
 		}
 		return false;
 	}
-	public static function publicKey($uri){
-		if(self::publicExists($uri)){
-			return openssl_pkey_get_public(self::_basePath().'/'.md5($uri).'.pub');
-		}
-		return false;
-	}
-	public static function sign($uri, $data){
-		$pkid = self::privateKey($uri);
+	public static function sign($uri, $ts, $data){
+		$pkid = self::privateKey($uri, $ts);
 		if(!$pkid)
 			return false;
 		$signature = '';
-		openssl_sign($data, $signature, $pkid, OPENSSL_ALGO_SHA1);
-		
+		$res = @openssl_sign($data, $signature, $pkid, OPENSSL_ALGO_SHA1);
 		openssl_free_key($pkid);
 		return $signature;
 	}
-	public static function verify($uri, $signature){
-		$pkid = self::publicKey($uri);
+	public static function verify($uri, $ts, $signature){
+		$pkid = self::publicKey($uri, $ts);
 		if(!$pkid)
 			return false;
 		$res = openssl_verify($data, $signature, $pkid, OPENSSL_ALGO_SHA1);
 		openssl_free_key($pkid);
 		return $res;
+	}
+	public static function removeKeys($uri, $ts){
+		$_private_path    = self::_basePath().'/'.md5($uri.$ts).'.pri';
+		$_public_path     = self::_basePath().'/'.md5($uri.$ts).'.pub';
+		unlink($_private_path);
+		unlink($_public_path);
 	}
 }
 ?>

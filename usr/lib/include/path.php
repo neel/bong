@@ -105,6 +105,8 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 	 * @param string $path
 	 */
 	public function currentProject($path){
+		if(!Runtime::currentProject())
+			debug_print_backtrace();
 		return $this->evaluate(':'.Runtime::currentProject()->name.'.'.$path);
 	}
 	/**
