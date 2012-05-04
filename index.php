@@ -121,9 +121,18 @@ try{
 	if(!\ROM\BongCurrentUserData::instance()->identical()){
 		\ROM\BongCurrentUserData::reset();
 	}
+	/*
+	if(!\ROM\BongCurrentUserData::instance()->csrf_sent()){
+		\ROM\BongCurrentUserData::instance()->csrf_send();
+	}else if(!\ROM\BongCurrentUserData::instance()->csrf_identical()){
+		\ROM\BongCurrentUserData::reset();
+		\ROM\BongCurrentUserData::instance()->csrf_resend();
+	}
+	*/
 	$urlReq = new \ROM\UrlRequest(time(), session_id(), $_SERVER['SCRIPT_NAME']);
 	\ROM\BongCurrentUserData::instance()->addUrlRequest($urlReq);
 	/*AbstractContentEngine* */ $engine = $router->engine();
+	//echo \ROM\BongCurrentUserData::instance()->csrf_rand;
 	$engine->run();
 	HTTPHeaders::send();
 	$engine->writeResponse();
