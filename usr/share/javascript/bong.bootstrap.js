@@ -79,12 +79,12 @@ var bong = {
 		}else{
 			if(elem.addEventListener){
 				elem.addEventListener(evType, function(e){
-					fn.call(elem, e);
+					return fn.call(elem, e);
 				}, false);
 				return true;
 			}else if(elem.attachEvent){
-				return elem.attachEvent("on"+evType, function(e){
-					fn.call(elem, e);
+				elem.attachEvent("on"+evType, function(e){
+					return fn.call(elem, e);
 				});
 			}else{
 				return false;
@@ -151,12 +151,12 @@ var bong = {
 		}
 		return container.removeChild(dom);
 	},
-	handle: function(dom){
+	_anchor: function(dom, attr_name){
 		var handle = {};
-		var elems = (dom .length ? dom[0] : dom).getElementsByTagName('*');
+		var elems = (bong.core.util.isArray(dom) ? dom[0] : dom).getElementsByTagName('*');
 		for(var i=0;i<elems.length;++i){
-			if(elems[i].getAttribute('bong:handle')){
-				var handleName = elems[i].getAttribute('bong:handle');
+			if(elems[i].getAttribute('bong:'+attr_name)){
+				var handleName = elems[i].getAttribute('bong:'+attr_name);
 				if(handleName.indexOf('.')){
 					var handleNameHierarchy = handleName.split('.');
 					var anchor = handle;
@@ -167,15 +167,35 @@ var bong = {
 						}
 						anchor = anchor[localName];
 						if(it == handleNameHierarchy.length-1){
+							if(typeof anchor.dom != 'undefined'){
+								if(typeof anchor.list == 'undefined'){
+									anchor.list = [];
+									anchor.list.push(anchor.dom);
+								}
+								anchor.list.push(elems[i]);
+							}
 							anchor.dom = elems[i];
 						}
 					}
 				}else{
+					if(typeof handle[handleName].dom != 'undefined'){
+						if(typeof handle[handleName].list != 'undefined'){
+							handle[handleName].list = [];
+							handle[handleName].list.push(handle[handleName].dom);
+						}
+						handle[handleName].list.push(elems[i]);
+					}
 					handle[handleName].dom = elems[i];
 				}
 			}
 		}
 		return handle;
+	},
+	handle: function(dom){
+		return bong._anchor(dom, 'handle');
+	},
+	bindings: function(dom){
+		return bong._anchor(dom, 'bind');
 	},
 	_button: function(handle, conf){
 		var dom = this.domify('<button class="bong-dialog-btn '+(conf.isDefault ? 'bong-dialog-btn-default' : '')+'">'+conf.label+'</button>');
@@ -308,7 +328,7 @@ var bong = {
 				if(elem.context)
 					elem = elem.context;
 				if(elem.nodeType == 1){//ELEMENT_NODE
-					if(elem.tagName.toLowerCase() == 'input' && elem.type.toLowerCase() == 'text'){
+					if(elem.tagName.toLowerCase() == 'input' && (elem.type.toLowerCase() == 'text' || elem.type.toLowerCase() == 'hidden')){
 						elem.value = value;
 					}else if(elem.tagName.toLowerCase() == 'input' && elem.type.toLowerCase() == 'checkbox'){
 						elem.checked = !(!value);
@@ -509,6 +529,36 @@ var bong = {
 					}
 				}, conff);
 			},
+			updateData: function(dom, conf){
+				var conff = (conf ? conf : config);
+				if(!conff)conff = {format: 'json'};
+				conff.format = 'json';
+				var bindings = bong.bindings(dom);
+				var travarse = function(binding_node, data){
+					if(typeof binding_node == 'object' && typeof binding_node.dom == 'undefined'){
+						for(var k in binding_node){
+							if(typeof data[k] != 'undefined'){
+								travarse(binding_node[k], data[k]);
+							}else{
+								return;
+							}
+						}
+					}else if(binding_node.dom){
+						if(binding_node.list && bong.core.util.isArray(binding_node.list)){
+							for(var i=0;i<binding_node.list.length;++i){
+								bong.core.util.setValue(binding_node.list[i], data);
+							}
+						}else{
+							bong.core.util.setValue(binding_node.dom, data);
+						}
+					}
+				}
+				return this.async(function(data){
+					if(!bong.core.util.isArray(dom)){
+						travarse(bindings, data);
+					}
+				}, conff);
+			},
 			freezingUpdate: function(dom){
 
 			},
@@ -528,6 +578,12 @@ var bong = {
 				var self = this;
 				return setInterval(function(){
 					self.update(dom);
+				}, interval ? interval : 2000);
+			},
+			refreshData: function(dom, interval){
+				var self = this;
+				return setInterval(function(){
+					self.updateData(dom);
 				}, interval ? interval : 2000);
 			},
 			invoke: function(callback, conf){
@@ -781,13 +837,12 @@ bong.onready(function(){
 	var scripts = document.getElementsByTagName('script');
 	function slotize(script){
 		var dom = script.parentNode;
-		var event = script.event;
+		var event = script.event ? script.event : script.getAttribute('event');
 		var code = script.innerHTML;
 		var callback = new Function(code);
 		var ftor = function(){
-			callback.call(dom);
+			return callback.call(dom);
 		}
-		//console.log(dom, event);
 		bong.addEvent(dom, event, ftor);
 	};
 	for(var i=0;i<scripts.length;++i){
