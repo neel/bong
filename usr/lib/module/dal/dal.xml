@@ -12,5 +12,10 @@
 	</bong:dependencies>
 	<bong:includes>
 		<bong:include file="querybuilder.php" />
+		<bong:include file="connectionparam.php" />
+		<bong:include file="connection.php" />
+		<bong:include file="config.php" />
+		<bong:include file="DatabaseConfig.php" />
+		<bong:include file="init.php" />
 	</bong:includes>
 </bong:module>
