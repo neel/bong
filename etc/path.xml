@@ -35,7 +35,11 @@
 			<bong:path name="layout" location="layout">
 				<bong:path name="controller" location="$controller" />
 			</bong:path>
-			<bong:path name="model" location="models" />
+			<bong:path name="model" location="models">
+				<bong:path name="controller" location="$controller">
+					<bong:path name="method" location="$method" />
+				</bong:path>
+			</bong:path>
 			<bong:path name="view" location="presentation">
 				<bong:path name="controller" location="$controller">
 					<bong:path name="method" location="$method" />
@@ -51,6 +55,7 @@
 		</bong:path>
 		<bong:path name="common" location="$projectDir/usr/local/common">
 			<bong:path name="layout" location="layout" />
+			<bong:path name="model" location="models" />
 		</bong:path>
 		<bong:path name="share" scope="bong" location="$projectDir/usr/share">
 			<bong:path name="css" location="css" />

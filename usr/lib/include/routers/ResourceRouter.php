@@ -16,7 +16,7 @@ final class ResourceRouter extends AbstractContentRouter{
 		$path = array_slice($path, $itr);
 		$this->navigation->contentName = implode('/', $path);
 		$extParts = explode('.', array_pop($path));
-		$ext = count($extParts) == 2 ? $extParts[1] : null;
+		$ext = count($extParts) >= 2 ? end($extParts) : null;
 		$this->navigation->extension = $ext;
 		$preferedExtension = null;
 		switch($this->navigation->resourceType){

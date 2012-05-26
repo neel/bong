@@ -238,7 +238,7 @@ var bong = {
 		};
 	},
 	dialog: function(conf){
-		console.log(conf);
+		//console.log(conf);
 		if(!conf)conf = {};
 		if(!conf.buttons)conf.buttons = [];
 		if(!conf.height)conf.height = '160';
@@ -378,11 +378,11 @@ var bong = {
 			 * @param loading bool
 			 */
 			_loading: function(url, loading){
-				bong.console.log(url+' '+(loading ? 'Loading...' : 'Finished'));
+				//bong.console.log(url+' '+(loading ? 'Loading...' : 'Finished'));
 			}
 		},
 		ajax: function(url, callback, conf){/*format, method, async, errCallback*/
-			console.log("AJAXing "+url);
+			//console.log("AJAXing "+url);
 			if(!callback)callback=this._ajax._eat;
 			if(!conf)conf = {};
 			for(var key in ['format', 'method', 'async', 'error', 'loading']){
@@ -429,7 +429,7 @@ var bong = {
 						var responseMimeType = request.getResponseHeader('Content-Type');
 						if(!responseMimeType){
 							alert(responseMimeType);
-							console.log("responseMimeType Could Not be Parsed");
+							console.warn("responseMimeType Could Not be Parsed");
 						}
 						var overridenMimeType = conf.format ? bong.core._ajax._dict(conf.format) : null;
 						
@@ -840,8 +840,8 @@ bong.onready(function(){
 		var event = script.event ? script.event : script.getAttribute('event');
 		var code = script.innerHTML;
 		var callback = new Function(code);
-		var ftor = function(){
-			return callback.call(dom);
+		var ftor = function(ev){
+			return callback.call(dom, ev);
 		}
 		bong.addEvent(dom, event, ftor);
 	};

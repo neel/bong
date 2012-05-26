@@ -159,7 +159,7 @@ foreach($batch->loads as $request){
 	 */
 	MemPool::instance()->set("bong.url.path", isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
 	Runtime::loadModule('rom');
-	
+
 	\ROM\BongCurrentUserData::startSession();
 	
 	$router = URLAnalyzer::instance()->decide();
@@ -170,7 +170,7 @@ foreach($batch->loads as $request){
 	}
 	$urlReq = new \ROM\UrlRequest(time(), session_id(), $_SERVER['SCRIPT_NAME']);
 	\ROM\BongCurrentUserData::instance()->addUrlRequest($urlReq);
-	
+	Runtime::loadModule('dal');
 	/*AbstractContentEngine* */ $engine = $router->engine();
 	$engine->run();
 	HTTPHeaders::send();

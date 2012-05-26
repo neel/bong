@@ -9,22 +9,28 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 		$branches = explode('.', $path);
 		$nullPos = -1;
 		$i = 0;
+		/**
+		 * +controllerName
+		 * -methodName
+		 * *spiritName
+		 * @arbitraryFileName
+		 */
 		$branches = array_map(function($value) use(&$projectName, &$controllerName, &$methodName, &$spiritName, &$terminal, &$i, &$nullPos){
 			++$i;
 			if($nullPos > -1)return $value;
 			if(preg_match("~\:(\w+)~", $value, $m) > 0){
 				$projectName = $m[1];
 				return "bong:path[@name='project']";
-			}elseif(preg_match("~\+([\&\w]+)~", $value, $m) > 0){
+			}elseif(preg_match("~^\+([\&\w]+)~", $value, $m) > 0){
 				$controllerName = $m[1][0] == '&' ? MemPool::instance()->get('bong.mvc.controller') : $m[1];
 				return "bong:path[@name='controller']";
-			}elseif(preg_match("~\-([\&\w]+)~", $value, $m) > 0){
+			}elseif(preg_match("~^\-([\&\w]+)~", $value, $m) > 0){
 				$methodName = $m[1][0] == '&' ? MemPool::instance()->get('bong.mvc.method') : $m[1];
 				return "bong:path[@name='method']";
-			}elseif(preg_match("~\*([\&\w]+)~", $value, $m) > 0){
+			}elseif(preg_match("~^\*([\&\w]+)~", $value, $m) > 0){
 				$spiritName = $m[1];
 				return "bong:path[@name='spirit']";
-			}elseif(preg_match("~\@([\&\w\S]+)~", $value, $m) > 0){
+			}elseif(preg_match("~^\@([\&\w\S]+)~", $value, $m) > 0){
 				if($m[1][0] == '&'){
 					$terminal = in_array($m[1][1], array('c', 'C')) ? 
 									MemPool::instance()->get('bong.mvc.controller') : 
@@ -77,7 +83,6 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 		}
 		$pathElems = array_reverse($pathElems);
 		$retPath = implode("/", $pathElems);
-		
 		if(!empty($projectDir)){
 			$retPath = (str_replace('$projectDir', $projectDir, $retPath));
 		}
@@ -93,6 +98,7 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 		if(!empty($retPath) && !empty($terminal)){
 			$retPath .= '/'.$terminal;
 		}
+
 		if($retPath)
 			return Path::toAbsolutePath($retPath);
 		else

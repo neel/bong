@@ -23,11 +23,19 @@ class MVCEngine extends ContentEngine{
 	}
 	public function executeLogic(){
 		Runtime::loadModule('util');
-		require_once($this->model($__i_dmp));
+		$models = $this->model();
+		$this->modelInclude($models);
+		while(!end($models)){
+			array_pop($models);
+		}
+		$last_model = end($models);
 		require_once($this->controller());
-		$modelName = $this->modelName();
-		$modelReflection = new ReflectionClass($modelName);
-		$model = $modelReflection->newInstance();
+		$model = null;
+		if($last_model->path && $last_model->className){
+			$modelName = $last_model->className;/*Figure out model name*/
+			$modelReflection = new ReflectionClass($modelName);/*Instantiate The Model*/
+			$model = $modelReflection->newInstance();
+		}
 		$controllerName = ucfirst($this->navigation->controllerName.'Controller');
 		$controllerReflection = new ReflectionClass($controllerName);
 		$controller = $controllerReflection->newInstanceArgs(array($model));
@@ -279,18 +287,60 @@ class MVCEngine extends ContentEngine{
 			}
 		}
 	}
-	private function model(&$index){
+	/**
+	 * Searches for model(s) that exists
+	 * returns an array of existing models and a require call must be done from the top of the array
+	 * top most is the BongAppModel and file exists
+	 * bottom of that will be 0 or more models located in /projectDir/usr/local/common/models/*
+	 * name of these models are not predefined and can have any arbitrary name
+	 * However its a good Practice to end the class names with Model
+	 * these models should include BongAppModel
+	 * Controller Model appears after that
+	 * Controller Models must have the name <ControllerName>Model
+	 * Controller Models may inherit any of the project level models
+	 * ControllerMethod Model is not supported as its thought that such deep model hierarchy is not required at all
+	 * All Models must have BongAppModel in its inheritance chain
+	 * trait functionility cannot be used as its in 5.4 and we are using 5.3 stable
+	 * If a controller Model is found its set to $this->model otherwise $this->model is set to null
+	 */
+	private function model(){
+		/*
 		$models = array(
-			Path::instance()->currentProject('apps.model.+&controller.-&method.php'),//Application Model
-			Path::instance()->currentProject('apps.model.+&controller.@model.php'),//Controller Model
-			Path::instance()->currentProject('common.@model.php'),//Project Model
+			//Path::instance()->currentProject('apps.model.+&controller.@&method.php'),//Application Model
+			Path::instance()->currentProject('apps.model.+@&controller.php'),//Controller Model
+			Path::instance()->currentProject('common.model'),//Project Model
 			Path::instance()->evaluate('share.apps.@model.php')//Bong Model
 		);
+		*/
+		$models = array();
+		$bongModel            = new stdClass;
+		$bongModel->path      = Path::instance()->evaluate('share.apps.@model.php');
+		$bongModel->name      = 'bong';
+		$bongModel->className = 'BongAppModel';
+		array_push($models, $bongModel);
+		foreach(glob(Path::instance()->currentProject('common.model').'/*.php') as $modelFile){
+			$projectModel            = new stdClass;
+			$projectModel->path      = $modelFile;
+			$projectModel->name      = basename($modelFile, '.php');
+			$projectModel->className = '';
+			array_push($models, $projectModel);
+		}
+		$appModel            = new stdClass;
+		$appModel->path      = Path::instance()->currentProject('apps.model.+@&controller.php');
+		$appModel->name      = MemPool::instance()->get('bong.mvc.controller');
+		$appModel->className = MemPool::instance()->get('bong.mvc.controller').'Model';
+		array_push($models, $appModel);
 		foreach($models as $i => $model){
-			if(file_exists($model)){
-				$index = $i;
-				return $model;
+			if(!file_exists($model->path)){
+				$models[$i] = false;
 			}
+		}
+		return $models;
+	}
+	private function modelInclude($models){
+		foreach($models as $model){
+			if($model)
+				require_once($model->path);
 		}
 	}
 	private function modelName(){

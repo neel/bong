@@ -377,7 +377,7 @@ class Rom extends \Singleton{
 		return $this->_method;
 	}
 	public function isPostRequest(){
-		return ($this->_method == Reuquest::POST);
+		return ($this->_method == \ROM\Request::POST);
 	}
 	public function client(){
 		$this->_client;

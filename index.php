@@ -129,11 +129,13 @@ try{
 		\ROM\BongCurrentUserData::instance()->csrf_resend();
 	}
 	*/
+	Runtime::loadModule('dal');
 	$urlReq = new \ROM\UrlRequest(time(), session_id(), $_SERVER['SCRIPT_NAME']);
 	\ROM\BongCurrentUserData::instance()->addUrlRequest($urlReq);
 	/*AbstractContentEngine* */ $engine = $router->engine();
 	//echo \ROM\BongCurrentUserData::instance()->csrf_rand;
 	$engine->run();
+
 	HTTPHeaders::send();
 	$engine->writeResponse();
 	\ROM\BongCurrentUserData::instance()->dump();
