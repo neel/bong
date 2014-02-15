@@ -82,7 +82,7 @@ abstract class BongException extends Exception{
 		header('Content-Type: text/html');
 		$this->prepare();
 		$missing_param = "";
-		if(!$this->valid(&$missing_param)){
+		if(!$this->valid($missing_param)){
 			throw new InvalidExceptionException($this, $missing_param);
 		}
 		return $this->templatize();

@@ -140,8 +140,8 @@ class Engine extends \Singleton{
 						$this->_states[$state->hash()] = $state;
 					}
 					if($i > 0){
-						$prev->addChild(&$state);
-						$state->addParent(&$prev);
+						$prev->addChild($state);
+						$state->addParent($prev);
 					}
 					$prev =& $state;
 				}

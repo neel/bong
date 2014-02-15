@@ -71,7 +71,7 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 		$spiritName = "";
 		$terminal = "";
 		
-		$xpath = $this->directiveToXPath($path, &$projectDir, &$controllerName, &$methodName, &$spiritName, &$terminal);
+		$xpath = $this->directiveToXPath($path, $projectDir, $controllerName, $methodName, $spiritName, $terminal);
 		$nodes = $this->xpath->query($xpath);
 		$pathElems = array();
 		if($nodes->length > 0){
@@ -109,6 +109,7 @@ final class Path extends ConfigurationAdapter implements XPathConfig{
 	 * evaluate path in Current Project scope
 	 * @internal concats current project Name with : and then appends $path to it. Then treat it as usual Path 
 	 * @param string $path
+	 * @return string
 	 */
 	public function currentProject($path){
 		if(!Runtime::currentProject())/*Project not Set Yet Who is Calling ?*/

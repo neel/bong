@@ -44,7 +44,7 @@ abstract class SpiritAbstractor extends BongController{
 		}
 		
 		parent::__construct();
-		
+		$this->data = new stdClass;
 		$this->_engine = $engine;
 		$this->meta = new SpiritMeta($spiritName);
 		

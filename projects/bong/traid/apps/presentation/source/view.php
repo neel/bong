@@ -16,7 +16,7 @@
 			 echo $data->source; 
 		 else: ?>
 			bong.editor({
-				file: '<?php echo $data->file ?>',
+				file: '<?php echo quotemeta($data->file) ?>',
 				url: '<?php echo Resource::self('?source') ?>',
 				<?php if(isset($data->titleText) && $data->titleText): ?>
 				title: '<?php echo $data->titleText ?>',

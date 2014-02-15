@@ -77,25 +77,25 @@ class XMLPacker{
 	}
 	public function toXML(){
 		$this->createRootElement();
-		$this->toXML_internal(&$this->__data);
-		$this->clearRecursionProbes(&$this->__data);
+		$this->toXML_internal($this->__data);
+		$this->clearRecursionProbes($this->__data);
 		$this->clearUnrefferedIds();
 		return $this->__dom;
 	}
 	private function toXML_internal(&$o){
 		if(is_object($o)){
-			if($this->isRecursive(&$o)){
-				$this->handleRecurseNode(&$o);
+			if($this->isRecursive($o)){
+				$this->handleRecurseNode($o);
 			}else{
-				$this->probeRecursionSecurity(&$o);
+				$this->probeRecursionSecurity($o);
 				foreach($o as $k => $v){
 					$attr = array('bong:type' => XMLType($v)->type());
-					if(!XMLType(&$v)->isScaler()){
+					if(!XMLType($v)->isScaler()){
 						if(XMLType($v)->isObject()){
 							$attr['bong:class'] = get_class($v);
 						}
 						$this->createElement($k, $attr);
-						$this->toXML_internal(&$v);		
+						$this->toXML_internal($v);		
 						$this->__domPtr = $this->__domPtr->parentNode;				
 					}else{
 						$this->createAtribute($k, $v);
@@ -103,10 +103,10 @@ class XMLPacker{
 				}
 			}
 		}elseif(is_array($o)){
-			if($this->isRecursive(&$o)){
-				$this->handleRecurseNode(&$o);
+			if($this->isRecursive($o)){
+				$this->handleRecurseNode($o);
 			}else{
-				$this->probeRecursionSecurity(&$o);
+				$this->probeRecursionSecurity($o);
 				foreach($o as $i => $v){
 					if(is_string($i) && $i == $this->__xml_recursion_marker)
 						return;
@@ -122,7 +122,7 @@ class XMLPacker{
 						$className = 'bong:item';
 					}
 					$this->createElement($className, $attr);
-					$this->toXML_internal(&$v);
+					$this->toXML_internal($v);
 					$this->__domPtr = $this->__domPtr->parentNode;
 				}
 			}
@@ -170,7 +170,7 @@ class XMLPacker{
 				unset($o[$this->__xml_recursion_marker]);
 			foreach($o as $v){
 				if(is_array($v) && isset($v[$this->__xml_recursion_marker])){
-					$this->clearRecursionProbes(&$v);
+					$this->clearRecursionProbes($v);
 				}
 			}
 		}

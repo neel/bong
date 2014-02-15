@@ -1,5 +1,16 @@
 <?php
 namespace DB;
+
+/**
+ * searches for a database.xml in project/etc/conf.d directory
+ * @code 
+ * <bong:connection name="CONNECTION_NAME" dsn="DSN" user="USER_NAME" pass="PASSWORD" />
+ * <bong:connection name="CONNECTION_NAME" dsn="DSN" user="USER_NAME" pass="PASSWORD">
+ * 		<bong:param name="PDO_PARAM_NAME" value="PDO_PARAM_VALUE" />
+ * </bong:connection>
+ * <bong:model default="CONNECTION_NAME" autoconnect="TRUE_OR_FALSE" />
+ * @endcode
+ */
 final class DatabaseConfig extends \ConfigurationAdapter{
 	private $collection = null;
 

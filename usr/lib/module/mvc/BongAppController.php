@@ -6,6 +6,7 @@ abstract class BongAppController extends BongController{
 	
 	public function __construct($model = null){
 		parent::__construct();
+		$this->data = new stdClass;
 		$this->meta = new ControllerMeta();
 		/*{ TODO Having an XDO should be optional not all app asks for an XDO*/
 		if(!($this instanceof NoXDO)){
