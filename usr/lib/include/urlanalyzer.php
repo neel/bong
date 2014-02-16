@@ -25,7 +25,8 @@ class URLAnalyzer extends Singleton implements Decider{
 	 */
 	public function decide(){
 		$projectName = null;
-		$urlparts = explode('/', trim($this->url, "/"));//Slash The Url
+		// issue #31 https://github.com/neel/bong/issues/31
+		$urlparts = strlen(trim($this->url, "/")) ? explode('/', trim($this->url, "/")) : array();//Slash The Url
 		$reqUrlParts = explode('/', trim($_SERVER['REQUEST_URI'], "/"));
 		$urlroot = '/'.implode('/', array_slice($reqUrlParts, 0, (count($reqUrlParts)-count($urlparts))) );
 		MemPool::instance()->set("bong.url.root", $urlroot);
@@ -45,14 +46,14 @@ class URLAnalyzer extends Singleton implements Decider{
 		 * ~projectName/image.png
 		 */
 		$projectExt = null;
-		if(substr_count($urlparts[0], '~') == 1){
+		if(count($urlparts) && substr_count($urlparts[0], '~') == 1){
 			$projectName = substr(array_shift($urlparts), 1);
 			if(substr_count($projectName, '.') == 1){
 				$parts = explode('.', $projectName);
 				$projectName = $parts[0];
 				$projectExt = $parts[1];
 			}
-		}elseif(substr_count($urlparts[0], '~') > 1){
+		}elseif(count($urlparts) && substr_count($urlparts[0], '~') > 1){
 			throw new MalformedUrlException();
 		}else{
 			$projectName = Fstab::instance()->defaultProjectName();

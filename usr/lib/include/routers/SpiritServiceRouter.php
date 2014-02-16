@@ -3,6 +3,7 @@ final class SpiritServiceRouter extends ServiceRouter{
 	public function __construct(){
 		parent::__construct();
 		//parent::__construct('AppJSONServiceEngine');
+		$this->navigation = new stdClass;
 	}
 	public function buildNavigation_1($parts){
 		/**
