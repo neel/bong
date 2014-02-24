@@ -40,6 +40,9 @@ class HTTPHeaders{
 	public static function contentType($mimeType){
 		self::addHeader('Content-Type', $mimeType);
 	}
+	public static function redirect($location){
+		self::addHeader('Location', $location);
+	}
 	/**
 	 * Once freezed No Headers can be sent unless its released
 	 */

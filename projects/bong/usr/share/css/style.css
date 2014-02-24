@@ -80,6 +80,9 @@ body{
 	padding-top: 20px;
 	position: relative;
 }
+.bong-welcome-box{
+	background: url(<?php echo SysResource::image('icons/bong-big.png') ?>) no-repeat #DCE2EA 50% 50%;
+}
 .bong-admin-box .bong-admin-box-header{
 	text-align: center;
 	padding-top: 10px;
