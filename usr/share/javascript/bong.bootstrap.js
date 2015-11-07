@@ -434,8 +434,9 @@ var bong = {
 						var overridenMimeType = conf.format ? bong.core._ajax._dict(conf.format) : null;
 						
 						if(overridenMimeType){
-							request.overrideMimeType(overridenMimeType);
-							responseMimeType = overridenMimeType;//now it truely overrides the mime Type and parses it as json or xml
+							// commented due to chrome exception
+							// request.overrideMimeType(overridenMimeType);
+							// responseMimeType = overridenMimeType;//now it truely overrides the mime Type and parses it as json or xml
 						}
 						
 						var response = null;
