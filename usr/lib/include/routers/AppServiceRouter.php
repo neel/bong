@@ -2,6 +2,7 @@
 final class AppServiceRouter extends ServiceRouter{
 	public function __construct(){
 		parent::__construct();
+		$this->navigation = new stdClass;
 		//parent::__construct('AppJSONServiceEngine');
 	}
 	public function buildNavigation($parts){
