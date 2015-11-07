@@ -1,0 +1,8 @@
+visiting http://localhost/installation_dir/bong will open the bong admin panel and list all bong projects. By default bong admin panel project is the default project. You can create a project with any name with this panel
+
+url for a project is:
+	http://localhost/installation_dir/bong/~project_name/controller_name/method_name
+	http://localhost/installation_dir/bong/~project_name will search for controller_name default and method_name main
+
+You can create a controller by clicking add button from left menu after selecting a project on bong admin panel
+You can create a method by clicking add button in central widget after selecting a controller
